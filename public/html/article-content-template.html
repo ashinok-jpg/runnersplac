@@ -1,0 +1,229 @@
+<!-- 記事テンプレートのHTMLコンテンツ部分 -->
+<!-- この部分を既存のdetail.ejsのメインコンテンツ部分に挿入することで、テンプレートスタイルが適用されます -->
+
+<!-- CSSとJavaScriptの読み込み（ヘッダー部分に追加） -->
+<!-- 
+<link rel="stylesheet" href="/css/article-template.css">
+<script src="/js/article-template.js"></script>
+-->
+
+<!-- メインコンテンツ部分 -->
+<div class="container">
+  <!-- 固定ヘッダー（必要に応じて） -->
+  <header id="fixedHeader">
+    <!-- ページ内リンク（目次）ドロップダウン -->
+    <div class="dropdown" onclick="toggleDropdown(event)">
+      <span>🎯 ページ内目次 ▼</span>
+      <div class="dropdown-content" id="tocLinks">
+        <!-- 目次が自動生成される -->
+      </div>
+    </div>
+  </header>
+  
+  <!-- メインコンテンツ -->
+  <main class="main-content" id="mainContent">
+    <!-- カーソル追従グローエフェクト -->
+    <div class="cursor-glow">
+      <div class="glow-dot" id="glowDot"></div>
+    </div>
+    
+    <div class="wrapper">
+      <!-- ヒーロー部分 -->
+      <header class="hero">
+        <h1 id="pageTitle"><%- shoe.manufacturer %> <%- shoe.name %> レビュー</h1>
+        <div class="hero-actions">
+          <span class="chip" id="priceChip">💴 <%- shoe.price || '¥未設定' %></span>
+          <span class="chip" id="weightChip">⚖️ <%- shoe.weight || '未設定' %></span>
+        </div>
+      </header>
+
+      <!-- 記事の見出し画像セクション -->
+      <section id="hero-image-section">
+        <% if (shoe.heroImage) { %>
+          <img class="hero-img" id="mainHeroImage" src="<%- shoe.heroImage %>" alt="<%- shoe.name %> 見出し画像" style="display: block;" />
+        <% } else { %>
+          <img class="hero-img" id="mainHeroImage" alt="見出し画像" style="display: none;" />
+        <% } %>
+      </section>
+
+      <!-- 自動生成される目次 -->
+      <nav id="toc" class="toc-card"></nav>
+
+      <!-- LEAD セクション -->
+      <section id="lead" class="card">
+        <h2>リード</h2>
+        <p id="leadContent"><%- shoe.lead || 'リード文がここに表示されます。' %></p>
+      </section>
+
+      <!-- SPEC セクション -->
+      <section id="spec" class="card">
+        <h2>概要とスペック</h2>
+        <p id="specContent"><%- shoe.specContent || 'スペック情報がここに表示されます。' %></p>
+        
+        <div class="spec-chips" id="specChips">
+          <% if (shoe.specChips && shoe.specChips.length > 0) { %>
+            <% shoe.specChips.forEach(chip => { %>
+              <div class="spec"><%- chip %></div>
+            <% }) %>
+          <% } else { %>
+            <div class="spec">⚖️ 約250g</div>
+            <div class="spec">📏 ドロップ：8mm</div>
+            <div class="spec">📐 スタック：41.5/33.5mm</div>
+            <div class="spec">🧪 ミッドソール：FF BLAST MAX</div>
+            <div class="spec">🪭 プレート：非搭載</div>
+            <div class="spec">💴 価格：16,500〜19,000円</div>
+          <% } %>
+        </div>
+        
+        <p class="sub" style="font-size:0.85rem;color:var(--muted);">※ 実測値はサイズ・個体で前後します。</p>
+      </section>
+
+      <!-- DESIGN × BIOMECH セクション -->
+      <section id="design-biomeech" class="card">
+        <h2>設計思想 × バイオメカ</h2>
+        <p id="designContent"><%- shoe.design || '設計思想とバイオメカニクスについて説明します。' %></p>
+      </section>
+
+      <!-- IMPRESSIONS セクション -->
+      <section id="impressions" class="card">
+        <h2>実走インプレ</h2>
+        <p id="impressionsContent"><%- shoe.impressions || '実際に走った感想をお伝えします。' %></p>
+      </section>
+
+      <!-- LIKES/DISLIKES セクション -->
+      <section id="likes-dislikes" class="card">
+        <h2>好きな点と惜しい点</h2>
+        <div class="split">
+          <div class="mini card" style="background:var(--card-soft);">
+            <span class="badge good">👍 好き！</span>
+            <p id="likesContent"><%- shoe.likes || '好きなポイントを記載します。' %></p>
+          </div>
+          <div class="mini card" style="background:var(--card-soft);">
+            <span class="badge bad">⚠️ 惜しい！</span>
+            <p id="dislikesContent"><%- shoe.dislikes || '惜しいポイントを記載します。' %></p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SCORES セクション -->
+      <section id="scores" class="card">
+        <h2>10項目評価</h2>
+        <div class="scores" id="scoresContainer" aria-live="polite">
+          <% if (shoe.scores && shoe.scores.length > 0) { %>
+            <% shoe.scores.forEach(score => { %>
+              <div class="score">
+                <div class="label">
+                  <span><%- score.name %></span>
+                  <span class="val"><%- score.value %>／<%- score.max %></span>
+                </div>
+                <div class="bar"><span style="width: <%- (score.value / score.max) * 100 %>%;"></span></div>
+                <p class="sub" style="font-size:0.85rem;color:var(--muted);"><%- score.comment %></p>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <!-- デフォルトのスコア表示 -->
+            <div class="score">
+              <div class="label">
+                <span>クッション性</span>
+                <span class="val">4.0／5</span>
+              </div>
+              <div class="bar"><span style="width: 80%;"></span></div>
+              <p class="sub" style="font-size:0.85rem;color:var(--muted);">評価コメント</p>
+            </div>
+          <% } %>
+        </div>
+      </section>
+
+      <!-- COMPARISON セクション -->
+      <section id="comparison" class="card">
+        <h2>ライバルシューズと比較</h2>
+        <div class="split" id="comparisonContainer">
+          <% if (shoe.comparison && shoe.comparison.length > 0) { %>
+            <% shoe.comparison.forEach((item, index) => { %>
+              <div class="mini card comparison-item" style="background:var(--card-soft);">
+                <% if (item.image) { %>
+                  <img class="comparison-img" src="<%- item.image %>" alt="<%- item.name %> image" style="display: block;" />
+                <% } %>
+                <h3><%- item.name %></h3>
+                <p><%- item.content %></p>
+              </div>
+            <% }) %>
+          <% } else { %>
+            <!-- デフォルトの比較項目 -->
+            <div class="mini card comparison-item" style="background:var(--card-soft);">
+              <h3>比較対象1</h3>
+              <p>比較内容が表示されます。</p>
+            </div>
+          <% } %>
+        </div>
+      </section>
+
+      <!-- TIPS & LONGEVITY セクション -->
+      <section id="tips-longevity" class="card">
+        <h2>使いこなしTips＆寿命</h2>
+        <p id="tipsContent"><%- shoe.tips || 'Tips情報と寿命についてお伝えします。' %></p>
+      </section>
+
+      <!-- SUMMARY セクション -->
+      <section id="summary" class="card">
+        <h2>まとめ</h2>
+        <p id="summaryContent"><%- shoe.summary || '総合的な評価とまとめをお伝えします。' %></p>
+        <p class="sub" style="font-size:0.85rem;color:var(--muted);">
+          <strong>要約</strong>：<span id="summaryShort"><%- shoe.summaryShort || '一言でまとめると...' %></span>
+        </p>
+        <p class="hashtags" style="font-size:0.9rem;color:var(--muted);" id="hashtags">
+          <%- shoe.hashtags || '#ランニングシューズ #レビュー' %>
+        </p>
+      </section>
+    </div>
+  </main>
+</div>
+
+<!-- 固定フッター（楽天＆Amazonボタン） -->
+<footer id="fitedFooter">
+  <% if (shoe.rakutenUrl) { %>
+    <a href="<%- shoe.rakutenUrl %>" target="_blank" class="btn-market btn-rakuten" id="rakutenLink">
+      <span style="font-size: 1.2rem;">🛒</span> 楽天で探す
+    </a>
+  <% } %>
+  
+  <% if (shoe.amazonUrl) { %>
+    <a href="<%- shoe.amazonUrl %>" target="_blank" class="btn-market btn-amazon" id="amazonLink">
+      <span style="font-size: 1.2rem;">🛒</span> Amazonで探す
+    </a>
+  <% } %>
+</footer>
+
+<script>
+  // ページ読み込み後にテンプレート機能を初期化
+  document.addEventListener('DOMContentLoaded', function() {
+    // 目次の生成
+    if (typeof buildTOC === 'function') {
+      buildTOC();
+    }
+    
+    // スコアバーのアニメーション
+    if (typeof updateScoreBars === 'function') {
+      updateScoreBars();
+    }
+    
+    // グローエフェクトの初期化
+    if (typeof setupGlowEffect === 'function') {
+      setupGlowEffect();
+    }
+    
+    // ドロップダウンの設定
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#fixedHeader') && typeof closeAllDropdowns === 'function') {
+        closeAllDropdowns();
+      }
+    });
+    
+    // スムーススクロールの設定
+    document.addEventListener('click', function(e) {
+      if (e.target.tagName === 'A' && e.target.getAttribute('href')?.startsWith('#') && typeof smoothScroll === 'function') {
+        smoothScroll(e, e.target.getAttribute('href'));
+      }
+    });
+  });
+</script>

@@ -14,7 +14,7 @@
   <meta property="og:title" content="<%= shoe.name %>｜ランニングシューズ徹底レビュー">
   <meta property="og:description" content="クッション性と安定性に優れた<%= shoe.name %>を徹底解説。実際のユーザー評価付き。">
   <meta property="og:type" content="article">
-  <meta property="og:image" content="https://runnersplac.onrender.com/images/<%= shoe.image %>">
+  <meta property="og:image" content="https://runnersplac.onrender.com<%= (typeof heroImage !== 'undefined' && heroImage) || (typeof images !== 'undefined' && images && images[0]) || '/images/' + (shoe.image || 'default.jpg') %>">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preload" href="/css/detail.css" as="style">
@@ -26,7 +26,7 @@
     "@context":"https://schema.org",
     "@type":"Product",
     "name":"<%= shoe.name %>",
-    "image":"https://runnersplac.onrender.com/images/<%= shoe.image %>",
+    "image":"https://runnersplac.onrender.com<%= (typeof heroImage !== 'undefined' && heroImage) || (typeof images !== 'undefined' && images && images[0]) || '/images/' + (shoe.image || 'default.jpg') %>",
     "description":"<%= shoe.name %> の詳細レビュー。クッション性・グリップ・耐久性などを解説。",
     "brand":{"@type":"Brand","name":"<%= shoe.brand %>"},
     "sku":"<%= shoe.id %>",
@@ -73,8 +73,8 @@
     
       <figure class="hero-img">
         <img
-          src="<%= shoe.image %>"
-          alt="<%= shoe.brand %> <%= shoe.name %> の商品画像"
+          src="<%= (typeof heroImage !== 'undefined' && heroImage) || (typeof images !== 'undefined' && images && images[0]) || (shoe.image ? '/images/' + shoe.image : '/images/default.jpg') %>"
+          alt="<%= shoe.brand || (typeof brand !== 'undefined' && brand) || 'ランニングシューズ' %> <%= shoe.name || (typeof name !== 'undefined' && name) || '' %> の商品画像"
           loading="eager" fetchpriority="high">
       </figure>
     </section>
@@ -99,6 +99,35 @@
         <% } %>
       <% } %>
     </section>
+
+    <!-- 画像ギャラリー -->
+    <% if (typeof images !== 'undefined' && images && images.length > 1) { %>
+    <section class="card image-gallery">
+      <h2>追加画像</h2>
+      <div class="gallery-grid">
+        <% images.slice(1).forEach(function(image, index) { %>
+          <figure class="gallery-item">
+            <img src="<%= image %>" alt="<%= shoe.name || (typeof name !== 'undefined' && name) || 'ランニングシューズ' %> 追加画像 <%= index + 2 %>" loading="lazy">
+          </figure>
+        <% }); %>
+      </div>
+    </section>
+    <% } %>
+
+    <!-- セクション別画像 -->
+    <% if (typeof sectionImages !== 'undefined' && sectionImages && Object.keys(sectionImages).length > 0) { %>
+    <section class="card section-images">
+      <h2>詳細画像</h2>
+      <% Object.entries(sectionImages).forEach(function([section, imageUrl]) { %>
+        <div class="section-image-item">
+          <h3><%= section %></h3>
+          <figure>
+            <img src="<%= imageUrl %>" alt="<%= section %> の画像" loading="lazy">
+          </figure>
+        </div>
+      <% }); %>
+    </section>
+    <% } %>
      <section id="memo-root"
   class="card"
   data-shoe-id="<%= shoe.slug || shoe.id %>"
@@ -106,7 +135,45 @@
   data-chart='<%- JSON.stringify(shoe.chartData) %>'>
 </section>
   
-    
+    <!-- 10項目詳細評価 -->
+    <section class="card performance-evaluation">
+      <h2>詳細性能評価</h2>
+      
+      <% 
+        const performanceScores = shoe.scores || [];
+        
+        function generateStars(score) {
+          const fullStars = Math.floor(score);
+          const hasHalfStar = score % 1 >= 0.5;
+          let stars = '★'.repeat(fullStars);
+          if (hasHalfStar) stars += '☆';
+          stars += '☆'.repeat(5 - fullStars - (hasHalfStar ? 1 : 0));
+          return stars;
+        }
+      %>
+      
+      <% if (performanceScores && performanceScores.length > 0) { %>
+        <% performanceScores.forEach(function(item) { %>
+          <% if (item.value > 0 || item.comment) { %>
+            <div class="performance-item">
+              <div class="performance-header">
+                <div class="performance-name"><%= item.name %></div>
+                <div class="performance-score">
+                  <span class="score-number"><%= item.value.toFixed ? item.value.toFixed(1) : item.value %></span>
+                  <span>/5</span>
+                  <div class="score-stars"><%= generateStars(item.value) %></div>
+                </div>
+              </div>
+              <div class="performance-content">
+                <%= item.comment || '' %>
+              </div>
+            </div>
+          <% } %>
+        <% }); %>
+      <% } else { %>
+        <p class="muted">詳細評価がまだ設定されていません。</p>
+      <% } %>
+    </section>
 
     <section class="charts">
       <div class="card">
@@ -161,6 +228,41 @@
       </table>
     </section>
 
+    <!-- 比較・競合ブランド情報セクション -->
+    <% if (shoe.comparison && shoe.comparison.length > 0) { %>
+    <section class="comparison-section card">
+      <h2>競合ブランドとの比較</h2>
+      <div class="comparison-grid">
+        <% shoe.comparison.forEach(comp => { %>
+          <div class="comparison-item">
+            <div class="comparison-brand">
+              <strong><%= comp.ブランド %></strong>
+            </div>
+            <div class="comparison-model">
+              <%= comp.モデル %>
+            </div>
+            <div class="comparison-price">
+              ¥<%= comp.価格 %>
+            </div>
+            <div class="comparison-diff">
+              <%= comp.差分 %>
+            </div>
+          </div>
+        <% }) %>
+      </div>
+    </section>
+    <% } %>
+
+    <!-- Tips・寿命について -->
+    <% if (shoe.tips) { %>
+    <section class="tips-section card">
+      <h2>使いこなしTipsと寿命について</h2>
+      <div class="tips-content">
+        <%= shoe.tips %>
+      </div>
+    </section>
+    <% } %>
+
     <section class="comments card" data-shoe-id="<%= shoe.id %>">
       <h2>レビュー投稿</h2>
 
@@ -197,10 +299,16 @@
     </section>
   </main>
 
-  <footer class="footer">
-    <a href="/home">Home</a>
+  <footer class="footer fixed-footer">
+    <a href="/home" class="footer-btn home-btn">
+      <i class="fas fa-home"></i>
+      <span>Home</span>
+    </a>
     <% if (shoe.buyUrl) { %>
-      <a href="<%= shoe.buyUrl %>" class="buy-btn outline" target="_blank" rel="noopener noreferrer">購入</a>
+      <a href="<%= shoe.buyUrl %>" class="footer-btn buy-btn" target="_blank" rel="noopener noreferrer">
+        <i class="fas fa-shopping-cart"></i>
+        <span>購入</span>
+      </a>
     <% } %>
   </footer>
 
@@ -214,33 +322,8 @@
     chartData: <%- JSON.stringify(shoe.chartData) %>
   };
 
-  // まずPENDINGにしておく（ここまで来れば console で見ても undefined にはならない）
-  window.__TAB_MODE__ = 'PENDING';
+  // Tabbed UI functionality has been removed
   console.log('[loader] alive, __SHOE__=', window.__SHOE__);
-
-  (async () => {
-    // slug → id の順で JSON を探す（どっちで置いても動く）
-    const keys = [window.__SHOE__.slug, String(window.__SHOE__.id)].filter(Boolean);
-    let ok = false;
-    for (const k of keys) {
-      try {
-        const res = await fetch(`/memos/${encodeURIComponent(k)}.json`, { cache: 'no-store' });
-        console.log('[memos]', k, res.status);
-        if (res.ok) { window.__MEMO__ = await res.json(); ok = true; break; }
-      } catch (e) { console.error(e); }
-    }
-    window.__TAB_MODE__ = ok;
-    document.dispatchEvent(new Event('tabmode:decided'));
-    if (ok) {
-      const s = document.createElement('script');
-      s.src = "/js/tabbed-ui.js";
-      s.onload = ()=>console.log('[tabbed] loaded');
-      s.onerror = (e)=>console.error('[tabbed] load failed', e);
-      document.head.appendChild(s);
-    } else {
-      console.log('[tabbed] legacy mode');
-    }
-  })();
 </script>
 
 
@@ -338,13 +421,7 @@
   }
 
   window.addEventListener('DOMContentLoaded', () => {
-    if (window.__TAB_MODE__ === 'PENDING') {
-      document.addEventListener('tabmode:decided', () => {
-        if (!window.__TAB_MODE__) startLegacy();
-      }, { once: true });
-    } else {
-      if (!window.__TAB_MODE__) startLegacy();
-    }
+    startLegacy();
   });
 
     let nextCursor = null;
@@ -580,6 +657,41 @@ form?.addEventListener('submit', async (e) => {
     function escapeHtml(str){
       return str.replace(/[&<>"']/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[s]));
     }
+
+    // 固定フッターの制御
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    function updateFooter() {
+      const footer = document.querySelector('.fixed-footer');
+      if (!footer) return;
+
+      const currentScrollY = window.scrollY;
+      
+      if (currentScrollY > lastScrollY && currentScrollY > 100) {
+        // 下にスクロール時は隠す
+        footer.classList.add('hidden');
+      } else {
+        // 上にスクロール時は表示
+        footer.classList.remove('hidden');
+      }
+      
+      lastScrollY = currentScrollY;
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        requestAnimationFrame(updateFooter);
+        ticking = true;
+      }
+    }
+
+    // スクロールイベントリスナー
+    window.addEventListener('scroll', requestTick, { passive: true });
+
+    // ページ読み込み時に一度実行
+    window.addEventListener('load', updateFooter);
   </script>
 
 

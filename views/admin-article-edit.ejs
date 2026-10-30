@@ -1,402 +1,399 @@
-<!-- views/admin-article-edit.ejs -->
-<!doctype html>
-<html lang="ja"><head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1"> <!-- ★追加 -->
-<title>記事編集 <%= shoeId %></title>
-<style>
-  body{font-family:system-ui;margin:24px}
-  .row{display:flex;gap:16px;align-items:center;margin:8px 0;flex-wrap:wrap}
-  textarea{width:100%;height:55vh;font-family:ui-monospace,monospace}
-  .grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media (max-width: 900px){ .grid{grid-template-columns:1fr} textarea{height:40vh} } /* ★SP対応 */
-  .card{border:1px solid #e5e7eb;border-radius:12px;padding:12px}
-  .badge{display:inline-block;background:#f59e0b;color:#fff;padding:2px 8px;border-radius:999px;margin-left:8px;font-size:12px}
-  .muted{opacity:.7;font-size:12px}
-</style>
-</head><body>
-  <h1>記事編集: <code><%= shoeId %></code>
-    <% if (doc.isDraft) { %><span class="badge">下書き</span><% } %>
-  </h1>
-  
-  <!-- Simple ID Authentication -->
-  <div class="card" style="background:#fef3c7;border-color:#f59e0b;margin-bottom:16px" id="authCard">
-    <div class="row">
-      <label>編集ID: <input type="password" id="authId" placeholder="編集IDを入力してください"></label>
-      <button type="button" id="authBtn">認証</button>
-    </div>
-    <div class="muted">正しい編集IDを入力してください</div>
-  </div>
-  
-  <div id="mainContent" style="display:none">
-    <div class="row">
-      <a href="/shoes/<%= shoeId %>" target="_blank">公開ページを開く</a>
-      <span class="muted" id="counter"></span>
-    </div>
-
-  <form id="form" method="POST" action="/admin/articles/<%= shoeId %>" class="grid">
-    <div class="card">
-      <div class="row">
-        <label>著者 <input name="author" value="<%= doc.author || '' %>"></label>
-        <label style="margin-left:auto"><input type="checkbox" name="isDraft" <%= doc.isDraft ? 'checked' : '' %>> 下書きにする</label>
-        <button type="submit" id="saveBtn">保存</button>
-      </div>
-      <textarea id="editor" name="html"><%= doc.html || '' %></textarea>
-      <div class="muted">最後に保存: <span id="savedAt">未保存</span></div>
-    </div>
-
-    <div class="card" style="margin-top:12px">
-      <div class="row">
-        <strong>画像</strong>
-        <button type="button" id="pickImage">画像を選ぶ</button>
-        <span class="muted">ドラッグ&ドロップ／ペーストも可</span>
-      </div>
-      <div id="dropZone" style="border:1px dashed #cbd5e1;border-radius:12px;padding:16px;text-align:center">
-        ここに画像をドロップ
-      </div>
-      <input id="fileInput" type="file" accept="image/*" hidden>
-      <div id="uploadMsg" class="muted"></div>
-    </div>
-
-    <div class="card">
-      <div class="row"><strong>プレビュー</strong></div>
-      <div id="preview" style="min-height:55vh"></div>
-    </div>
-  </form>
-
-  <!-- 画像挿入ツール -->
-  <div id="image-tools" class="editor-tools" style="margin:8px 0; gap:8px; display:flex; align-items:center;">
-    <button type="button" id="insertImageBtn">画像を挿入</button>
-    <input type="file" id="imageInput" accept="image/*" hidden>
-  </div>
-
-  <!-- DOMPurify（クライアント）: サニタイズをサーバと揃える -->
-  <script src="https://unpkg.com/dompurify@3.0.5/dist/purify.min.js"></script>
-  <script>
-    // DOMPurifyの読み込み確認
-    document.addEventListener('DOMContentLoaded', function() {
-      if (typeof DOMPurify === 'undefined') {
-        console.warn('DOMPurify could not be loaded. Proceeding without client-side sanitization.');
-      } else {
-        console.log('DOMPurify loaded successfully');
-      }
-    });
-  </script>
-  <script>
-    // ID Authentication
-    const EDIT_ID = 'mypassword123'; // ここを好きなIDに変更してください
-    document.getElementById('authBtn').addEventListener('click', () => {
-      const inputId = document.getElementById('authId').value;
-      if (inputId === EDIT_ID) {
-        document.getElementById('authCard').style.display = 'none';
-        document.getElementById('mainContent').style.display = 'block';
-      } else {
-        alert('編集IDが正しくありません');
-        document.getElementById('authId').value = '';
-      }
-    });
-
-    // Enterキーでも認証
-    document.getElementById('authId').addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        document.getElementById('authBtn').click();
-      }
-    });
-
-    const ed = document.getElementById('editor');
-    const pv = document.getElementById('preview');
-    const form = document.getElementById('form');
-    const savedAt = document.getElementById('savedAt');
-    const counter = document.getElementById('counter');
-
-    function render(){
-      // サーバと同様にサニタイズして表示
-      if (pv && ed) {
-        // DOMPurifyが利用可能な場合はサニタイズ、そうでなければそのまま表示
-        const content = (typeof DOMPurify !== 'undefined') ? DOMPurify.sanitize(ed.value) : ed.value;
-        pv.innerHTML = content;
-        counter.textContent = `文字数: ${ed.value.replace(/\s+/g,' ').trim().length}／語数: ${ed.value.trim().split(/\s+/).filter(Boolean).length}`;
-      }
-    }
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Markdown エディタ - <%= shoeId %></title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+JP:wght@300;400;500;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     
-    if (ed) {
-      ed.addEventListener('input', () => { dirty = true; render(); });
-    }
-
-    // Ctrl/Cmd+Sで保存
-    let dirty = false;
-    window.addEventListener('keydown', (e) => {
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') {
-        e.preventDefault();
-        if (form) form.requestSubmit(document.getElementById('saveBtn'));
-      }
-    });
-
-    // 保存時刻表示
-    if (form) {
-      form.addEventListener('submit', async (e) => {
-        console.log('=== フォーム送信開始 ===');
-        console.log('Form element:', form);
-        console.log('Form action:', form.action);
-        console.log('Form method:', form.method);
-        console.log('Event:', e);
-        
-        // デバッグのため一時的にデフォルトの送信を防ぐ
-        e.preventDefault();
-        
-        // フォームデータを確認
-        const formData = new FormData(form);
-        console.log('FormData entries:');
-        for (let [key, value] of formData.entries()) {
-          console.log(`  ${key}:`, typeof value === 'string' && value.length > 100 ? `${value.substring(0,100)}...` : value);
+    <style>
+        :root {
+            --bg-main: #0f172a;
+            --bg-card: #1e293b;
+            --bg-editor: #0b1329;
+            --border-color: #334155;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent: #6366f1;
+            --accent-hover: #4f46e5;
+            --accent-success: #10b981;
+            --accent-error: #ef4444;
+            --shadow: 0 10px 25px -5px rgba(0,0,0,0.3), 0 8px 10px -6px rgba(0,0,0,0.3);
+            --font-sans: 'Inter', 'Noto Sans JP', sans-serif;
+            --font-mono: 'Fira Code', 'Consolas', monospace;
         }
-        
-        // 手動でPOSTリクエストを送信
-        try {
-          console.log('Sending manual POST request...');
-          // FormDataの代わりにJSON形式で送信
-          const postData = {
-            html: ed.value || '',
-            author: document.querySelector('input[name="author"]')?.value || '',
-            isDraft: document.querySelector('input[name="isDraft"]')?.checked || false
-          };
-          
-          console.log('Sending data:', postData);
-          
-          const response = await fetch(form.action, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(postData)
-          });
-          console.log('Response status:', response.status);
-          console.log('Response headers:', response.headers.get('content-type'));
-          
-          const responseText = await response.text();
-          console.log('Raw response:', responseText);
-          
-          let result;
-          try {
-            result = JSON.parse(responseText);
-          } catch (parseError) {
-            console.error('JSON parse error:', parseError);
-            throw new Error(`サーバーから無効なレスポンス: ${responseText.substring(0, 200)}...`);
-          }
-          
-          console.log('Parsed response:', result);
-          
-          if (response.ok) {
-            dirty = false;
-            if (savedAt) savedAt.textContent = new Date().toLocaleString();
-            localStorage.removeItem(lsKey);
-            alert('保存完了！');
-          } else {
-            alert('保存失敗: ' + (result.error || 'Unknown error'));
-          }
-        } catch (error) {
-          console.error('Fetch error:', error);
-          alert('保存エラー: ' + error.message);
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
         }
-        
-        console.log('=== フォーム送信完了 ===');
-      });
-    }
 
-    // 離脱警告
-    window.addEventListener('beforeunload', (e) => {
-      if (dirty) { e.preventDefault(); e.returnValue = ''; }
-    });
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: var(--font-sans);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
 
-    // ローカル自動バックアップ（誤操作対策）
-    const lsKey = `article:${'<%= shoeId %>'}`;
-    if (ed) {
-      setInterval(() => {
-        localStorage.setItem(lsKey, ed.value);
-      }, 2000);
-      // 復帰
-      const cached = localStorage.getItem(lsKey);
-      if (cached && !('<%= (doc.html||"").length %>' > 0)) {
-        ed.value = cached;
-      }
-      render();
-    }
-  </script>
+        /* ヘッダー */
+        header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+            z-index: 10;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
 
-  <script>
-    const fileInput = document.getElementById('fileInput');
-    const pickBtn   = document.getElementById('pickImage');
-    const dz        = document.getElementById('dropZone');
-    const upMsg     = document.getElementById('uploadMsg');
-    const shoeId    = '<%= shoeId %>';
+        .header-title-area {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
 
-    if (pickBtn) pickBtn.onclick = () => fileInput.click();
-    if (fileInput) fileInput.onchange = () => handleFiles(fileInput.files);
+        .header-title-area h1 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            letter-spacing: -0.025em;
+        }
 
-    if (dz) {
-      dz.addEventListener('dragover', e => { e.preventDefault(); dz.style.background='#f8fafc'; });
-      dz.addEventListener('dragleave', () => dz.style.background='transparent');
-      dz.addEventListener('drop', e => {
-        e.preventDefault(); dz.style.background='transparent';
-        handleFiles(e.dataTransfer.files);
-      });
-    }
+        .file-badge {
+            background-color: rgba(99, 102, 241, 0.15);
+            border: 1px solid rgba(99, 102, 241, 0.3);
+            color: #818cf8;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+        }
 
-    window.addEventListener('paste', e => {
-      const items = e.clipboardData?.items || [];
-      const files = [...items].map(i => i.getAsFile()).filter(Boolean);
-      if (files.length) handleFiles(files);
-    });
+        .source-badge {
+            background-color: rgba(148, 163, 184, 0.1);
+            border: 1px solid rgba(148, 163, 184, 0.2);
+            color: var(--text-muted);
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.75rem;
+        }
 
-    async function handleFiles(files){
-      const file = files[0];
-      if(!file) return;
-      if(!/^image\/(png|jpe?g|webp|gif)$/i.test(file.type)) {
-        if (upMsg) upMsg.textContent = '画像ファイルを選んでね';
-        return;
-      }
-      try{
-        if (upMsg) upMsg.textContent = 'アップロード中…';
-        const url = await uploadImage(file);
-        insertImg(url);
-        if (upMsg) upMsg.textContent = '挿入したよ：' + url;
-      }catch(err){
-        console.error(err);
-        if (upMsg) upMsg.textContent = 'アップロード失敗：' + (err?.message || err);
-      }
-    }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
 
-    async function uploadImage(file){
-      const fd = new FormData();
-      fd.append('image', file);
-      const res = await fetch(`/admin/articles/${encodeURIComponent(shoeId)}/image`, {
-        method: 'POST',
-        body: fd,
-      });
-      if(!res.ok) throw new Error('HTTP ' + res.status);
-      const data = await res.json();
-      return data.url; // 署名URL or 公開URL
-    }
+        /* ボタン */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            text-decoration: none;
+            outline: none;
+        }
 
-    function insertImg(url){
-      const alt = '';
-      const tag = `<img src="${url}" alt="${alt}" loading="lazy">`;
-      if (ed) {
-        const start = ed.selectionStart, end = ed.selectionEnd;
-        const v = ed.value;
-        ed.value = v.slice(0,start) + tag + v.slice(end);
-        ed.focus();
-        ed.selectionStart = ed.selectionEnd = start + tag.length;
-        dirty = true;
-        render();
-      }
-    }
-  </script>
+        .btn-primary {
+            background-color: var(--accent);
+            color: white;
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
 
-  <script>
-  (function(){
-    const shoeId = '<%= shoeId %>';
-    const btn = document.getElementById('insertImageBtn');
-    const input = document.getElementById('imageInput');
+        .btn-primary:hover {
+            background-color: var(--accent-hover);
+            transform: translateY(-1px);
+        }
 
-    function getEditor(){
-      return document.querySelector('#html, textarea[name="html"], #articleContent, #content, [data-role="editor"], textarea');
-    }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
 
-    async function uploadImage(file){
-      const fd = new FormData();
-      fd.append('image', file);
-      const res = await fetch(`/admin/articles/${encodeURIComponent(shoeId)}/image`, { method:'POST', body: fd });
-      if (!res.ok) throw new Error('upload failed');
-      const data = await res.json();
-      if (!data.ok || !data.url) throw new Error(data.msg || 'invalid response');
-      return data.url;
-    }
+        .btn-secondary {
+            background-color: transparent;
+            color: var(--text-main);
+            border: 1px solid var(--border-color);
+        }
 
-    function insertAtCursor(el, html){
-      if (!el) return;
-      if (el instanceof HTMLTextAreaElement || el.tagName === 'TEXTAREA') {
-        const start = el.selectionStart ?? el.value.length;
-        const end = el.selectionEnd ?? el.value.length;
-        const before = el.value.slice(0, start);
-        const after = el.value.slice(end);
-        el.value = before + html + after;
-        const pos = start + html.length;
-        el.selectionStart = el.selectionEnd = pos;
-        el.focus();
-      } else if (el.isContentEditable) {
-        document.execCommand('insertHTML', false, html);
-        el.focus();
-      } else {
-        const ta = document.querySelector('textarea');
-        if (ta) insertAtCursor(ta, html);
-      }
-    }
+        .btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+            border-color: var(--text-muted);
+        }
 
-    btn && btn.addEventListener('click', () => input && input.click());
-    input && input.addEventListener('change', async (e) => {
-      const file = e.target.files && e.target.files[0];
-      if (!file) return;
-      try {
-        const url = await uploadImage(file);
-        const tag = `\n<img src="${url}" alt="" loading="lazy">\n`;
-        const editor = getEditor();
-        insertAtCursor(editor, tag);
-        alert('画像を挿入しました');
-      } catch (err) {
-        console.error(err);
-        alert('画像のアップロードに失敗しました');
-      } finally {
-        e.target.value = '';
-      }
-    });
-  })();
-  </script>
+        /* メインコンテナ（左右分割） */
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            flex: 1;
+            overflow: hidden;
+            background-color: var(--bg-main);
+        }
 
-  <!-- 既存のuploadImageを上書き・堅牢化 -->
-  <script>
-  (async function strengthenUpload(){
-    function parseMaybeJSON(text){
-      try { return JSON.parse(text); } catch(_) { return null; }
-    }
-    // 最初のブロックにあるuploadImageを上書き
-    const firstUpload = window.uploadImage;
-    window.uploadImage = async function(file){
-      const fd = new FormData();
-      fd.append('image', file);
-      const res = await fetch(`/admin/articles/${encodeURIComponent('<%= shoeId %>')}/image`, { method:'POST', body: fd });
-      const text = await res.text();
-      const data = parseMaybeJSON(text) || { ok:false, msg:text.slice(0,200) };
-      if (!res.ok || !data.ok || !data.url) {
-        const msg = data.msg || data.error || `HTTP ${res.status}`;
-        throw new Error(msg);
-      }
-      return data.url;
-    }
-  })();
-  </script>
+        /* 左側：エディターペイン */
+        .editor-pane {
+            display: flex;
+            flex-direction: column;
+            border-right: 1px solid var(--border-color);
+            position: relative;
+            height: 100%;
+        }
 
-  <!-- 下のブロック専用のuploadImageも堅牢化 -->
-  <script>
-  (function(){
-    function parseMaybeJSON(text){
-      try { return JSON.parse(text); } catch(_) { return null; }
-    }
-    const shoeId = '<%= shoeId %>';
-    async function robustUpload(file){
-      const fd = new FormData();
-      fd.append('image', file);
-      const res = await fetch(`/admin/articles/${encodeURIComponent(shoeId)}/image`, { method:'POST', body: fd });
-      const text = await res.text();
-      const data = parseMaybeJSON(text) || { ok:false, msg:text.slice(0,200) };
-      if (!res.ok || !data.ok || !data.url) {
-        const msg = data.msg || data.error || `HTTP ${res.status}`;
-        throw new Error(msg);
-      }
-      return data.url;
-    }
-    // 既存関数を差し替え
-    window.uploadImage = robustUpload;
-  })();
-  </script>
-</body></html>
+        .editor-header {
+            background-color: rgba(30, 41, 59, 0.4);
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .editor-container {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        textarea#markdownEditor {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: var(--bg-editor);
+            color: #e2e8f0;
+            font-family: var(--font-mono);
+            font-size: 15px;
+            line-height: 1.6;
+            padding: 24px;
+            resize: none;
+            outline: none;
+            tab-size: 4;
+            overflow-y: auto;
+        }
+
+        /* 右側：プレビューペイン */
+        .preview-pane {
+            display: flex;
+            flex-direction: column;
+            background-color: #f8fafc; /* 公開ページと同じ背景色 */
+            height: 100%;
+        }
+
+        .preview-header {
+            background-color: var(--bg-card);
+            border-bottom: 1px solid var(--border-color);
+            padding: 8px 16px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 38px;
+        }
+
+        .preview-iframe {
+            flex: 1;
+            width: 100%;
+            border: none;
+            background-color: white;
+        }
+
+        /* トースト通知 */
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 24px;
+            background-color: var(--accent-success);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            box-shadow: var(--shadow);
+            font-weight: 500;
+            z-index: 100;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .toast.error {
+            background-color: var(--accent-error);
+        }
+
+        /* ショートカットキー案内 */
+        .shortcuts-tip {
+            display: flex;
+            gap: 12px;
+        }
+
+        .shortcut-key {
+            background: rgba(255,255,255,0.08);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 1px 5px;
+            border-radius: 4px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+        }
+
+        /* レスポンシブ対応 */
+        @media (max-width: 1024px) {
+            .main-container {
+                grid-template-columns: 1fr;
+                grid-template-rows: 1fr 1fr;
+            }
+            .editor-pane {
+                border-right: none;
+                border-bottom: 1px solid var(--border-color);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ヘッダー -->
+    <header>
+        <div class="header-title-area">
+            <h1>📝 Markdown 記事エディタ</h1>
+            <span class="file-badge">data/articles/<%= shoeId %>.md</span>
+            <span class="source-badge">読み込み元: <%= dataFormat %></span>
+        </div>
+        <div class="header-actions">
+            <a href="/shoes/<%= shoeId %>" target="_blank" class="btn btn-secondary">
+                👁️ 本番公開ページ
+            </a>
+            <button id="saveBtn" class="btn btn-primary">
+                💾 変更を保存
+            </button>
+        </div>
+    </header>
+
+    <!-- メイン -->
+    <main class="main-container">
+        <!-- 左側：エディタ -->
+        <div class="editor-pane">
+            <div class="editor-header">
+                <span>編集エリア（Markdown 形式で記述）</span>
+                <div class="shortcuts-tip">
+                    <span>保存: <span class="shortcut-key">Ctrl + S</span></span>
+                </div>
+            </div>
+            <div class="editor-container">
+                <textarea id="markdownEditor" spellcheck="false" placeholder="# 記事タイトル&#10;&#10;ここにレビューを記入してください..."><%= markdownContent %></textarea>
+            </div>
+        </div>
+
+        <!-- 右側：プレビュー -->
+        <div class="preview-pane">
+            <div class="preview-header">
+                <span>プレビュー（保存後に自動更新）</span>
+                <button id="refreshPreviewBtn" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.8rem; text-decoration:underline;">
+                    再読み込み
+                </button>
+            </div>
+            <iframe id="previewIframe" class="preview-iframe" src="/shoes/<%= shoeId %>"></iframe>
+        </div>
+    </main>
+
+    <!-- トースト通知 -->
+    <div id="toast" class="toast">保存しました！</div>
+
+    <script>
+        const editor = document.getElementById('markdownEditor');
+        const saveBtn = document.getElementById('saveBtn');
+        const previewIframe = document.getElementById('previewIframe');
+        const refreshPreviewBtn = document.getElementById('refreshPreviewBtn');
+        const toast = document.getElementById('toast');
+        const shoeId = '<%= shoeId %>';
+
+        // トースト表示関数
+        function showToast(message, isError = false) {
+            toast.textContent = message;
+            if (isError) {
+                toast.classList.add('error');
+            } else {
+                toast.classList.remove('error');
+            }
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // 保存処理
+        async function saveArticle() {
+            saveBtn.disabled = true;
+            saveBtn.textContent = '保存中...';
+
+            try {
+                const markdown = editor.value;
+                const response = await fetch(`/admin/articles/${encodeURIComponent(shoeId)}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ markdown }),
+                });
+
+                const result = await response.json();
+
+                if (response.ok && result.ok) {
+                    showToast('💾 記事を正常に保存しました！');
+                    // プレビューiframeをリロード
+                    previewIframe.contentWindow.location.reload();
+                } else {
+                    showToast(result.error || '保存に失敗しました。', true);
+                }
+            } catch (err) {
+                console.error(err);
+                showToast('通信エラーが発生しました。', true);
+            } finally {
+                saveBtn.disabled = false;
+                saveBtn.textContent = '💾 変更を保存';
+            }
+        }
+
+        // イベントリスナー
+        saveBtn.addEventListener('click', saveArticle);
+        refreshPreviewBtn.addEventListener('click', () => {
+            previewIframe.contentWindow.location.reload();
+        });
+
+        // ショートカットキー (Ctrl + S)
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                saveArticle();
+            }
+        });
+
+        // Tabキー入力のサポート（テキストエリア内でインデントできるようにする）
+        editor.addEventListener('keydown', (e) => {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                const start = editor.selectionStart;
+                const end = editor.selectionEnd;
+                editor.value = editor.value.substring(0, start) + "\t" + editor.value.substring(end);
+                editor.selectionStart = editor.selectionEnd = start + 1;
+            }
+        });
+    </script>
+</body>
+</html>

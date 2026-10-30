@@ -95,7 +95,7 @@ const defaultBlogs = [
     slug: 'oldspice',
     title: '【ランナー必見】Old Spiceデオドラントで走った後も"爽やかランナー"に',
     excerpt: 'ランニング後の大敵「汗とニオイ」――その不安を丸ごと減らしてくれたのが，アメリカ発のOld Spiceだった．実際に走る生活の中で効いた理由と使い分けをまとめた．',
-  image: '/img/blog-oldspice.jpg',
+  image: '/images/blog-oldspice.webp',
     category: 'GEAR',
     date: '2025-09-24'
   }
@@ -104,8 +104,17 @@ const blogsList = (typeof blogs !== 'undefined' && Array.isArray(blogs)) ? [...d
 %>
 <section class="section blog-section">
   <div class="container">
-    <h2>ランニングブログ</h2>
-    <p class="muted">役立つコラムやニュースをピックアップ</p>
+    <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+      <div>
+        <h2>ランニングブログ</h2>
+        <p class="muted">役立つコラムやニュースをピックアップ</p>
+      </div>
+      <% if (typeof user !== 'undefined' && user && user.isAdmin) { %>
+        <div style="white-space:nowrap">
+          <a href="/admin/blogs/new" class="btn brand">新規追加</a>
+        </div>
+      <% } %>
+    </div>
     <div class="blog-grid" style="margin-top:12px">
       <% blogsList.forEach(function(b){ %>
         <article class="blog-card">
@@ -122,6 +131,9 @@ const blogsList = (typeof blogs !== 'undefined' && Array.isArray(blogs)) ? [...d
               <div class="blog-meta">
                 <time datetime="<%= b.date %>"><%= new Date(b.date).toLocaleDateString('ja-JP') %></time>
               </div>
+            <% } %>
+            <% if (typeof user !== 'undefined' && user && user.isAdmin) { %>
+              <div style="margin-top:8px"><a href="/admin/blogs/<%= b.slug %>" class="btn">編集</a></div>
             <% } %>
           </div>
         </article>

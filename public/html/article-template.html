@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ブログテンプレート（固定フッターと画像追加）</title>
+  
+  <!-- CSSファイルの読み込み -->
+  <link rel="stylesheet" href="/css/article-template.css">
+</head>
+<body>
+  <div class="container">
+    <!-- 固定ヘッダー（ナビゲーションドロップダウン） -->
+    <header id="fixedHeader">
+        <!-- ★ 記事一覧ドロップダウン (階層化) -->
+        <div class="dropdown" id="articleDropdown" onclick="toggleDropdown(event)">
+            <span>📚 記事一覧 ▼</span>
+            <div class="dropdown-content" id="articleLinks">
+                <!-- 記事リストがJavaScriptで動的に生成される -->
+            </div>
+        </div>
+        
+        <!-- ページ内リンク（目次）ドロップダウン -->
+        <div class="dropdown" onclick="toggleDropdown(event)">
+            <span>🎯 ページ内目次 ▼</span>
+            <div class="dropdown-content" id="tocLinks">
+                <!-- 目次が自動生成される -->
+            </div>
+        </div>
+
+        <!-- 外部リンクドロップダウン -->
+        <div class="dropdown" onclick="toggleDropdown(event)">
+            <span>🔗 外部リンク ▼</span>
+            <div class="dropdown-content">
+                <a href="https://example.com" target="_blank" class="sub-item">公式サイト</a>
+                <a href="https://github.com" target="_blank" class="sub-item">GitHub</a>
+                <a href="https://twitter.com" target="_blank" class="sub-item">Twitter</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- メインコンテンツ -->
+    <main class="main-content" id="mainContent">
+      <!-- カーソル追従グローエフェクトを配置するコンテナ -->
+      <div class="cursor-glow">
+        <div class="glow-dot" id="glowDot"></div>
+      </div>
+      
+      <div class="wrapper">
+        
+        <!-- JSON読み込み機能 -->
+        <div class="json-loader">
+          <h3>📄 JSONファイルから記事データを読み込み</h3>
+          <div class="json-upload-area">
+            <input type="file" id="jsonFileInput" accept=".json" class="json-file-input">
+            <button onclick="loadJsonFile()" class="btn">読み込み</button>
+            <button onclick="downloadTemplate()" class="btn">テンプレートDL</button>
+          </div>
+          <p style="font-size:0.8rem;color:var(--muted);margin-top:0.5rem;">
+            JSONファイルを選択して「読み込み」ボタンを押すと、記事内容が自動で反映されます。
+          </p>
+        </div>
+
+        <header class="hero">
+          <h1 id="pageTitle" contenteditable="false" style="outline: none;">記事タイトルをここに入力</h1>
+          <div class="hero-actions">
+            <span class="chip" id="priceChip">💴 ¥未設定</span>
+            <span class="chip" id="weightChip">⚖️ 未設定</span>
+            <button id="editBtn" class="btn">編集</button>
+            <button id="saveBtn" class="btn">保存</button>
+          </div>
+        </header>
+
+        <!-- 記事の見出し画像セクション -->
+        <section id="hero-image-section">
+            <img class="hero-img" id="mainHeroImage" alt="記事の見出し画像" />
+            <div class="section-footer">
+                <button class="btn addHeroImg" type="button">見出し画像を追加</button>
+                <input type="file" accept="image/*" id="heroImgInput" style="display:none;">
+            </div>
+        </section>
+
+        <!-- 自動生成される目次 -->
+        <nav id="toc" class="toc-card"></nav>
+
+        <!-- LEAD セクション -->
+        <section id="lead" class="card">
+          <h2>リード</h2>
+          <p id="leadContent" contenteditable="false" style="outline: none;">ここにリード文を入力してください。ダブルクリックで編集できます。</p>
+          <img class="section-img" alt="Lead image" />
+          <div class="section-footer">
+            <button class="btn addImg" type="button">画像追加</button>
+            <input type="file" accept="image/*" class="imgInput" style="display:none;">
+          </div>
+        </section>
+
+        <!-- SPEC セクション -->
+        <section id="spec" class="card">
+          <h2>概要とスペック</h2>
+          <p id="specContent" contenteditable="false" style="outline: none;">ここにスペックの説明を書き換えてください。</p>
+          <div class="spec-chips" id="specChips">
+            <div class="spec" contenteditable="false" style="outline: none;">⚖️ 約250g</div>
+            <div class="spec" contenteditable="false" style="outline: none;">📏 ドロップ：8mm</div>
+            <div class="spec" contenteditable="false" style="outline: none;">📐 スタック：41.5/33.5mm</div>
+            <div class="spec" contenteditable="false" style="outline: none;">🧪 ミッドソール：FF BLAST MAX</div>
+            <div class="spec" contenteditable="false" style="outline: none;">🪭 プレート：非搭載</div>
+            <div class="spec" contenteditable="false" style="outline: none;">💴 価格：16,500〜19,000円</div>
+          </div>
+          <p class="sub" style="font-size:0.85rem;color:var(--muted);" contenteditable="false" style="outline: none;">※ 実測値はサイズ・個体で前後します。</p>
+          <img class="section-img" alt="Spec image" />
+          <div class="section-footer">
+            <button class="btn addImg" type="button">画像追加</button>
+            <input type="file" accept="image/*" class="imgInput" style="display:none;">
+          </div>
+        </section>
+
+        <!-- DESIGN × BIOMECH セクション -->
+        <section id="design-biomeech" class="card">
+          <h2>設計思想 × バイオメカ</h2>
+          <p id="designContent" contenteditable="false" style="outline: none;">ここに設計やバイオメカについて自由に書き換えてください。</p>
+          <img class="section-img" alt="Design image" />
+          <div class="section-footer">
+            <button class="btn addImg" type="button">画像追加</button>
+            <input type="file" accept="image/*" class="imgInput" style="display:none;">
+          </div>
+        </section>
+
+        <!-- IMPRESSIONS セクション -->
+        <section id="impressions" class="card">
+          <h2>実走インプレ</h2>
+          <p id="impressionsContent" contenteditable="false" style="outline: none;">ここに実走の感想を書き換えてください。</p>
+          <img class="section-img" alt="Impressions image" />
+          <div class="section-footer">
+            <button class="btn addImg" type="button">画像追加</button>
+            <input type="file" accept="image/*" class="imgInput" style="display:none;">
+          </div>
+        </section>
+
+        <!-- LIKES/DISLIKES セクション -->
+        <section id="likes-dislikes" class="card">
+          <h2>好きな点と惜しい点</h2>
+          <div class="split">
+            <div class="mini card" style="background:var(--card-soft);">
+              <span class="badge good">👍 好き！</span>
+              <p id="likesContent" contenteditable="false" style="outline: none;">好きなポイントを入力してください。</p>
+            </div>
+            <div class="mini card" style="background:var(--card-soft);">
+              <span class="badge bad">⚠️ 惜しい！</span>
+              <p id="dislikesContent" contenteditable="false" style="outline: none;">惜しいポイントを入力してください。</p>
+            </div>
+          </div>
+          <img class="section-img" alt="Likes/dislikes image" />
+          <div class="section-footer">
+            <button class="btn addImg" type="button">画像追加</button>
+            <input type="file" accept="image/*" class="imgInput" style="display:none;">
+          </div>
+        </section>
+
+        <!-- SCORES セクション -->
+        <section id="scores" class="card">
+          <h2>10項目評価</h2>
+          <div class="scores" id="scoresContainer" aria-live="polite">
+            <!-- スコアが動的に生成される -->
+          </div>
+          <img class="section-img" alt="Scores image" />
+          <div class="section-footer">
+            <button class="btn addImg" type="button">画像追加</button>
+            <input type="file" accept="image/*" class="imgInput" style="display:none;">
+          </div>
+        </section>
+
+        <!-- COMPARISON セクション -->
+        <section id="comparison" class="card">
+          <h2>ライバルシューズと比較</h2>
+          <!-- split クラスは CSS で grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)) に設定済み -->
+          <div class="split" id="comparisonContainer">
+            <!-- 比較項目が動的に生成される -->
+          </div>
+          <img class="section-img" alt="Comparison image" />
+          <div class="section-footer">
+            <button class="btn addImg" type="button">画像追加</button>
+            <input type="file" accept="image/*" class="imgInput" style="display:none;">
+          </div>
+        </section>
+
+        <!-- TIPS & LONGEVITY セクション -->
+        <section id="tips-longevity" class="card">
+          <h2>使いこなしTips＆寿命</h2>
+          <p id="tipsContent" contenteditable="false" style="outline: none;">ここにTipsや寿命に関するテキストを入力してください。</p>
+          <img class="section-img" alt="Tips image" />
+          <div class="section-footer">
+            <button class="btn addImg" type="button">画像追加</button>
+            <input type="file" accept="image/*" class="imgInput" style="display:none;">
+          </div>
+        </section>
+
+        <!-- SUMMARY セクション -->
+        <section id="summary" class="card">
+          <h2>まとめ</h2>
+          <p id="summaryContent" contenteditable="false" style="outline: none;">ここにまとめの文章を入力してください。</p>
+          <p class="sub" style="font-size:0.85rem;color:var(--muted);"><strong>要約</strong>：<span id="summaryShort" contenteditable="false" style="outline: none;">ここに要約を入力してください。</span></p>
+          <p class="hashtags" style="font-size:0.9rem;color:var(--muted);" id="hashtags" contenteditable="false" style="outline: none;">#タグ1 #タグ2 #タグ3</p>
+          <img class="section-img" alt="Summary image" />
+          <div class="section-footer">
+            <button class="btn addImg" type="button">画像追加</button>
+            <input type="file" accept="image/*" class="imgInput" style="display:none;">
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+  
+  <!-- 固定フッター（楽天＆Amazonボタン） -->
+  <footer id="fixedFooter">
+    <a href="https://example.com/rakuten" target="_blank" class="btn-market btn-rakuten" id="rakutenLink">
+      <span style="font-size: 1.2rem;">🛒</span> 楽天で探す
+    </a>
+    <a href="https://example.com/amazon" target="_blank" class="btn-market btn-amazon" id="amazonLink">
+      <span style="font-size: 1.2rem;">🛒</span> Amazonで探す
+    </a>
+  </footer>
+
+  <!-- JavaScriptファイルの読み込み -->
+  <script src="/js/article-template.js"></script>
+</body>
+</html>

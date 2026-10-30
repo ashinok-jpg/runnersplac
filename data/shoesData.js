@@ -250,6 +250,58 @@ hostComment : {
   rating: 3.9,
   brand: "ASICS",
   chartData: [5, 5, 3.5, 2.5, 4, 4, 3, 3.5, 4, 4],
+  performance: {
+    cushioning: {
+      score: 4.5,
+      comment: "厚みの割に沈み込みが素直で，着地の角を丸める．\"たわみ→復元\"の流れがテンポに合う",
+      source: "(Solereview, 2025-08-25)"
+    },
+    stability: {
+      score: 2.8,
+      comment: "直進は十分だが，強いコーナリングや横風では中足部が流れやすい",
+      source: "(RoadTrailRun, 2024-12-07)"
+    },
+    lightness: {
+      score: 4.7,
+      comment: "約224gで回しやすく，後半のケイデンス維持が楽．",
+      source: ""
+    },
+    valueForMoney: {
+      score: 4.0,
+      comment: "トレーニング〜レース前後を一足で賄える．寿命は使い方次第．",
+      source: ""
+    },
+    comfort: {
+      score: 4.0,
+      comment: "前足部に余裕がありストレスが少ないが，タンは対策が必要．",
+      source: ""
+    },
+    design: {
+      score: 4.2,
+      comment: "\"薄い\"見た目で速さを想起させるが，個人差あり．",
+      source: ""
+    },
+    breathability: {
+      score: 4.2,
+      comment: "軽量メッシュで体感は軽いが，真夏LSDでやや蒸れ（不確か）．",
+      source: ""
+    },
+    speed: {
+      score: 4.6,
+      comment: "閾値〜Mペースでの伸びが強み．最速域はプレート機が優位．",
+      source: ""
+    },
+    grip: {
+      score: 4.0,
+      comment: "ドライ良好．ウェットの白線・マンホールは注意．",
+      source: ""
+    },
+    durability: {
+      score: 3.3,
+      comment: "前足部・踵外側のラバー摩耗が速い個体あり．反発は持続傾向．",
+      source: ""
+    }
+  },
   buyUrl: "https://amzn.to/43SYV36"
 },
 {

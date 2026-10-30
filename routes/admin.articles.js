@@ -14,52 +14,75 @@ const fs = require('fs').promises;
 const path = require('path');
 // const DOMPurify = require('isomorphic-dompurify'); // 一時的にコメントアウト
 
-// ここは自分の認証に合わせて。req.user?.isAdmin を想定
-function requireAdmin(req, res, next){
-    console.log('=== requireAdmin middleware ===');
-    console.log('Request URL:', req.url);
-    console.log('Request Method:', req.method);
-    
-    try {
-      // 一時的に認証をスキップしてテスト
-      console.log('Skipping admin auth for testing...');
-      next();
-    } catch (error) {
-      console.error('requireAdmin error:', error);
-      next(error);
+const { requireAdmin, validateIdParam } = require('../lib/session');
+const { sanitizeArticleHtml } = require('../lib/sanitize');
+
+router.param('id', validateIdParam);
+router.param('shoeId', validateIdParam);
+
+// プレーンテキスト（Markdown/HTML）の生データを取得するヘルパー
+async function getRawArticleContent(docId) {
+  // 1. Markdown優先
+  try {
+    const mdPath = path.join(__dirname, '..', 'data', 'articles', `${docId}.md`);
+    const content = await fs.readFile(mdPath, 'utf-8');
+    return { content, format: 'markdown' };
+  } catch (e) {}
+
+  // 2. ローカルJSONのhtmlフィールド優先
+  try {
+    const jsonPath = path.join(__dirname, '..', 'data', 'articles', `${docId}.json`);
+    const data = await fs.readFile(jsonPath, 'utf-8');
+    const article = JSON.parse(data);
+    return { content: article.html || '', format: 'html-json' };
+  } catch (e) {}
+
+  // 3. ローカルHTML優先
+  try {
+    const htmlPath = path.join(__dirname, '..', 'public', 'articles', `${docId}.html`);
+    const content = await fs.readFile(htmlPath, 'utf-8');
+    return { content, format: 'html' };
+  } catch (e) {}
+
+  // 4. Firestore優先
+  try {
+    const snap = await db.collection('articles').doc(String(docId)).get();
+    if (snap.exists) {
+      return { content: snap.data().html || '', format: 'firestore-html' };
     }
-  }
-  
-// 編集フォーム
-router.get('/admin/articles/:shoeId', requireAdmin, async (req, res) => {
-  const id = String(req.params.shoeId);
-  const snap = await db.collection('articles').doc(id).get();
-  const doc = snap.exists ? snap.data() : { html:'', author:'', isDraft:true };
-  res.render('admin-article-edit', { shoeId: id, doc });
-});
+  } catch (e) {}
+
+  // 新規記事用テンプレート
+  const template = `# 新しい記事タイトル
+
+ここに商品の特徴やレビュー内容を記述してください。Markdownが使用可能です。
+
+## 特徴
+- 特徴1
+- 特徴2
+
+## スペック
+| 項目 | スペック |
+| --- | --- |
+| 重量 | g |
+| ドロップ | mm |
+`;
+  return { content: template, format: 'new' };
+}
 
 // GET /admin/articles/:id - 記事編集ページを表示
-router.get('/admin/articles/:id', requireAdmin, async (req, res) => {
+router.get('/admin/articles/:id', requireAdmin, async (req, res, next) => {
   try {
     const shoeId = req.params.id;
-    console.log('Loading article for editing:', shoeId);
+    const { content, format } = await getRawArticleContent(shoeId);
     
-    // 既存の記事を読み込み
-    let doc = { html: '', author: '', isDraft: false };
-    
-    try {
-      const jsonPath = path.join(__dirname, '..', 'data', 'articles', `${shoeId}.json`);
-      const data = await fs.readFile(jsonPath, 'utf-8');
-      doc = JSON.parse(data);
-      console.log('Loaded existing article:', jsonPath);
-    } catch (error) {
-      console.log('No existing article found, using defaults');
-    }
-    
-    res.render('admin-article-edit', { shoeId, doc });
-  } catch (error) {
-    console.error('Failed to load article editor:', error);
-    res.status(500).send('記事編集ページの読み込みに失敗しました: ' + error.message);
+    res.render('admin-article-edit', {
+      shoeId,
+      markdownContent: content,
+      dataFormat: format
+    });
+  } catch (err) {
+    next(err);
   }
 });
 
@@ -125,182 +148,97 @@ function wantsJSON(req) {
   return ctype.includes('application/json') || accept.includes('application/json') || xrw === 'xmlhttprequest';
 }
 
-// 保存（新規でも自動作成される）
-router.post('/admin/articles/:shoeId', requireAdmin, async (req, res) => {
-  try {
-    const id = String(req.params.shoeId);
-    const window = (new JSDOM('')).window;
-    const DOMPurify = createDOMPurify(window);
+// この古いルートは削除（下の新しいPOST /admin/articles/:idルートを使用）
 
-    const rawHtml = String(req.body.html || '');
-    // 後方互換のためのエイリアス（旧コードでhtmlを参照しても落ちないように）
-    const html = rawHtml;
-
-    // サニタイズ
-    const cleanHtml = basicSanitize(rawHtml);
-
-    const author = String(req.body.author || 'Host').slice(0,100);
-    const isDraft = req.body.isDraft === true || req.body.isDraft === 'on' || req.body.isDraft === 'true';
-
-    // Firestoreへ保存
-    await db.collection('articles').doc(id).set({
-      html: cleanHtml,
-      author,
-      isDraft,
-      updatedAt: admin.firestore.Timestamp.now()
-    }, { merge: true });
-
-    // JSONファイルとして保存（バックアップ用）
-    const jsonDir = path.join(__dirname, '..', 'data', 'articles');
-    await fs.mkdir(jsonDir, { recursive: true });
-    const jsonPath = path.join(jsonDir, `${id}.json`);
-    await fs.writeFile(jsonPath, JSON.stringify({
-      html: cleanHtml,
-      author,
-      isDraft,
-      updatedAt: new Date().toISOString()
-    }, null, 2), 'utf8');
-
-    // 静的HTMLファイルとして保存（表示用）
-    const articlesDir = path.join(__dirname, '..', 'public', 'articles');
-    await fs.mkdir(articlesDir, { recursive: true });
-    const htmlPath = path.join(articlesDir, `${id}.html`);
-
-    if (!isDraft) {
-      await fs.writeFile(htmlPath, cleanHtml, 'utf8');
-    } else {
-      try { await fs.unlink(htmlPath); } catch (_) {}
-    }
-
-    // レスポンス分岐
-    if (wantsJSON(req)) {
-      return res.json({ success: true, message: '保存完了', id, paths: { json: jsonPath, html: htmlPath } });
-    }
-    return res.redirect('/admin/articles/' + encodeURIComponent(id));
-  } catch (error) {
-    console.error('admin save error:', error);
-    if (wantsJSON(req)) {
-      return res.status(500).json({ success: false, error: '保存に失敗しました', message: error.message });
-    }
-    return res.status(500).send('保存に失敗しました: ' + error.message);
-  }
-});
-
-// POST /admin/articles/:id - 記事を保存
+// POST /admin/articles/:id - 記事を保存（Markdownファイルとして保存）
 router.post('/admin/articles/:id', requireAdmin, async (req, res) => {
-  console.log('=== POST route reached ===');
-  console.log('req.params.id:', req.params.id);
-  console.log('req.body:', req.body);
-  console.log('req.headers:', req.headers);
-  
   try {
     const shoeId = req.params.id;
+    const { markdown } = req.body;
     
-    console.log('=== 記事保存開始 ===');
-    console.log('shoeId:', shoeId);
-    console.log('req.body exists:', !!req.body);
-    
-    // req.bodyが存在しない場合のエラー処理
-    if (!req.body) {
-      console.error('req.body is undefined or null');
-      return res.status(400).json({ error: 'リクエストボディが空です。フォームが正しく送信されていません。' });
+    if (markdown === undefined || markdown === null) {
+      return res.status(400).json({ ok: false, error: 'コンテンツが空です' });
     }
     
-    // リクエストボディからhtmlを取得
-    const { html, author, isDraft } = req.body;
-    
-    console.log('Extracted values:');
-    console.log('- html exists:', !!html);
-    console.log('- html type:', typeof html);
-    console.log('- html content:', html);
-    console.log('- author:', author);
-    console.log('- isDraft:', isDraft);
-    
-    if (!html) {
-      console.log('HTML is missing or empty');
-      return res.status(400).json({ error: 'htmlが必要です' });
-    }
-
-    // サニタイズ
-    console.log('Starting sanitization...');
-    const cleanHtml = basicSanitize(html);
-    console.log('Sanitization completed');
-    
-    const doc = {
-      html: cleanHtml,
-      author: author || '',
-      isDraft: isDraft === true || isDraft === 'on',
-      updatedAt: new Date().toISOString()
-    };
-    
-    console.log('Document object created:', doc);
-
-    // JSONファイルとして保存（バックアップ用）
-    const jsonDir = path.join(__dirname, '..', 'data', 'articles');
-    console.log('JSONディレクトリ:', jsonDir);
-    await fs.mkdir(jsonDir, { recursive: true });
-    const jsonPath = path.join(jsonDir, `${shoeId}.json`);
-    await fs.writeFile(jsonPath, JSON.stringify(doc, null, 2));
-    console.log('JSON保存完了:', jsonPath);
-
-    // 静的HTMLファイルとして保存（表示用）
-    const articlesDir = path.join(__dirname, '..', 'public', 'articles');
-    console.log('HTMLディレクトリ:', articlesDir);
+    const articlesDir = path.join(__dirname, '..', 'data', 'articles');
+    // ディレクトリ作成
     await fs.mkdir(articlesDir, { recursive: true });
-    const htmlPath = path.join(articlesDir, `${shoeId}.html`);
-    console.log('HTMLパス:', htmlPath);
     
-    // 下書きでない場合のみ静的HTMLを生成
-    if (!doc.isDraft) {
-      await fs.writeFile(htmlPath, cleanHtml, 'utf-8');
-      console.log('HTML保存完了:', htmlPath);
-    } else {
-      // 下書きに変更した場合は既存のHTMLファイルを削除
-      try {
-        await fs.unlink(htmlPath);
-        console.log('HTML削除完了:', htmlPath);
-      } catch (e) {
-        console.log('HTML削除スキップ（ファイル無し）:', htmlPath);
-      }
-    }
-
-    console.log('=== 記事保存完了 ===');
-    res.json({ success: true, message: '保存完了', paths: { json: jsonPath, html: htmlPath } });
+    const mdPath = path.join(articlesDir, `${shoeId}.md`);
+    await fs.writeFile(mdPath, markdown, 'utf-8');
     
-  } catch (error) {
-    console.error('記事保存エラー:', error);
-    console.error('Error stack:', error.stack);
-    console.error('Error name:', error.name);
-    console.error('Error message:', error.message);
-    
-    // JSONエラーレスポンスを確実に返す
-    try {
-      if (!res.headersSent) {
-        res.status(500).json({ 
-          error: '保存に失敗しました: ' + error.message,
-          details: error.stack 
-        });
-      }
-    } catch (responseError) {
-      console.error('Error sending response:', responseError);
-    }
+    console.log(`[articles] ✅ Markdown保存成功: ${mdPath}`);
+    res.json({ ok: true, message: '記事をMarkdownとして保存しました！' });
+  } catch (err) {
+    console.error('[articles] Markdown保存エラー:', err);
+    res.status(500).json({ ok: false, error: err.message });
   }
 });
 
-// 簡易サニタイズ関数（本格的なものではないが、テスト用）
-function basicSanitize(htmlContent) {
-  if (!htmlContent) return '';
-  // 一時的にサニタイズを無効にして、ファイル保存テストを優先
-  return htmlContent;
-  
-  // 後で有効にする場合のコード
-  /*
-  return htmlContent
-    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
-    .replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '')
-    .replace(/javascript:/gi, '')
-    .replace(/on\w+\s*=/gi, '');
-  */
-}
+// --- ブログ編集ルート（admin/blogs） ---
+// 新規作成用ルート
+router.get('/admin/blogs/new', requireAdmin, async (req, res) => {
+  try {
+    const id = 'new';
+    const doc = { title:'', slug:'', excerpt:'', author:'', category:'', html:'', isDraft:true };
+    res.render('admin-blog-edit', { blogId: id, doc });
+  } catch (e) {
+    console.error('Failed to open new blog editor:', e);
+    res.status(500).send('ロード失敗');
+  }
+});
+
+// GET /admin/blogs/:id
+router.get('/admin/blogs/:id', requireAdmin, async (req, res) => {
+  const id = String(req.params.id);
+  try {
+    const jsonPath = path.join(__dirname, '..', 'data', 'blogs', `${id}.json`);
+    let doc = { title:'', slug:'', excerpt:'', author:'', category:'', html:'', isDraft:true };
+    try { const txt = await fs.readFile(jsonPath,'utf8'); doc = JSON.parse(txt); } catch(_){}
+    res.render('admin-blog-edit', { blogId: id, doc });
+  } catch (e) {
+    console.error('Failed to open blog editor:', e);
+    res.status(500).send('ロード失敗');
+  }
+});
+
+// POST /admin/blogs/:id
+router.post('/admin/blogs/:id', requireAdmin, async (req, res) => {
+  try {
+    const id = String(req.params.id);
+    const { title, slug, excerpt, author, category, isDraft, html } = req.body;
+    const doc = { title, slug, excerpt, author, category, isDraft: !!isDraft, html: sanitizeArticleHtml(html), updatedAt: new Date().toISOString() };
+    const jsonDir = path.join(__dirname, '..', 'data', 'blogs');
+    await fs.mkdir(jsonDir, { recursive: true });
+    const jsonPath = path.join(jsonDir, `${id}.json`);
+    await fs.writeFile(jsonPath, JSON.stringify(doc, null, 2), 'utf8');
+    const pubDir = path.join(__dirname, '..', 'public', 'blogs');
+    await fs.mkdir(pubDir, { recursive: true });
+    const htmlPath = path.join(pubDir, `${id}.html`);
+    if (!doc.isDraft) await fs.writeFile(htmlPath, doc.html, 'utf8'); else try{ await fs.unlink(htmlPath) }catch(_){}
+    return res.json({ ok:true, paths:{ json: jsonPath, html: htmlPath } });
+  } catch (e) {
+    console.error('Save blog failed:', e);
+    return res.status(500).json({ ok:false, error: e.message });
+  }
+});
+
+// POST /admin/blogs/:id/image
+router.post('/admin/blogs/:id/image', requireAdmin, upload.single('image'), async (req, res)=>{
+  try{
+    if(!req.file) return res.status(400).json({ ok:false, msg:'no file' });
+    const mime = req.file.mimetype;
+    if(!/^image\/(png|jpe?g|webp|gif)$/i.test(mime)) return res.status(400).json({ ok:false, msg:'invalid mime' });
+    const ext = mime.split('/')[1].replace('jpeg','jpg');
+    const uploadsDir = path.join(__dirname, '..', 'public', 'uploads', 'blogs', String(req.params.id));
+    await fs.mkdir(uploadsDir, { recursive:true });
+    const fileName = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const localPath = path.join(uploadsDir, fileName);
+    await fs.writeFile(localPath, req.file.buffer);
+    const url = `/uploads/blogs/${encodeURIComponent(String(req.params.id))}/${encodeURIComponent(fileName)}`;
+    return res.json({ ok:true, url });
+  }catch(e){ console.error('blog image upload failed:', e); return res.status(500).json({ ok:false, msg:e.message }); }
+});
+
 
 module.exports = router;

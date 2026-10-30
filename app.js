@@ -3,19 +3,61 @@ const express = require('express');
 const path = require('path');
 const cookieParser = require('cookie-parser');
 const fs = require('fs').promises;
-const DOMPurify = require('dompurify');
 
 const app = express();
 
 // ----- 基本ミドルウェア（順序大事） -----
-app.use(express.json());
+// Firestoreデータクリーンアップ関数
+function cleanFirestoreData(data) {
+  const cleaned = {};
+  
+  for (const [key, value] of Object.entries(data)) {
+    if (value === undefined || value === null) {
+      continue; // undefined/nullをスキップ
+    }
+    
+    if (typeof value === 'object' && !Array.isArray(value) && !(value instanceof Date)) {
+      // ネストされたオブジェクトを再帰的にクリーンアップ
+      const nestedCleaned = cleanFirestoreData(value);
+      if (Object.keys(nestedCleaned).length > 0) {
+        cleaned[key] = nestedCleaned;
+      }
+    } else if (Array.isArray(value)) {
+      // 配列の場合
+      const cleanedArray = value.filter(item => {
+        if (item === null || item === undefined) return false;
+        if (typeof item === 'object' && !(item instanceof Date)) {
+          // 配列内のオブジェクトもクリーンアップ
+          return Object.keys(cleanFirestoreData(item)).length > 0;
+        }
+        return true;
+      }).map(item => {
+        if (typeof item === 'object' && !(item instanceof Date)) {
+          return cleanFirestoreData(item);
+        }
+        return item;
+      });
+      
+      if (cleanedArray.length > 0) {
+        cleaned[key] = cleanedArray;
+      }
+    } else {
+      // プリミティブ値
+      cleaned[key] = value;
+    }
+  }
+  
+  return cleaned;
+}
+
+app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // セッション → ユーザー展開（これを先に）
-const { sessionMiddleware, exposeUser } = require('./lib/session');
+const { sessionMiddleware, requireAdmin, validateIdParam } = require('./lib/session');
 sessionMiddleware(app);
-app.use(exposeUser);
+app.param('id', validateIdParam);
 
 app.use((req, _res, next)=>{
   console.log('[DBG] cookies=', req.headers.cookie || '(none)');
@@ -32,7 +74,10 @@ app.use((req, res, next) => {
 
 // 静的ファイル
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/firebase', express.static(path.join(__dirname, 'firebase')));
+// firebase/ には serviceAccountKey.json があるのでフォルダごと公開しない。クライアント設定だけ配信
+app.get('/firebase/config.js', (_req, res) => {
+  res.type('application/javascript').sendFile(path.join(__dirname, 'firebase', 'config.js'));
+});
 
 // 静的ファイル配信（記事HTML用）
 app.use('/articles', express.static(path.join(__dirname, 'public', 'articles')));
@@ -64,6 +109,7 @@ app.use('/', require('./routes/wishlist'));
 // 認証や管理画面（セッション後に）
 app.use('/', require('./routes/auth'));
 app.use('/', require('./routes/admin.articles'));
+app.use('/', require('./routes/template'));
 
 app.get('/__set_test_cookie', (req, res) => {
   res.cookie('__session_test', 'hello', {
@@ -110,70 +156,10 @@ app.get('/blog/oldspice', (req, res) => {
 app.get('/__health', (_req,res)=>res.json({ok:true}));
 
 
-// POST /admin/articles/:id - 記事を保存
-app.post('/admin/articles/:id', async (req, res) => {
-  try {
-    const shoeId = req.params.id;
-    const { html, author, isDraft } = req.body;
-    
-    console.log('=== 記事保存開始 ===');
-    console.log('shoeId:', shoeId);
-    console.log('isDraft:', isDraft);
-    console.log('html length:', html ? html.length : 0);
-    
-    if (!html) {
-      return res.status(400).json({ error: 'htmlが必要です' });
-    }
-
-    // サニタイズ
-    const cleanHtml = html; // 一時的にサニタイズを無効化
-    
-    const doc = {
-      html: cleanHtml,
-      author: author || '',
-      isDraft: isDraft === 'on',
-      updatedAt: new Date().toISOString()
-    };
-
-    // JSONファイルとして保存（バックアップ用）
-    const jsonDir = path.join(__dirname, 'data', 'articles');
-    console.log('JSONディレクトリ:', jsonDir);
-    await fs.mkdir(jsonDir, { recursive: true });
-    const jsonPath = path.join(jsonDir, `${shoeId}.json`);
-    await fs.writeFile(jsonPath, JSON.stringify(doc, null, 2));
-    console.log('JSON保存完了:', jsonPath);
-
-    // 静的HTMLファイルとして保存（表示用）
-    const articlesDir = path.join(__dirname, 'public', 'articles');
-    console.log('HTMLディレクトリ:', articlesDir);
-    await fs.mkdir(articlesDir, { recursive: true });
-    const htmlPath = path.join(articlesDir, `${shoeId}.html`);
-    console.log('HTMLパス:', htmlPath);
-    
-    // 下書きでない場合のみ静的HTMLを生成
-    if (!doc.isDraft) {
-      await fs.writeFile(htmlPath, cleanHtml, 'utf-8');
-      console.log('HTML保存完了:', htmlPath);
-    } else {
-      // 下書きに変更した場合は既存のHTMLファイルを削除
-      try {
-        await fs.unlink(htmlPath);
-        console.log('HTML削除完了:', htmlPath);
-      } catch (e) {
-        console.log('HTML削除スキップ（ファイル無し）:', htmlPath);
-      }
-    }
-
-    console.log('=== 記事保存完了 ===');
-    res.json({ success: true, message: '保存完了', paths: { json: jsonPath, html: htmlPath } });
-  } catch (error) {
-    console.error('記事保存エラー:', error);
-    res.status(500).json({ error: '保存に失敗しました: ' + error.message });
-  }
-});
+// POST /admin/articles/:id は routes/admin.articles.js で処理される
 
 // テスト用：記事ファイルの存在確認
-app.get('/admin/articles/:id/check', async (req, res) => {
+app.get('/admin/articles/:id/check', requireAdmin, async (req, res) => {
   try {
     const shoeId = req.params.id;
     const articlesDir = path.join(__dirname, 'public', 'articles');
@@ -228,30 +214,397 @@ app.post('/test-post', (req, res) => {
   res.json({ received: req.body, time: new Date().toISOString() });
 });
 
-// GET /admin/articles/:id - 記事編集ページを表示
-app.get('/admin/articles/:id', async (req, res) => {
+// 記事保存エンドポイント（管理画面用）
+app.post('/api/articles/:id', requireAdmin, async (req, res) => {
   try {
-    const shoeId = req.params.id;
-    console.log('Loading article for editing:', shoeId);
+    const { id } = req.params;
+    console.log('=== 記事保存リクエスト受信（app.js） ===');
+    console.log('記事ID:', id);
+    console.log('リクエストボディサイズ:', JSON.stringify(req.body).length, 'bytes');
+    console.log('HTMLサイズ:', req.body.html ? req.body.html.length : 0, 'bytes');
     
-    // 既存の記事を読み込み
-    let doc = { html: '', author: '', isDraft: false };
+    const { html, category, author, isDraft, jsonData, title } = req.body;
     
-    try {
-      const jsonPath = path.join(__dirname, 'data', 'articles', `${shoeId}.json`);
-      const data = await fs.readFile(jsonPath, 'utf-8');
-      doc = JSON.parse(data);
-      console.log('Loaded existing article:', jsonPath);
-    } catch (error) {
-      console.log('No existing article found, using defaults');
+    if (!html) {
+      return res.status(400).json({ success: false, message: 'HTMLコンテンツが必要です' });
     }
     
-    res.render('admin-article-edit', { shoeId, doc });
+    const articlePath = path.join(__dirname, 'public', 'articles', `${id}.html`);
+    const jsonPath = path.join(__dirname, 'data', 'articles', `${id}.json`);
+    
+    // JSONディレクトリを作成
+    await fs.mkdir(path.dirname(jsonPath), { recursive: true });
+
+    // JSONデータを準備（構造化データがあればそれを使用、なければ基本データ）
+    const baseArticleData = jsonData ? {
+      ...jsonData,
+      category: category || jsonData.manufacturer || '',
+      author: author || 'Admin Editor',
+      isDraft: isDraft === 'true' || isDraft === true || isDraft === 'on',
+      updatedAt: new Date().toISOString(),
+      // 画像データが含まれていることを確認
+      images: jsonData.images || [],
+      heroImage: jsonData.heroImage || '',
+      sectionImages: jsonData.sectionImages || {}
+    } : {
+      category: category || '',
+      author: author || 'Admin Editor',
+      isDraft: isDraft === 'true' || isDraft === true || isDraft === 'on',
+      title: title || '',
+      updatedAt: new Date().toISOString(),
+      images: [],
+      heroImage: '',
+      sectionImages: {}
+    };
+
+    // HTML生成: shoe-detail.ejsテンプレートからHTMLを生成
+    let generatedHtml = html;
+    if (!generatedHtml || generatedHtml.trim().length < 100) {
+      try {
+        console.log('EJSテンプレートからHTMLを生成中...');
+        console.log('テンプレートに渡すデータ - images:', baseArticleData.images?.length || 0);
+        console.log('テンプレートに渡すデータ - heroImage:', baseArticleData.heroImage ? '有り' : '無し');
+        
+        // EJSテンプレートからHTMLを生成（Express appを使用）
+        generatedHtml = await new Promise((resolve, reject) => {
+          // Express appからrenderメソッドを取得
+          const app = res.app || req.app;
+          if (!app) {
+            reject(new Error('Express app not available'));
+            return;
+          }
+          
+          app.render('shoe-detail', baseArticleData, (err, html) => {
+            if (err) {
+              console.error('EJS render error:', err);
+              reject(err);
+            } else {
+              resolve(html);
+            }
+          });
+        });
+        
+        console.log('EJSからのHTML生成完了 (length:', generatedHtml.length, ')');
+      } catch (ejsError) {
+        console.error('EJSテンプレート生成エラー:', ejsError);
+        generatedHtml = html || '<p>HTML生成エラー</p>';
+      }
+    }
+
+    // 最終的な記事データにHTMLを追加
+    const articleData = {
+      ...baseArticleData,
+      html: generatedHtml
+    };
+
+    // デバッグ: 保存されるデータの内容を確認
+    console.log('保存されるarticleDataの主要項目:');
+    console.log('- title:', articleData.title);
+    console.log('- comparison length:', articleData.comparison ? articleData.comparison.length : 'undefined');
+    console.log('- tips length:', articleData.tips ? articleData.tips.length : 'undefined');
+    console.log('- images:', articleData.images ? 'あり' : 'なし');
+    console.log('- scores length:', articleData.scores ? articleData.scores.length : 'undefined');
+    
+    await fs.writeFile(jsonPath, JSON.stringify(articleData, null, 2), 'utf8');
+    
+    // HTMLファイルをpublic/articlesフォルダに保存（常に実行）
+    let htmlSaved = false;
+    
+    if (generatedHtml && generatedHtml.trim()) {
+      try {
+        // public/articlesディレクトリを作成
+        await fs.mkdir(path.dirname(articlePath), { recursive: true });
+        await fs.writeFile(articlePath, generatedHtml, 'utf8');
+        htmlSaved = true;
+        console.log(`HTMLファイルをpublic/articlesに保存: ${articlePath}`);
+      } catch (htmlError) {
+        console.error('HTMLファイル保存エラー:', htmlError);
+      }
+    }
+    
+    console.log(`記事データが保存されました: ${jsonPath}`);
+    if (htmlSaved) {
+      console.log(`HTMLファイルをpublic/articlesに保存完了: ${articlePath}`);
+    }
+    
+    // Firestoreにも保存（優先的に保存）
+    let firestoreSuccess = false;
+    let firestoreError = null;
+    try {
+      const { db } = require('./firebase/admin');
+      console.log('Firestoreへの保存を開始...');
+      
+      // Firestoreへの保存データを準備
+      const firestoreData = {
+        ...articleData,
+        updatedAt: new Date(),
+        createdAt: new Date() // 新規作成時のみ設定される
+      };
+      
+      // Firestoreでサポートされていないデータ型をクリーンアップ
+      if (firestoreData.images) {
+        // imagesが配列または文字列でない場合は削除
+        if (Array.isArray(firestoreData.images)) {
+          // 配列の場合、文字列のみを保持
+          firestoreData.images = firestoreData.images.filter(img => 
+            typeof img === 'string' || (typeof img === 'object' && img !== null && typeof img.url === 'string')
+          ).map(img => typeof img === 'string' ? img : img.url);
+        } else if (typeof firestoreData.images === 'object') {
+          // オブジェクトの場合は削除
+          delete firestoreData.images;
+          console.log('⚠️ 複雑なimagesオブジェクトを削除しました');
+        }
+      }
+      
+      // その他の問題のあるフィールドをクリーンアップ
+      const cleanData = cleanFirestoreData(firestoreData);
+      
+      console.log('クリーンアップ後のデータサイズ:', JSON.stringify(cleanData).length, 'bytes');
+      
+      // 既存のドキュメントがある場合はcreatedAtを保持
+      try {
+        const existingDoc = await db.collection('articles').doc(id).get();
+        if (existingDoc.exists && existingDoc.data().createdAt) {
+          cleanData.createdAt = existingDoc.data().createdAt; // 既存の作成日時を保持
+          console.log('既存記事を更新します');
+        } else {
+          console.log('新規記事を作成します');
+        }
+      } catch (checkError) {
+        console.warn('既存記事チェックでエラー:', checkError.message);
+      }
+      
+      await db.collection('articles').doc(id).set(cleanData, { merge: true });
+      firestoreSuccess = true;
+      console.log(`✅ Firestoreに保存完了: articles/${id}`);
+      console.log('保存されたデータ:', {
+        hasHtml: !!cleanData.html,
+        htmlLength: cleanData.html?.length || 0,
+        isDraft: cleanData.isDraft,
+        hasJsonData: !!cleanData.jsonData
+      });
+    } catch (err) {
+      firestoreError = err;
+      console.error('❌ Firestore保存エラー:', err);
+      console.error('エラー詳細:', err.message);
+      // Firestoreエラーでも続行
+    }
+    
+    // 保存されたファイルが存在するかチェック
+    const jsonExists = await fs.access(jsonPath).then(() => true).catch(() => false);
+    const htmlExists = await fs.access(articlePath).then(() => true).catch(() => false);
+    
+    res.json({ 
+      success: true, 
+      message: htmlSaved && firestoreSuccess ? 
+        'public/articlesとFirestoreの両方に保存しました！' :
+        htmlSaved ? 'public/articlesに保存しました（Firestore保存エラー）' :
+        firestoreSuccess ? 'Firestoreに保存しました（HTML生成なし）' :
+        '記事データを保存しました（一部エラー）',
+      paths: {
+        json: `/data/articles/${id}.json`,
+        html: htmlSaved ? `/articles/${id}.html` : null,
+        publicHtml: htmlSaved ? `public/articles/${id}.html` : null
+      },
+      timestamp: new Date().toISOString(),
+      saved: {
+        json: jsonExists,
+        firestore: firestoreSuccess,
+        html: htmlSaved,
+        isDraft: articleData.isDraft
+      },
+      errors: {
+        firestore: firestoreError ? firestoreError.message : null
+      }
+    });
   } catch (error) {
-    console.error('Failed to load article editor:', error);
-    res.status(500).send('記事編集ページの読み込みに失敗しました: ' + error.message);
+    console.error('記事保存エラー（app.js）:', error);
+    res.status(500).json({ 
+      success: false, 
+      message: '保存に失敗しました: ' + error.message 
+    });
   }
 });
+
+// テスト用エンドポイント（管理画面用）
+app.get('/api/test', (req, res) => {
+  res.json({ 
+    message: 'Server is running', 
+    timestamp: new Date().toISOString(),
+    server: 'app.js (main server)'
+  });
+});
+
+// 記事確認エンドポイント（デバッグ用）
+app.get('/api/articles/:id/status', requireAdmin, async (req, res) => {
+  try {
+    const { id } = req.params;
+    const result = {
+      articleId: id,
+      sources: {
+        firestore: null,
+        localJson: null,
+        staticHtml: null
+      }
+    };
+    
+    // Firestore確認
+    try {
+      const { db } = require('./firebase/admin');
+      const snap = await db.collection('articles').doc(id).get();
+      result.sources.firestore = {
+        exists: snap.exists,
+        data: snap.exists ? {
+          hasHtml: !!(snap.data()?.html),
+          htmlLength: (snap.data()?.html || '').length,
+          isDraft: snap.data()?.isDraft,
+          updatedAt: snap.data()?.updatedAt?.toDate?.()?.toISOString()
+        } : null
+      };
+    } catch (error) {
+      result.sources.firestore = { error: error.message };
+    }
+    
+    // ローカルJSON確認
+    try {
+      const jsonPath = path.join(__dirname, 'data', 'articles', `${id}.json`);
+      const data = await fs.readFile(jsonPath, 'utf-8');
+      const article = JSON.parse(data);
+      result.sources.localJson = {
+        exists: true,
+        hasHtml: !!article.html,
+        htmlLength: (article.html || '').length,
+        isDraft: article.isDraft,
+        updatedAt: article.updatedAt
+      };
+    } catch (error) {
+      result.sources.localJson = { exists: false, error: error.message };
+    }
+    
+    // 静的HTML確認
+    try {
+      const htmlPath = path.join(__dirname, 'public', 'articles', `${id}.html`);
+      const html = await fs.readFile(htmlPath, 'utf-8');
+      result.sources.staticHtml = {
+        exists: true,
+        htmlLength: html.length
+      };
+    } catch (error) {
+      result.sources.staticHtml = { exists: false, error: error.message };
+    }
+    
+    res.json(result);
+  } catch (error) {
+    console.error('記事確認エラー:', error);
+    res.status(500).json({ error: error.message });
+  }
+});
+
+// HTMLファイルから記事データを取得するエンドポイント（編集画面用）
+app.get('/api/articles/:id/html-data', requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+    // public/articles/[id].htmlファイルを読み込み
+    const htmlPath = path.join(__dirname, 'public', 'articles', `${id}.html`);
+    
+    try {
+      const htmlContent = await fs.readFile(htmlPath, 'utf-8');
+      console.log('Loaded HTML file for editing:', htmlPath);
+      
+      res.json({
+        success: true,
+        articleId: id,
+        htmlContent: htmlContent,
+        filePath: htmlPath,
+        loadedAt: new Date().toISOString()
+      });
+    } catch (fileError) {
+      console.log('HTML file not found:', htmlPath);
+      res.status(404).json({ 
+        success: false, 
+        error: 'HTML file not found',
+        filePath: htmlPath 
+      });
+    }
+  } catch (error) {
+    console.error('HTML file read error:', error);
+    res.status(500).json({ 
+      success: false, 
+      error: 'Failed to read HTML file: ' + error.message 
+    });
+  }
+});
+
+// 記事データ取得エンドポイント（編集画面用）
+app.get('/api/articles/:id/data', requireAdmin, async (req, res) => {
+  const { id } = req.params;
+  
+  try {
+    let articleData = null;
+    
+    // 1. Firestoreから読み込み
+    try {
+      const { db } = require('./firebase/admin');
+      const snap = await db.collection('articles').doc(id).get();
+      if (snap.exists) {
+        articleData = snap.data();
+        console.log('Loaded from Firestore for API:', id);
+        
+        // HTMLからJSONデータを抽出する試み
+        if (articleData.html && !articleData.title) {
+          const extractedData = extractDataFromHTML(articleData.html);
+          if (extractedData) {
+            articleData = { ...articleData, ...extractedData };
+          }
+        }
+      }
+    } catch (error) {
+      console.error('Firestore read error:', error);
+    }
+    
+    // 2. ローカルJSONから読み込み（Firestoreになければ）
+    if (!articleData) {
+      const jsonPath = path.join(__dirname, 'data', 'articles', `${id}.json`);
+      try {
+        const data = await fs.readFile(jsonPath, 'utf-8');
+        articleData = JSON.parse(data);
+        console.log('Loaded from local JSON for API:', id);
+      } catch (error) {
+        console.log('No local JSON found for API:', id);
+      }
+    }
+    
+    if (articleData) {
+      res.json(articleData);
+    } else {
+      res.status(404).json({ error: 'Article not found' });
+    }
+  } catch (error) {
+    console.error('Article data fetch error:', error);
+    res.status(500).json({ error: 'Failed to fetch article data' });
+  }
+});
+
+// HTMLからデータを抽出する関数
+function extractDataFromHTML(html) {
+  try {
+    // 簡単なHTMLパースでタイトルや内容を抽出
+    const titleMatch = html.match(/<h1[^>]*>(.*?)<\/h1>/i);
+    const title = titleMatch ? titleMatch[1].replace(/レビュー$/, '').trim() : '';
+    
+    // 他の要素も抽出可能だが、基本的な情報のみ
+    return {
+      title,
+      html // 既存のHTMLは保持
+    };
+  } catch (error) {
+    console.error('HTML extraction error:', error);
+    return null;
+  }
+}
+
+// GET /admin/articles/:id は routes/admin.articles.js で処理される
 
 // グローバルエラーハンドラ
 app.use((error, req, res, next) => {

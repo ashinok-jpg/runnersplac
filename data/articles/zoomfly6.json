@@ -1,0 +1,61 @@
+{
+  "manufacturer": "ASICS",
+  "title": "NOVABLAST 4",
+  "price": "¥16,500〜19,000",
+  "weight": "約250g",
+  "heroImage": "http://localhost:3000/admin/articles/zoomfly6",
+  "lead": "ASICSの人気ランニングシューズ「NOVABLAST 4」の詳細レビューです。前作から大幅にアップデートされたデザインと性能を徹底解析します。",
+  "spec": {
+    "content": "NOVABLAST 4は軽量性とクッション性を両立した日常トレーニング用シューズです。",
+    "chips": [
+      "⚖️ 約250g",
+      "📏 ドロップ：8mm",
+      "📐 スタック：41.5/33.5mm",
+      "🧪 ミッドソール：FF BLAST MAX",
+      "🪭 プレート：非搭載",
+      "💴 価格：16,500〜19,000円"
+    ]
+  },
+  "design": "トランポリンのような反発力を持つFF BLAST MAXミッドソールが特徴的で、軽やかな走り心地を実現しています。",
+  "impressions": "実際に走ってみると、着地時の衝撃吸収と蹴り出し時の反発力のバランスが絶妙でした。",
+  "likes": "軽量で反発力があり、デイリートレーナーとして最適。価格も手頃でコスパが良い。",
+  "dislikes": "安定性がやや物足りなく、長距離では足が疲れやすい印象。耐久性も気になるところ。",
+  "summary": {
+    "content": "NOVABLAST 4は軽量で反発力に優れたデイリートレーナーです。",
+    "ratings": [
+      "⭐ 総合: 未評価/5",
+      "🏃 走り心地: 未評価/5",
+      "💎 デザイン: 未評価/5",
+      "💰 コスパ: 未評価/5"
+    ],
+    "recommendation": "どのようなランナーにおすすめかを入力してください。"
+  },
+  "comparison": [
+    {
+      "name": "比較シューズ 1",
+      "description": "比較対象のシューズとの違いや特徴を入力してください。"
+    }
+  ],
+  "images": {
+    "heroImage": "http://localhost:3000/admin/articles/zoomfly6",
+    "sectionImages": {
+      "lead": [],
+      "spec": [],
+      "design": [],
+      "impressions": [],
+      "likes": [],
+      "dislikes": [],
+      "summary": []
+    },
+    "comparisonImages": [
+      []
+    ]
+  },
+  "createdAt": "2025-09-30T02:55:05.281Z",
+  "lastModified": "2025-09-30T02:55:05.281Z",
+  "html": "<!DOCTYPE html>\n<html lang=\"ja\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>ASICS NOVABLAST 4 レビュー</title>\n    <link rel=\"stylesheet\" href=\"/css/article-template.css\">\n    <style>\n        body { \n            font-family: -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, sans-serif;\n            line-height: 1.6;\n            color: #333;\n            max-width: 800px;\n            margin: 0 auto;\n            padding: 20px;\n            background: #f5f5f5;\n        }\n        .article-container {\n            background: white;\n            border-radius: 12px;\n            padding: 30px;\n            box-shadow: 0 4px 20px rgba(0,0,0,0.1);\n        }\n        .hero-image {\n            width: 100%;\n            max-height: 400px;\n            object-fit: cover;\n            border-radius: 8px;\n            margin: 20px 0;\n        }\n        .section {\n            margin: 30px 0;\n            padding: 20px 0;\n            border-bottom: 1px solid #eee;\n        }\n        .section:last-child { border-bottom: none; }\n        .section h2 {\n            color: #2563eb;\n            margin-bottom: 15px;\n        }\n        .spec-chips {\n            display: flex;\n            flex-wrap: wrap;\n            gap: 8px;\n            margin: 15px 0;\n        }\n        .spec-chip {\n            background: #3b82f6;\n            color: white;\n            padding: 6px 12px;\n            border-radius: 20px;\n            font-size: 0.85em;\n        }\n        .image-gallery {\n            display: flex;\n            flex-wrap: wrap;\n            gap: 10px;\n            margin: 15px 0;\n        }\n        .image-gallery img {\n            max-width: 300px;\n            height: auto;\n            border-radius: 8px;\n            box-shadow: 0 2px 8px rgba(0,0,0,0.1);\n        }\n        .comparison-item {\n            margin: 20px 0;\n            padding: 15px;\n            border: 1px solid #ddd;\n            border-radius: 8px;\n            background: #f9f9f9;\n        }\n        .comparison-item h3 {\n            color: #059669;\n            margin-bottom: 10px;\n        }\n        .price-weight {\n            display: flex;\n            gap: 15px;\n            margin: 15px 0;\n        }\n        .chip {\n            background: #10b981;\n            color: white;\n            padding: 8px 16px;\n            border-radius: 25px;\n            font-weight: 500;\n        }\n    </style>\n</head>\n<body>\n    <div class=\"article-container\">\n        <header>\n            <h1>ASICS NOVABLAST 4 レビュー</h1>\n            <div class=\"price-weight\">\n                <span class=\"chip\">¥16,500〜19,000</span>\n                <span class=\"chip\">約250g</span>\n            </div>\n        </header>\n\n        <img src=\"http://localhost:3000/admin/articles/zoomfly6\" alt=\"ヒーロー画像\" class=\"hero-image\">\n\n        <div class=\"section\">\n            <h2>リード</h2>\n            <p>ASICSの人気ランニングシューズ「NOVABLAST 4」の詳細レビューです。前作から大幅にアップデートされたデザインと性能を徹底解析します。</p>\n            \n        </div>\n\n        <div class=\"section\">\n            <h2>概要とスペック</h2>\n            <p>NOVABLAST 4は軽量性とクッション性を両立した日常トレーニング用シューズです。</p>\n            <div class=\"spec-chips\"><span class=\"spec-chip\">⚖️ 約250g</span><span class=\"spec-chip\">📏 ドロップ：8mm</span><span class=\"spec-chip\">📐 スタック：41.5/33.5mm</span><span class=\"spec-chip\">🧪 ミッドソール：FF BLAST MAX</span><span class=\"spec-chip\">🪭 プレート：非搭載</span><span class=\"spec-chip\">💴 価格：16,500〜19,000円</span></div>\n            \n        </div>\n\n        \n        <div class=\"section\">\n            <h2>デザイン・見た目</h2>\n            <p>トランポリンのような反発力を持つFF BLAST MAXミッドソールが特徴的で、軽やかな走り心地を実現しています。</p>\n            \n        </div>\n        \n\n        \n        <div class=\"section\">\n            <h2>履き心地・走った感想</h2>\n            <p>実際に走ってみると、着地時の衝撃吸収と蹴り出し時の反発力のバランスが絶妙でした。</p>\n            \n        </div>\n        \n\n        \n        <div class=\"section\">\n            <h2>👍 好きな点・良い点</h2>\n            <p>軽量で反発力があり、デイリートレーナーとして最適。価格も手頃でコスパが良い。</p>\n            \n        </div>\n        \n\n        \n        <div class=\"section\">\n            <h2>👎 嫌いな点・気になる点</h2>\n            <p>安定性がやや物足りなく、長距離では足が疲れやすい印象。耐久性も気になるところ。</p>\n            \n        </div>\n        \n\n        \n        <div class=\"section\">\n            <h2>🔄 他シューズとの比較</h2>\n            \n        <div class=\"comparison-item\">\n            <h3>比較シューズ 1</h3>\n            <p>比較対象のシューズとの違いや特徴を入力してください。</p>\n            \n        </div>\n      \n        </div>\n      \n\n        \n        <div class=\"section\" style=\"border: 2px solid #f59e0b; background: linear-gradient(135deg, #fff7ed, #fef3c7);\">\n            <h2 style=\"color: #f59e0b;\">📝 まとめ</h2>\n            <p>NOVABLAST 4は軽量で反発力に優れたデイリートレーナーです。</p>\n            <div class=\"spec-chips\"><span class=\"spec-chip\" style=\"background: #f59e0b;\">⭐ 総合: 未評価/5</span><span class=\"spec-chip\" style=\"background: #f59e0b;\">🏃 走り心地: 未評価/5</span><span class=\"spec-chip\" style=\"background: #f59e0b;\">💎 デザイン: 未評価/5</span><span class=\"spec-chip\" style=\"background: #f59e0b;\">💰 コスパ: 未評価/5</span></div>\n            \n            <div style=\"margin-top: 20px; padding: 15px; background: rgba(16, 185, 129, 0.1); border-radius: 8px;\">\n                <h3 style=\"color: #059669; margin-bottom: 10px;\">こんな人におすすめ</h3>\n                <p>どのようなランナーにおすすめかを入力してください。</p>\n            </div>\n            \n            \n        </div>\n        \n\n        <footer style=\"margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee; text-align: center; color: #666;\">\n            <p>作成日時: 2025/9/30 11:55:05</p>\n            <p style=\"font-size: 0.85em;\">このレビューは管理画面で生成されました</p>\n        </footer>\n    </div>\n</body>\n</html>",
+  "category": "ASICS",
+  "author": "Admin Editor",
+  "isDraft": false,
+  "updatedAt": "2025-09-30T02:55:05.812Z"
+}

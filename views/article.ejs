@@ -4,7 +4,6 @@
   <!-- ...existing code... -->
 </head>
 <body data-user-uid="<%= user && user.uid ? user.uid : '' %>" data-shoe-id="<%= shoeId %>">
-  <!-- Ensure memo-root exists for tabbed-ui -->
   <div id="memo-root" data-shoe-id="<%= shoeId %>"></div>
   <script>
     // Populate globals for front-end without embedding server-side values into JS code

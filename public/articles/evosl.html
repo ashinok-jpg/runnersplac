@@ -1,349 +1,171 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>adidas Adizero EVO SLレビュー｜“軽い厚底”でテンポが楽しくなる一足</title>
-  <style>
-    :root{
-      --bg: #0b0c10;
-      --bg-soft: #121319;
-      --card: #151821;
-      --text: #e6e8ee;
-      --muted: #aab0bd;
-      --accent: #6ad1ff;
-      --accent-2: #9bffb7;
-      --danger: #ff6a8a;
-      --ok: #7cf2c6;
-      --warn: #ffd166;
-      --ring: rgba(106, 209, 255, .35);
-      --shadow: 0 10px 30px rgba(0,0,0,.35);
-      --radius-xl: 18px;
-      --radius: 12px;
-      --radius-sm: 10px;
-      --fw-bold: 700;
-      --fw-medium: 600;
-      --gap: 22px;
-      --gap-sm: 14px;
-      --maxw: 1080px;
-      --hero-h:4px;
-      --bp: 960px; /* ← ブレークポイントを統一 */
-    }
-    @media (prefers-color-scheme: light){
-      :root{
-        --bg:#f7f8fb; --bg-soft:#eef1f7; --card:#ffffff; --text:#111827; --muted:#606a7b; --shadow:0 10px 25px rgba(16,24,40,.08);
-        --ring: rgba(17, 89, 201, .25);
-      }
-    }
-    *{box-sizing:border-box}
-    html,body{margin:0;background:var(--bg);color:var(--text);font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans JP", "Hiragino Kaku Gothic ProN", Meiryo, sans-serif; line-height:1.8}
-    a{color:var(--accent)}
-    .wrap{max-width:var(--maxw);margin:auto; padding: 20px 20px 80px}
-
-    /* Hero */
-    .hero{position:fixed; top:0; left:0; right:0; transform:translateY(0); transition:transform .28s ease, opacity .2s ease, background .3s ease; background:linear-gradient(to bottom, rgba(255,255,255,0.02), rgba(255,255,255,0)); backdrop-filter:saturate(1.2) blur(8px); z-index:5; border-bottom:1px solid rgba(255,255,255,.06); will-change: transform, opacity}
-    .hero-hidden .hero{ transform: translateY(-120%) !important; opacity: 0 !important; pointer-events: none; }
-    .hero-inner{max-width:var(--maxw);margin:auto;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:space-between}
-    .title{font-size:clamp(20px, 3vw, 28px);font-weight:800;letter-spacing:.2px;margin:0}
-    .chip{display:inline-flex;gap:8px;align-items:center;padding:6px 10px;background:var(--bg-soft);border:1px solid rgba(255,255,255,.06);border-radius:999px;color:var(--muted);font-size:12px}
-    .actions{display:flex;gap:10px}
-    .btn{border:1px solid rgba(255,255,255,.12);background:var(--card);color:var(--text);padding:8px 12px;border-radius:999px;cursor:pointer;box-shadow:var(--shadow)}
-    .btn:hover{outline:2px solid var(--ring)}
-
-    /* Grid layout */
-    .grid{display:grid;gap:var(--gap);grid-template-columns: 220px 1fr}
-    .toc-collapsed .grid{grid-template-columns:1fr}
-    @media (max-width: var(--bp)){.grid{grid-template-columns: 1fr}}
-
-    /* Cards */
-    .card{background:var(--card);border-radius:var(--radius-xl);padding:22px;box-shadow:var(--shadow);border:1px solid rgba(255,255,255,0.06)}
-    .card h2{font-size:clamp(18px, 2.2vw, 22px);margin:0 0 8px;font-weight:800}
-    .sub{color:var(--muted);font-size:14px;margin:6px 0 0}
-
-    .lead{font-size:18px;line-height:1.9}
-
-    /* Spec chips */
-    .spec-chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px}
-    .spec{background:linear-gradient(120deg, rgba(106,209,255,.12), rgba(155,255,183,.10));border:1px solid rgba(106,209,255,.3);padding:10px 12px;border-radius:12px;font-weight:600}
-
-    /* Two-column section cards */
-    .stack{display:grid;gap:var(--gap)}
-
-    /* Like/Dislike split */
-    .split{display:grid;gap:var(--gap);grid-template-columns: 1fr 1fr}
-    @media (max-width: 780px){.split{grid-template-columns:1fr}}
-    .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:700}
-    .good{background:rgba(124,242,198,.15);border:1px solid rgba(124,242,198,.5);color:#00c58e}
-    .bad{background:rgba(255,106,138,.15);border:1px solid rgba(255,106,138,.5);color:#ff6a8a}
-
-    /* Scores */
-    .scores{display:grid;grid-template-columns: 1fr 1fr;gap:14px}
-    @media (max-width: 720px){.scores{grid-template-columns:1fr}}
-    .score{background:var(--bg-soft);border:1px solid rgba(255,255,255,.06);border-radius:14px;padding:12px 14px}
-    .score .label{display:flex;justify-content:space-between;gap:10px;font-weight:700}
-    .bar{height:10px;border-radius:999px;background:linear-gradient(90deg, rgba(106,209,255,.25), rgba(155,255,183,.25));overflow:hidden;margin-top:10px;position:relative}
-    .bar>span{display:block;height:100%;width:0%;background:linear-gradient(90deg, var(--accent), var(--accent-2));border-radius:inherit;transition:width .8s ease;min-height:10px}
-
-    /* Comparison */
-    .compare{display:grid;grid-template-columns: 1fr 1fr;gap:var(--gap)}
-    @media (max-width: 900px){.compare{grid-template-columns:1fr}}
-    .compare .mini{display:grid;gap:10px}
-
-    /* Tips */
-    .tips{display:grid;gap:var(--gap);grid-template-columns: .65fr .35fr}
-    @media (max-width: var(--bp)){.tips{grid-template-columns:1fr}}
-    .callout{border-left:4px solid var(--accent);padding-left:16px}
-    .kpis{display:grid;gap:10px}
-    .kpi{background:var(--bg-soft);padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.06)}
-
-    /* Footer summary */
-    .summary{background:linear-gradient( to bottom right, rgba(106,209,255,.10), rgba(155,255,183,.08) );border:1px solid rgba(106,209,255,.35)}
-    .hashtags{opacity:.8}
-
-    /* Smooth anchors */
-    html{scroll-behavior:smooth}
-    .toc{position:sticky; top: 10px; align-self:flex-start;width:200px;transition:opacity .25s ease, visibility .25s ease}
-    .toc-collapsed .toc{opacity:0; visibility:hidden; pointer-events:none}
-    .toc .card{padding:12px; position:relative}
-    .toc .toc-close{position:absolute; top:8px; right:8px; height:28px; width:28px; border-radius:8px; border:1px solid rgba(255,255,255,.12); background:var(--bg-soft); color:var(--muted); cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:14px}
-    .toc .toc-close:hover{outline:2px solid var(--ring); color:var(--text)}
-    .toc a{display:block;padding:6px 8px;border-radius:10px;color:var(--muted);text-decoration:none; font-size:14px}
-    .toc a:hover{background:var(--bg-soft);color:var(--text)}
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUMA PUMA Deviate NITRO Elite 3 — レビュー</title>
+    <link rel="stylesheet" href="/css/article-template.css">
+    <style>
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .article-container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+        }
+        .hero-image {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .section {
+            margin: 30px 0;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .section:last-child { border-bottom: none; }
+        .section h2 {
+            color: #2563eb;
+            margin-bottom: 15px;
+        }
+        .spec-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        .spec-chip {
+            background: #3b82f6;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+        .image-gallery img {
+            max-width: 300px;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        .comparison-item {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .comparison-item h3 {
+            color: #059669;
+            margin-bottom: 10px;
+        }
+        .price-weight {
+            display: flex;
+            gap: 15px;
+            margin: 15px 0;
+        }
+        .chip {
+            background: #10b981;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+    </style>
 </head>
 <body>
-  <header class="hero">
-    <div class="hero-inner">
-      <h1 class="title">adidas Adizero EVO SLレビュー｜“軽い厚底”でテンポが楽しくなる一足</h1>
-      <div class="actions">
-        <span class="chip" title="価格">💴 ¥19,800 / $150</span>
-        <span class="chip" title="重量">⚖️ 約224g（US9）</span>
-        <button id="tocToggle" class="btn" aria-label="目次の表示切替" aria-pressed="false">📑 目次</button>
-        <button id="themeBtn" class="btn" aria-label="テーマ切替">🌓 テーマ</button>
-      </div>
+    <div class="article-container">
+        <header>
+            <h1>PUMA PUMA Deviate NITRO Elite 3 — レビュー</h1>
+            <div class="price-weight">
+                <span class="chip">$230.00〜</span>
+                <span class="chip">195g</span>
+            </div>
+        </header>
+
+        
+
+        <div class="section">
+            <h2>リード</h2>
+            <p>PUMA Deviate NITRO Elite 3 (DNE3)は、規格上限の40mmスタックと195gの驚異的な軽量性を両立し、V2から大刷新を遂げたPUMAのフラッグシップレーシング。各メーカーの中でも随一の柔らかさをほこるNITOROFORMに,各メーカーの中でももっと硬いと言われるPWRPLATEをいれたレースシューズである。この爆発的なコンビネーションにより、主に5kmからハーフマラソンで、ランナーを新たなスピード領域へと導く。</p>
+            
+        </div>
+
+        <div class="section">
+            <h2>概要とスペック</h2>
+            <p>カテゴリ: PUMAのフラッグシップ・レーシングシューズ（スーパーシューズ）。用途: 主に5kmからハーフマラソンの高速レースに特化。スタック高: 40mm（国際競技連盟の規定上限を最大化）。重量: 195g（US M9）という極めて軽量な設計。ミッドソール: 最新のA-TPUベースのNITROFOAM™ ELITEを採用。高いエネルギーリターン（77.1%）と耐久性が期待される。カーボンプレート: メーカーで最もアグレッシブとされる極めて硬質なフルレングスPWRPLATEを搭載。ライド感: 低速時は硬いが、ペースを上げると爆発的な推進力とバウンスを生むスピード特化型。アッパー: 軽量で確実なロックダウンを実現するULTRAWEAVE素材を使用。アウトソール: 全天候型で卓越したグリップ力を提供するPUMAGRIPを採用。懸念点: 初期のロットでアウトソール剥離の品質問題が報告されている。フィット: 中足部が非常に狭く、幅広の足には不向きな設計。</p>
+            
+            
+        </div>
+
+        
+        <div class="section">
+            <h2>デザイン・見た目</h2>
+            <p>このシューズの設計思想はシンプルで、それは、「軽量性」と「爆発的な推進力」を限界まで高めること。PUMAは、超軽量で異例な柔らかさを持つフォーム（NITRO ELITE）を採用することで、プレートの硬さを全面におしだして爆発的推進力を生み出している。柔らかすぎる高スタックシューズが抱える安定性の不安を、この硬質なプレートが構造的に制御する仕組み。プレートはつま先の先まであることでてこの動きをうみだしてより高速なペースまで対応できるようになっている。この組み合わせこそが、硬いのに速いというDNE3独自の、他に類を見ない爆発的なライド感を生み出す核である。</p>
+            
+        </div>
+        
+
+        
+        <div class="section">
+            <h2>履き心地・走った感想</h2>
+            <p>DNE3の第一印象は「走れるスパイク」だ。そのライド感は生半可ではない。低速域では、極めて剛性の高いカーボンプレートが牙を剥く。足裏に硬質な石板を当てられているような強烈な圧迫感で、シューズから「もっと速く走れ」と試されている気分になる。でも、閾値を超えた瞬間、この硬質さは一変する。ペースが上がればプレートを曲げられるようになるので心地良い反発を感じる。他のシューズのように前足部を潰すような形で前に進んでいく感じではないのでフルマラソンで使うには勇気と実力が必要。アッパーのULTRAWEAVEは、まるで第二の皮膚のように快適かつ強固に足を包み込み、中足部を完璧にロックダウンする。普通のレースシューズはグリップは弱めのことがおおいけどこいつは強い！心配なのはニュートラル設計で硬いので、接地がきれいじゃないと怪我リスクは高いこと。グリップのお陰で総合点は高いけど市民ランナーの方にはおすすめできない。</p>
+            
+        </div>
+        
+
+        
+        <div class="section">
+            <h2>👍 好きな点・良い点</h2>
+            <p>・卓越したグリップ力: アウトソールのPUMAGRIPは、乾燥路面はもちろん、濡れた路面やカーブでも性能を損なわない、全天候型の高いトラクションを発揮。高速走行への最適化: 極めて硬質なカーボンプレートが、閾値以上のペースで最高の推進力を生み出す、スピード特化型のパフォーマンス。耐久性への期待: スーパーフォームとして実績のあるA-TPU素材の使用により、競合製品と比較して平均以上のミッドソール寿命が期待できる。</p>
+            
+        </div>
+        
+
+        
+        <div class="section">
+            <h2>👎 嫌いな点・気になる点</h2>
+            <p>極端なプレート剛性: 極めて硬いカーボンプレート（PWRPLATE）により、低速走行時（ジョグなど）に足裏に強い不快感やストレスを感じさせやすい。日常のトレーニングには不向き。ピーキーな性能: 高速走行に極度に特化しているため、ランニングフォームやペースが定まらないランナーには、プレートの硬さが扱いにくいと感じられる可能性がある。</p>
+            
+        </div>
+        
+
+        
+
+        
+        <div class="section" style="border: 2px solid #f59e0b; background: linear-gradient(135deg, #fff7ed, #fef3c7);">
+            <h2 style="color: #f59e0b;">📝 まとめ</h2>
+            <p>Puma Deviate NITRO Elite 3は、40mmのスタックと195gの超軽量ボディ、そして極めて硬質なカーボンプレートを特徴とする、市場で最もアグレッシブなスーパーシューズの一つです。A-TPUフォームの爆発的なバウンスと、高速走行時の推進力は高く評価されていますが、低速ランナーや足幅の広いランナーには適していません。アウトソールの初期品質問題は懸念点ですが、高速レースでのパフォーマンスはトップクラスです。</p>
+            <div class="spec-chips"><span class="spec-chip" style="background: #f59e0b;">⭐ 総合: 未評価/5</span><span class="spec-chip" style="background: #f59e0b;">🏃 走り心地: 未評価/5</span><span class="spec-chip" style="background: #f59e0b;">💎 デザイン: 未評価/5</span><span class="spec-chip" style="background: #f59e0b;">💰 コスパ: 未評価/5</span></div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: rgba(16, 185, 129, 0.1); border-radius: 8px;">
+                <h3 style="color: #059669; margin-bottom: 10px;">こんな人におすすめ</h3>
+                <p>体重が重めのランナーでスピードを求める方に最もおすすめ。足幅が狭くて他社の製品が合わない方も一度ためしてみてほしい。</p>
+            </div>
+            
+            
+        </div>
+        
+
+        <footer style="margin-top: 40px; padding-top: 20px; border-top: 2px solid #eee; text-align: center; color: #666;">
+            <p>作成日時: 2025/10/1 17:17:31</p>
+            <p style="font-size: 0.85em;">このレビューは管理画面で生成されました</p>
+        </footer>
     </div>
-  </header>
-
-  <div class="wrap">
-    <div class="grid">
-      <aside class="toc">
-        <nav class="card"><button class="toc-close" aria-label="目次を閉じる" title="閉じる">✕</button>
-          <a href="#lead">リード</a>
-          <a href="#spec">概要とスペック</a>
-          <a href="#design-biomech">設計思想 × バイオメカ</a>
-          <a href="#impressions">実走インプレ</a>
-          <a href="#likes-dislikes">好き×惜しい</a>
-          <a href="#scores">10項目評価</a>
-          <a href="#comparison">ライバル比較</a>
-          <a href="#tips-longevity">Tips＆寿命</a>
-          <a href="#summary">まとめ</a>
-        </nav>
-      </aside>
-
-
-      <main class="stack">
-        <!-- LEAD -->
-        <section id="lead" class="card lead">
-          <p>「カーボンの“突っぱね”は苦手だけど，テンポや閾値は楽に刻みたい」──そんな市民ランナーに刺さるのがEVO SLである．軽量かつ厚みのあるLightstrike Proが，ロッカーと組み合わさって“勝手に前へ”の巡航感を作る．この記事では実走の温度感まで含めて，長所と注意点を科学的に解きほぐす（RoadTrailRun, 2024-12-07／Solereview, 2025-08-25）．</p>
-        </section>
-
-        <!-- SPEC -->
-        <section id="spec" class="card">
-          <h2>概要とスペック</h2>
-          <p>重量は約224g（US9），ドロップ6mm，スタックはおおむね39/33mmだが測定法で差が出るためレンジで捉えるのが安全である．この数値は「軽さで脚を回しやすく，厚みで接地衝撃の角を丸める」という走行感に直結する．ミッドソールはLightstrike Pro単層，プレートは非搭載，価格は$150／¥19,800である（RunRepeat, 2024-11-26／Solereview, 2025-08-25）．</p>
-          <div class="spec-chips">
-            <div class="spec">⚖️ 重量：約224g（US9）</div>
-            <div class="spec">📏 ドロップ：6mm</div>
-            <div class="spec">📐 スタック：39/33mm（概算）</div>
-            <div class="spec">🧪 ミッドソール：Lightstrike Pro</div>
-            <div class="spec">🪭 プレート：非搭載</div>
-            <div class="spec">💴 価格：¥19,800（$150）</div>
-          </div>
-          <p class="sub">※ スタック値は情報源・測定条件で前後．レンジで把握推奨．</p>
-        </section>
-
-        <!-- DESIGN × BIOMECH -->
-        <section id="design-biomech" class="card">
-          <h2>設計思想 × バイオメカ</h2>
-          <p>EVO SLの狙いは「剛性デバイスに頼らず，フォームの弾性で巡航を作る」ことだと解釈する．前足部にかけて緩やかなロッカーを設け，重心が“坂を下る”ように前へ移りやすい姿勢を作る．例えるなら，浅い傾斜のベルトコンベアに乗っているような感覚であり，着地から離地までの時間軸がスムーズにつながる．Lightstrike Proは高反発かつ減衰が穏やかで，接地初期の衝撃を吸収しつつ，踏み込みの底で“たわみ”，復元で一歩を押し出す．プレート非搭載ゆえに前足部の屈曲は適度に残り，MTP（母趾球）まわりの背屈が嫌な突き返しになりにくい．その代わり，プレート特有の“瞬時の跳ね返り”は控えめで，テンポ域での“伸びのある推進”が真骨頂になる．一般知見ではロッカーは足関節の機械仕事とピークモーメントを低減し，厚みは立ち上がり衝撃（ローディングレート）を和らげやすいとされるが，効果量は個体差が大きい（Frontiers in Sports &amp; Active Living, 2025-01-01（不確か））．軽量化は代謝コストを下げる方向に働くため，約224gという質量は“楽に回せるテンポ”を後押しする（RunRepeat, 2024-11-26／Hoogkamer, 2016-06-01（不確か））．</p>
-        </section>
-
-        <!-- IMPRESSIONS -->
-        <section id="impressions" class="card">
-          <h2>実走インプレ</h2>
-          <p>キロ5分台のジョグでは，着地の角が丸まり，心拍がフラットに立ち上がる印象だと感じた．路面が粗いアスファルトでも嫌な突き上げは少なく，脚の張りが翌日に残りにくい．一方でキロ5:30以降まで落とすと，フォームの復元が少し“遅れて付いてくる”ように感じ，もたつきが出やすかったと感じた．</p>
-          <p>キロ4:30前後のMペースに入ると，ロッカーの“転がり”が生きて一歩一歩のつながりが良くなる．足を強く蹴らずともストライドが自然に伸び，呼吸の余裕が残る．トラックではスムーズ，街路の起伏でもテンポを崩しにくいと感じた．ただしタイトなカーブでは中足部がわずかに外へ逃げるため，進入時に荷重を真上に置く意識が効いた．</p>
-          <p>キロ3分台後半の閾値域では，プレート搭載機のような“バチッとした跳ね返り”は出ないが，弾性のトーンが崩れず長く保たれる．4kmを超えても推進の質が落ちにくく，ビルドアップで最後まで“伸びる”のが使いやすい．濡れた路面では前足部のグリップは良好だが，白線やマンホールで踵が滑りやすい場面があり，接地時間を半拍だけ長く取ると安心感が増した．フィットは前足部がやや余裕のあるレギュラー寄り．甲の薄い足ではタンが短くズレを感じやすかったため，ランナーズノットで甲圧をやや高めにすると安定した（RoadTrailRun, 2024-12-07／Believe in the Run, 2024-10-18）．</p>
-        </section>
-
-        <!-- LIKES / DISLIKES as cards -->
-        <section id="likes-dislikes" class="card">
-          <h2>ここが好き！× ここは惜しい！</h2>
-          <div class="split">
-            <div class="mini card" style="padding:16px">
-              <span class="badge good">👍 ここが好き！</span>
-              <p>第一に“楽に速い”を作る巡航力．テンポ走で力感が薄いままキロ4分台を維持しやすく，翌日に疲れを残しにくい．第二に，軽量のわりに脚当たりがマイルドで長めのジョグにも連れ出せる守備範囲の広さ．第三に，前足部のゆとりがストレスを減らし，足幅が広めでも詰まりにくい（Solereview, 2025-08-25）．</p>
-            </div>
-            <div class="mini card" style="padding:16px">
-              <span class="badge bad">⚠️ ここは惜しい！</span>
-              <p>コーナーや片勾配での横安定が強くない．薄いアウトソールの局所摩耗が早い個体がある．とくに踵外側で擦る癖があるランナーは減り方に注意（RunRepeat, 2024-11-26／RoadTrailRun, 2024-12-07）．</p>
-            </div>
-          </div>
-        </section>
-
-        <!-- SCORES -->
-        <section id="scores" class="card">
-          <h2>10項目評価</h2>
-          <div class="scores" aria-live="polite">
-            <div class="score"><div class="label"><span>クッション性</span><span class="val">4.5／5</span></div><div class="bar"><span></span></div><p class="sub">厚みの割に沈み込みが素直で，着地の角を丸める．“たわみ→復元”の流れがテンポに合う（Solereview, 2025-08-25）．</p></div>
-            <div class="score"><div class="label"><span>安定性</span><span class="val">2.8／5</span></div><div class="bar"><span></span></div><p class="sub">直進は十分だが，強いコーナリングや横風では中足部が流れやすい（RoadTrailRun, 2024-12-07）．</p></div>
-            <div class="score"><div class="label"><span>軽さ</span><span class="val">4.7／5</span></div><div class="bar"><span></span></div><p class="sub">約224gで回しやすく，後半のケイデンス維持が楽．</p></div>
-            <div class="score"><div class="label"><span>コスパ</span><span class="val">4.0／5</span></div><div class="bar"><span></span></div><p class="sub">トレーニング〜レース前後を一足で賄える．寿命は使い方次第．</p></div>
-            <div class="score"><div class="label"><span>履き心地</span><span class="val">4.0／5</span></div><div class="bar"><span></span></div><p class="sub">前足部に余裕がありストレスが少ないが，タンは対策が必要．</p></div>
-            <div class="score"><div class="label"><span>デザイン</span><span class="val">4.2／5</span></div><div class="bar"><span></span></div><p class="sub">“薄い”見た目で速さを想起させるが，個人差あり．</p></div>
-            <div class="score"><div class="label"><span>通気性</span><span class="val">4.2／5</span></div><div class="bar"><span></span></div><p class="sub">軽量メッシュで体感は軽いが，真夏LSDでやや蒸れ（不確か）．</p></div>
-            <div class="score"><div class="label"><span>スピード性能</span><span class="val">4.6／5</span></div><div class="bar"><span></span></div><p class="sub">閾値〜Mペースでの伸びが強み．最速域はプレート機が優位．</p></div>
-            <div class="score"><div class="label"><span>グリップ</span><span class="val">4.0／5</span></div><div class="bar"><span></span></div><p class="sub">ドライ良好．ウェットの白線・マンホールは注意．</p></div>
-            <div class="score"><div class="label"><span>耐久性</span><span class="val">3.3／5</span></div><div class="bar"><span></span></div><p class="sub">前足部・踵外側のラバー摩耗が速い個体あり．反発は持続傾向．</p></div>
-          </div>
-        </section>
-
-        <!-- COMPARISON -->
-        <section id="comparison" class="card">
-          <h2>ライバルシューズと比較</h2>
-          <div class="compare">
-            <div class="mini card">
-              <h3 style="margin:0 0 6px">Nike ZoomX Streakfly</h3>
-              <p>より鋭い“跳ね返り”が欲しいなら近い選択．超軽量・薄底ゆえ瞬発は高いが，保護は控えめで距離適性は短い．</p>
-            </div>
-            <div class="mini card">
-              <h3 style="margin:0 0 6px">Saucony Sinister</h3>
-              <p>さらに軽量で“超薄”のダイレクト感を求める人向け．EVO SLは“楽に長く速く”のゾーンを広くカバー．</p>
-            </div>
-          </div>
-          <p class="sub">※ あなたの脚質・用途（テンポ走／閾値走／街路ジョグ）に応じて選び分けが有効．</p>
-        </section>
-
-        <!-- TIPS & LONGEVITY -->
-        <section id="tips-longevity" class="card">
-          <h2>使いこなしTips＆寿命</h2>
-          <div class="tips">
-            <div class="callout">
-              <p>タンの短さはランナーズノットやシューレース交換で改善しやすい．片勾配やコーナーでは荷重線を拇趾球の内側へ通す意識で横ブレを抑えられる．踵外側の摩耗が目立つ癖があるなら安定系・厚ラバーの一足とローテを推奨．</p>
-            </div>
-            <div class="kpis">
-              <div class="kpi">⏱️ 得意領域：テンポ〜閾値（キロ3:50〜4:40目安）</div>
-              <div class="kpi">👟 推奨ローテ：EVO SL × 安定系 × レーシング</div>
-              <div class="kpi">📈 寿命目安：600〜800km（路面・接地癖で±）</div>
-            </div>
-          </div>
-        </section>
-
-        <!-- SUMMARY -->
-        <section id="summary" class="card summary">
-          <h2>まとめ</h2>
-          <p>EVO SLは「プレートに頼らず，フォームとロッカーでテンポ域の巡航を作る」軽量厚底．日々のペース走を“楽に速く”したい市民ランナーに最適．最後に，サイズ感（特に甲と前足部の余裕）とタンの処理だけは試着で必ず確認を．</p>
-          <p class="summary-100"><strong>要約（約100字）</strong>：軽量×厚底のEVO SLは，テンポ〜閾値で“楽に速い”巡航を作る．横安定やラバー摩耗には注意しつつ，日々のペース走から5K〜ハーフの前後まで頼れる一足．</p>
-          <p class="hashtags">#反発 #マラソン #Adizero EVO SL</p>
-        </section>
-      </main>
-    </div>
-  </div>
-
-  <script>
-    // まず基本的なJavaScript動作確認
-    console.log('JavaScript is working!');
-    alert('JavaScript test - スコアバーのテストを開始します');
-    
-    // ヘッダー高さを計測してCSS変数に反映（リサイズにも追従）
-    (function(){
-      const header = document.querySelector('.hero');
-      function applyHeroH(){
-        if(!header) return;
-        const h = header.offsetHeight || 64;
-        document.documentElement.style.setProperty('--hero-h', h + 'px');
-      }
-      window.addEventListener('load', applyHeroH);
-      window.addEventListener('resize', () => { requestAnimationFrame(applyHeroH); });
-    })();
-
-    // Theme toggle
-    const btn = document.getElementById('themeBtn');
-    let light = window.matchMedia('(prefers-color-scheme: light)').matches;
-    const toggle = () => {
-      document.documentElement.style.filter = light ? 'invert(0) hue-rotate(0)' : 'invert(0)';
-      document.documentElement.dataset.theme = light ? 'dark' : 'light';
-      light = !light;
-    };
-    btn?.addEventListener('click', toggle);
-
-    // 超シンプルなスコアバーテスト
-    setTimeout(() => {
-      console.log('Simple test starting...');
-      alert('Simple test starting - スコアバーに色を付けます');
-      
-      const bars = document.querySelectorAll('.bar > span');
-      console.log('Found bars:', bars.length);
-      
-      bars.forEach((bar, i) => {
-        console.log(`Setting bar ${i} to 90%`);
-        bar.style.width = '90%';
-        bar.style.backgroundColor = 'red';
-      });
-    }, 2000);
-
-    // スクロールでヘッダーを確実に隠す
-    (function(){
-      let lastY = window.pageYOffset || document.documentElement.scrollTop || 0;
-      const threshold = 10;
-      const topKeep = 60;
-      let ticking = false;
-      function update(){
-        const y = window.pageYOffset || document.documentElement.scrollTop || 0;
-        if (y > topKeep && y - lastY > threshold){
-          document.body.classList.add('hero-hidden');
-        } else if (lastY - y > threshold || y <= topKeep){
-          document.body.classList.remove('hero-hidden');
-        }
-        lastY = y;
-        ticking = false;
-      }
-      window.addEventListener('scroll', ()=>{ if(!ticking){ ticking = true; requestAnimationFrame(update); } }, {passive:true});
-      let touchStartY = null;
-      window.addEventListener('touchstart', e => { touchStartY = (e.touches?.[0]?.clientY) ?? null; }, {passive:true});
-      window.addEventListener('touchmove', e => {
-        const cy = (e.touches?.[0]?.clientY) ?? null;
-        const y = window.pageYOffset || document.documentElement.scrollTop || 0;
-        if (touchStartY !== null && cy !== null){
-          const dy = touchStartY - cy;
-          if (y > topKeep && dy > 4) document.body.classList.add('hero-hidden');
-          if (dy < -4) document.body.classList.remove('hero-hidden');
-        }
-      }, {passive:true});
-      requestAnimationFrame(update);
-    })();
-
-    // シンプルなTOC toggle（デスクトップ専用）
-    const tocBtn = document.getElementById('tocToggle');
-    const applyTocState = (on) => {
-      document.body.classList.toggle('toc-collapsed', !on);
-      tocBtn?.setAttribute('aria-pressed', String(on));
-      tocBtn?.setAttribute('aria-label', on ? '目次を隠す' : '目次を表示');
-    };
-
-    // 初期表示: デフォルトで表示
-    applyTocState(true);
-
-    // クリックでトグル
-    tocBtn?.addEventListener('click', ()=>{
-      const visible = !document.body.classList.contains('toc-collapsed');
-      applyTocState(!visible);
-    });
-
-    // X ボタンで閉じる
-    document.querySelector('.toc .toc-close')?.addEventListener('click', ()=>{
-      applyTocState(false);
-    });
-  </script>
 </body>
 </html>
