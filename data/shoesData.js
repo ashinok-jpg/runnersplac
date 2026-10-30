@@ -1,3 +1,5 @@
+const { applyArticleRatings } = require('../lib/articles');
+
 const shoes = [
  
   {
@@ -1676,66 +1678,6 @@ hostComment : {
   buyUrl: "https://amzn.to/3HvFOVd"
 },
 {
-  id: "cloud5",
-  name: "Cloud 5",
-  image: "/images/29.jpg",
-  weight: 250,
-  midsole: "Zero-Gravity + Speedboard",
-  drop: 7,
-  offset: "20/28",
-  purpose: "デイリー・カジュアル",
-  price: 18700,
-  rating: 3.7,
-  brand: "on",
-  chartData: [3.5, 3.5, 4, 3.5, 4, 4.5, 4, 2.5, 3, 3.5],
-  buyUrl: "https://amzn.to/4kYGCAt"
-},
-{
-  id: "cloudflow4",
-  name: "Cloudflow 4",
-  image: "/images/24.jpg",
-  weight: 235,
-  midsole: "Helion + Speedboard",
-  drop: 8,
-  offset: "23/31",
-  purpose: "テンポ・レース",
-  price: 19580,
-  rating: 3.7,
-  brand: "on",
-  chartData: [3, 3, 4.5, 3, 3, 4, 4.5, 4.5, 3.5, 3.5],
-  buyUrl: "https://amzn.to/4mWXMQP"
-},
-{
-  id: "cloudswift3",
-  name: "Cloudswift 3",
-  image: "/images/31.jpg",
-  weight: 282,
-  midsole: "Helion (dual) + Speedboard",
-  drop: 6,
-  offset: "28/33",
-  purpose: "街ラン・ジョグ",
-  price: 19580,
-  rating: 3.6,
-  brand: "on",
-  chartData: [4, 4, 3, 3, 4, 4, 4, 3, 3.5, 4],
-  buyUrl: "https://amzn.to/43u9M4y"
-},
-{
-  id: "cloudeclipse",
-  name: "Cloudeclipse",
-  image: "/images/21.jpg",
-  weight: 285,
-  midsole: "Helion + Speedboard",
-  drop: 6,
-  offset: "31/37",
-  purpose: "ロングジョグ",
-  price: 23100,
-  rating: 4.0,
-  brand: "on",
-  chartData: [5, 5, 2, 2, 4, 4, 4, 2, 4, 4],
-  buyUrl: "https://amzn.to/3HvFOVd"
-},
-{
   id: "cloudstratus3",
   name: "Cloudstratus 3",
   image: "/images/on_on_.jpg",
@@ -2390,13 +2332,9 @@ hostComment : {
 ];
 
 shoes.forEach(shoe => {
+  applyArticleRatings(shoe);
   const avg = shoe.chartData.reduce((sum, val) => sum + val, 0) / shoe.chartData.length;
   shoe.rating = Number(avg.toFixed(2));
 });
-
-console.log(shoes.map(shoe => shoe.rating)); // ちゃんと平均が入ってるか確認
-
-
-console.log(JSON.stringify(shoes))
 
 module.exports = shoes;

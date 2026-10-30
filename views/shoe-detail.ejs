@@ -1,4 +1,6 @@
-<!DOCTYPE html>
+<%
+  const heroSrc = !shoe.image ? '/images/default.jpg' : (shoe.image.startsWith('/') ? shoe.image : '/images/' + shoe.image);
+%><!DOCTYPE html>
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
@@ -14,7 +16,7 @@
   <meta property="og:title" content="<%= shoe.name %>｜ランニングシューズ徹底レビュー">
   <meta property="og:description" content="クッション性と安定性に優れた<%= shoe.name %>を徹底解説。実際のユーザー評価付き。">
   <meta property="og:type" content="article">
-  <meta property="og:image" content="https://runnersplac.onrender.com<%= (typeof heroImage !== 'undefined' && heroImage) || (typeof images !== 'undefined' && images && images[0]) || '/images/' + (shoe.image || 'default.jpg') %>">
+  <meta property="og:image" content="https://runnersplac.onrender.com<%= heroSrc %>">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preload" href="/css/detail.css" as="style">
@@ -26,7 +28,7 @@
     "@context":"https://schema.org",
     "@type":"Product",
     "name":"<%= shoe.name %>",
-    "image":"https://runnersplac.onrender.com<%= (typeof heroImage !== 'undefined' && heroImage) || (typeof images !== 'undefined' && images && images[0]) || '/images/' + (shoe.image || 'default.jpg') %>",
+    "image":"https://runnersplac.onrender.com<%= heroSrc %>",
     "description":"<%= shoe.name %> の詳細レビュー。クッション性・グリップ・耐久性などを解説。",
     "brand":{"@type":"Brand","name":"<%= shoe.brand %>"},
     "sku":"<%= shoe.id %>",
@@ -73,61 +75,19 @@
     
       <figure class="hero-img">
         <img
-          src="<%= (typeof heroImage !== 'undefined' && heroImage) || (typeof images !== 'undefined' && images && images[0]) || (shoe.image ? '/images/' + shoe.image : '/images/default.jpg') %>"
-          alt="<%= shoe.brand || (typeof brand !== 'undefined' && brand) || 'ランニングシューズ' %> <%= shoe.name || (typeof name !== 'undefined' && name) || '' %> の商品画像"
+          src="<%= heroSrc %>"
+          alt="<%= shoe.brand %> <%= shoe.name %> の商品画像"
           loading="eager" fetchpriority="high">
       </figure>
     </section>
     
-    <!-- ホスト本文（ブログ） -->
-    
+    <% if (shoe.articleHtml) { %>
     <section class="host-article card">
-      <h2>
-        ホストレビュー
-        <% if (user && user.isAdmin) { %>
-          <a href="/admin/articles/<%= shoe.slug || shoe.id %>" class="badge" style="margin-left:.6rem">編集</a>
-        <% } %>
-      </h2>
-    
-      <% if (shoe.articleHtml) { %>
-        <article class="prose"><%- shoe.articleHtml %></article>
-      <% } else { %>
-        <% if (user && user.isAdmin) { %>
-          <p class="muted">まだ記事がありません．
-            <a href="/admin/articles/<%= shoe.slug || shoe.id %>">新規作成</a>
-          </p>
-        <% } %>
-      <% } %>
-    </section>
-
-    <!-- 画像ギャラリー -->
-    <% if (typeof images !== 'undefined' && images && images.length > 1) { %>
-    <section class="card image-gallery">
-      <h2>追加画像</h2>
-      <div class="gallery-grid">
-        <% images.slice(1).forEach(function(image, index) { %>
-          <figure class="gallery-item">
-            <img src="<%= image %>" alt="<%= shoe.name || (typeof name !== 'undefined' && name) || 'ランニングシューズ' %> 追加画像 <%= index + 2 %>" loading="lazy">
-          </figure>
-        <% }); %>
-      </div>
+      <h2>ホストレビュー</h2>
+      <article class="prose"><%- shoe.articleHtml %></article>
     </section>
     <% } %>
 
-    <!-- セクション別画像 -->
-    <% if (typeof sectionImages !== 'undefined' && sectionImages && Object.keys(sectionImages).length > 0) { %>
-    <section class="card section-images">
-      <h2>詳細画像</h2>
-      <% Object.entries(sectionImages).forEach(function([section, imageUrl]) { %>
-        <div class="section-image-item">
-          <h3><%= section %></h3>
-          <figure>
-            <img src="<%= imageUrl %>" alt="<%= section %> の画像" loading="lazy">
-          </figure>
-        </div>
-      <% }); %>
-    </section>
-    <% } %>
      <section id="memo-root"
   class="card"
   data-shoe-id="<%= shoe.slug || shoe.id %>"
@@ -135,46 +95,6 @@
   data-chart='<%- JSON.stringify(shoe.chartData) %>'>
 </section>
   
-    <!-- 10項目詳細評価 -->
-    <section class="card performance-evaluation">
-      <h2>詳細性能評価</h2>
-      
-      <% 
-        const performanceScores = shoe.scores || [];
-        
-        function generateStars(score) {
-          const fullStars = Math.floor(score);
-          const hasHalfStar = score % 1 >= 0.5;
-          let stars = '★'.repeat(fullStars);
-          if (hasHalfStar) stars += '☆';
-          stars += '☆'.repeat(5 - fullStars - (hasHalfStar ? 1 : 0));
-          return stars;
-        }
-      %>
-      
-      <% if (performanceScores && performanceScores.length > 0) { %>
-        <% performanceScores.forEach(function(item) { %>
-          <% if (item.value > 0 || item.comment) { %>
-            <div class="performance-item">
-              <div class="performance-header">
-                <div class="performance-name"><%= item.name %></div>
-                <div class="performance-score">
-                  <span class="score-number"><%= item.value.toFixed ? item.value.toFixed(1) : item.value %></span>
-                  <span>/5</span>
-                  <div class="score-stars"><%= generateStars(item.value) %></div>
-                </div>
-              </div>
-              <div class="performance-content">
-                <%= item.comment || '' %>
-              </div>
-            </div>
-          <% } %>
-        <% }); %>
-      <% } else { %>
-        <p class="muted">詳細評価がまだ設定されていません。</p>
-      <% } %>
-    </section>
-
     <section class="charts">
       <div class="card">
         <h2>ホスト評価（レーダー）</h2>
@@ -221,7 +141,7 @@
                 <% } %>
                 <span class="num"><%= score.toFixed ? score.toFixed(1) : score %></span>
               </td>
-              <td class="hostComment"><%= shoe.hostComment ? shoe.hostComment[label] : 'コメントなし' %></td>
+              <td class="hostComment"><%= (shoe.hostComment && shoe.hostComment[label]) || 'コメントなし' %></td>
             </tr>
           <% } %>
         </tbody>

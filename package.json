@@ -5,6 +5,7 @@
   "type": "commonjs",
   "scripts": {
     "start": "node app.js",
+    "new-article": "node scripts/new-article.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
