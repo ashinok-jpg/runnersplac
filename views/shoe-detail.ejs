@@ -71,10 +71,15 @@
         <span class="hero-brand"><%= shoe.brand %></span>
         <h1><%= shoe.name %></h1>
         <div class="hero-score">
-          <strong><%= shoe.rating.toFixed(1) %></strong><span>/ 5 総合評価</span>
+          <% if (typeof shoe.rating === 'number') { %>
+            <strong><%= shoe.rating.toFixed(1) %></strong><span>/ 5 性能点<% if (shoe.category) { %>（<%= shoe.category %>）<% } %></span>
+            <% if (typeof shoe.value === 'number') { %><strong class="hero-score__sub"><%= shoe.value.toFixed(1) %></strong><span>/ 5 コスパ点</span><% } %>
+          <% } else { %>
+            <span>計測データが不足しているため点数はありません</span>
+          <% } %>
         </div>
         <dl class="hero-spec">
-          <div><dt>価格</dt><dd>¥<%= shoe.price.toLocaleString() %></dd></div>
+          <div><dt>価格</dt><dd><%= shoe.price != null ? "¥" + shoe.price.toLocaleString() : "国内未定" %></dd></div>
           <div><dt>重量</dt><dd><%= shoe.weight %>g</dd></div>
           <div><dt>オフセット</dt><dd><%= shoe.offset %></dd></div>
           <div><dt>用途</dt><dd><%= shoe.purpose %></dd></div>

@@ -1146,7 +1146,8 @@ main {
 }
 .hero-brand{color:var(--muted);font-size:.9375rem}
 .hero h1{margin:.1rem 0 .75rem;font-weight:800;line-height:1.2}
-.hero-score{display:flex;align-items:baseline;gap:.5rem;margin-bottom:1.25rem;color:var(--muted)}
+.hero-score{display:flex;flex-wrap:wrap;align-items:baseline;gap:.5rem;margin-bottom:1.25rem;color:var(--muted)}
+.hero-score .hero-score__sub{margin-left:.75rem;font-size:1.75rem}
 .hero-score strong{font-size:2.75rem;font-weight:800;line-height:1;color:var(--fg)}
 .hero-spec{display:grid;grid-template-columns:1fr 1fr;gap:.75rem 1rem;margin:0 0 1.25rem}
 .hero-spec dt{color:var(--muted);font-size:.8125rem}

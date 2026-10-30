@@ -94,7 +94,9 @@ body{font-family:"Inter","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui
 .shoe-card__title{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
 .shoe-card__brand{color:var(--muted);font-size:.8125rem}
 .shoe-card h3{margin:0;font-size:1.0625rem;line-height:1.35}
-.shoe-card__score{font-size:1.5rem;font-weight:800;line-height:1.1;color:var(--text)}
+.shoe-card__score{font-size:1.5rem;font-weight:800;line-height:1.1;color:var(--text);text-align:right;white-space:nowrap}
+.shoe-card__score small{display:block;color:var(--muted);font-size:.65rem;font-weight:500}
+.shoe-card__score--none,.shoe-card__score.shoe-card__score--none{color:var(--muted);font-size:.75rem;font-weight:500}
 .shoe-card__spec{margin:.5rem 0 .75rem;color:var(--muted);font-size:.875rem}
 .score-bars{display:grid;gap:6px;margin:0}
 .score-bars div{display:grid;grid-template-columns:5em 1fr;align-items:center;font-size:.8125rem}

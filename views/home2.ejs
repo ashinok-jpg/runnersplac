@@ -36,9 +36,17 @@
         レビュー記事あり
       </label>
       <label class="list-bar__sort">
+        用途
+        <select name="category" data-autosubmit>
+          <% [['','すべて'],['レース','レース'],['スピード','スピード練習'],['デイリー','デイリー'],['トレイル','トレイル']].forEach(function([v, label]){ %>
+            <option value="<%= v %>" <%= category===v ? 'selected' : '' %>><%= label %></option>
+          <% }) %>
+        </select>
+      </label>
+      <label class="list-bar__sort">
         並び順
         <select name="sort" data-autosubmit>
-          <% [['score','評価が高い順'],['priceAsc','価格が安い順'],['weightAsc','軽い順']].forEach(function([v, label]){ %>
+          <% [['score','性能点が高い順'],['value','コスパ点が高い順'],['priceAsc','価格が安い順'],['weightAsc','軽い順']].forEach(function([v, label]){ %>
             <option value="<%= v %>" <%= sort===v ? 'selected' : '' %>><%= label %></option>
           <% }) %>
         </select>
@@ -63,13 +71,13 @@
             <div class="shoe-card__body">
               <div class="shoe-card__title">
                 <div>
-                  <span class="shoe-card__brand"><%= s.brand %></span>
+                  <span class="shoe-card__brand"><%= s.brand %><% if (s.category) { %> ・ <%= s.category %><% } %></span>
                   <h3><%= s.name %></h3>
                 </div>
-                <span class="shoe-card__score" aria-label="総合評価 <%= s.score?.overall ?? '—' %>"><%= typeof s.score?.overall === 'number' ? s.score.overall.toFixed(1) : '—' %></span>
+                <% if (typeof s.score?.overall === 'number') { %><span class="shoe-card__score" aria-label="性能点 <%= s.score.overall %>"><%= s.score.overall.toFixed(1) %><small>性能点</small></span><% } else { %><span class="shoe-card__score shoe-card__score--none">データなし</span><% } %>
               </div>
               <p class="shoe-card__spec">
-                <%= s.price ? '¥' + s.price.toLocaleString() : '価格未定' %><% if (s.weight) { %> ・ <%= s.weight %>g<% } %><% if (s.purpose) { %> ・ <%= s.purpose %><% } %>
+                <%= s.price ? '¥' + s.price.toLocaleString() : '価格未定' %><% if (s.weight) { %> ・ <%= s.weight %>g<% } %><% if (typeof s.value === 'number') { %> ・ コスパ <%= s.value.toFixed(1) %><% } %><% if (s.purpose) { %> ・ <%= s.purpose %><% } %>
               </p>
               <dl class="score-bars">
                 <% scoreBars.forEach(function([label, key]){ const v = s.score?.[key]; %>

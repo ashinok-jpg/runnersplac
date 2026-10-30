@@ -7,6 +7,7 @@ const { listBlogs } = require('../lib/blogs');
 const BRANDS = Array.from(new Set(shoes.map((s) => s.brand).filter(Boolean)));
 const SORTERS = {
   score: (a, b) => (b.score?.overall ?? -1) - (a.score?.overall ?? -1),
+  value: (a, b) => (b.value ?? -1) - (a.value ?? -1),
   priceAsc: (a, b) => (a.price ?? Infinity) - (b.price ?? Infinity),
   weightAsc: (a, b) => (a.weight ?? Infinity) - (b.weight ?? Infinity),
 };
@@ -27,6 +28,7 @@ router.get('/home2', (req, res) => {
   const cushionMin   = toNum(req.query.cushionMin);
   const stabilityMin = toNum(req.query.stabilityMin);
   const speedMin     = toNum(req.query.speedMin);
+  const category     = (req.query.category || '').trim();
   const review       = req.query.review === '1';
   const sort         = SORTERS[req.query.sort] ? req.query.sort : 'score';
 
@@ -47,6 +49,7 @@ router.get('/home2', (req, res) => {
   if (stabilityMin !== undefined) list = list.filter(s => (typeof s.score?.stability === 'number' && s.score.stability >= stabilityMin));
   if (speedMin !== undefined)     list = list.filter(s => (typeof s.score?.speed     === 'number' && s.score.speed     >= speedMin));
 
+  if (category) list = list.filter(s => s.category === category);
   if (review) list = list.filter(s => s.hasArticle);
 
   list = list.sort(SORTERS[sort]);
@@ -70,7 +73,7 @@ router.get('/home2', (req, res) => {
     shoes: list,
     q, brand, priceMax, weightMax, cushionMin, stabilityMin, speedMin,
     activeFilters,
-    review, sort, keepParams,
+    review, sort, category, keepParams,
     brands: BRANDS,
     totalCount: shoes.length,
     blogs: listBlogs(),

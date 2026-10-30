@@ -1,0 +1,1854 @@
+{
+ "adistar3": {
+  "category": "デイリー",
+  "performance": 3.53,
+  "value": 3.5,
+  "items": {
+   "0": 3.5,
+   "1": 4,
+   "2": 2.5,
+   "3": 3.5,
+   "6": 5,
+   "7": 2.5,
+   "8": 2.5,
+   "9": 4
+  }
+ },
+ "adistarbyd": {
+  "category": "デイリー",
+  "performance": 3.92,
+  "value": 4,
+  "items": {
+   "0": 3.5,
+   "1": 4.5,
+   "2": 2.5,
+   "3": 4,
+   "6": 2,
+   "7": 3,
+   "8": 4.5,
+   "9": 4.5
+  }
+ },
+ "adiospro4": {
+  "category": "レース",
+  "performance": 3.98,
+  "value": 5,
+  "items": {
+   "0": 4,
+   "1": 2,
+   "2": 4.5,
+   "3": 5,
+   "6": 2,
+   "7": 5,
+   "8": 4,
+   "9": 4.5
+  }
+ },
+ "adiospro5": {
+  "category": "レース",
+  "performance": 4.14,
+  "value": 4,
+  "items": {
+   "0": 4,
+   "1": 2,
+   "2": 5,
+   "3": 4,
+   "6": 3,
+   "7": 5,
+   "8": 4.5,
+   "9": 2.5
+  }
+ },
+ "adizerosl2": {
+  "category": "スピード",
+  "performance": 3.24,
+  "value": 4,
+  "items": {
+   "0": 3.5,
+   "1": 2.5,
+   "2": 3,
+   "3": 4,
+   "6": 5,
+   "7": 3,
+   "8": 4.5,
+   "9": 3.5
+  }
+ },
+ "boston12": {
+  "category": "スピード",
+  "performance": 3.25,
+  "value": 3.5,
+  "items": {
+   "0": 3,
+   "1": 2.5,
+   "2": 2.5,
+   "3": 3.5,
+   "6": 5,
+   "7": 3,
+   "8": 4,
+   "9": 4.5
+  }
+ },
+ "duramosl2": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "evosl": {
+  "category": "スピード",
+  "performance": 3.77,
+  "value": 4.5,
+  "items": {
+   "0": 4,
+   "1": 3.5,
+   "2": 3.5,
+   "3": 4.5,
+   "7": 4,
+   "8": 2.5,
+   "9": 4.5
+  }
+ },
+ "evo1": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "glx6": {
+  "category": "デイリー",
+  "performance": 3.03,
+  "value": 5,
+  "items": {
+   "0": 2.5,
+   "1": 3,
+   "2": 1.5,
+   "3": 5,
+   "6": 2,
+   "7": 2,
+   "8": 1.5,
+   "9": 3.5
+  }
+ },
+ "japan9": {
+  "category": "レース",
+  "performance": 3.76,
+  "value": 5,
+  "items": {
+   "0": 2.5,
+   "1": 1.5,
+   "2": 5,
+   "3": 5,
+   "6": 2,
+   "7": 4.5,
+   "8": 4,
+   "9": 4.5
+  }
+ },
+ "primex2strung": {
+  "category": "スピード",
+  "performance": 3.45,
+  "value": 2,
+  "items": {
+   "0": 4,
+   "1": 2,
+   "2": 1.5,
+   "3": 2,
+   "6": 4,
+   "7": 3.5,
+   "8": 4.5,
+   "9": 5
+  }
+ },
+ "supernovacomfort": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "supernovaprima": {
+  "category": "デイリー",
+  "performance": 3.24,
+  "value": 2,
+  "items": {
+   "0": 3,
+   "1": 4.5,
+   "2": 2,
+   "3": 2,
+   "6": 4,
+   "7": 3,
+   "8": 3,
+   "9": 2.5
+  }
+ },
+ "supernovarise2": {
+  "category": "デイリー",
+  "performance": 3.43,
+  "value": 3.5,
+  "items": {
+   "0": 3,
+   "1": 4,
+   "2": 3,
+   "3": 3.5,
+   "6": 4,
+   "7": 3.5,
+   "8": 2.5,
+   "9": 3.5
+  }
+ },
+ "supernovasolution": {
+  "category": "デイリー",
+  "performance": 3.51,
+  "value": 3.5,
+  "items": {
+   "0": 3,
+   "1": 4,
+   "2": 2.5,
+   "3": 3.5,
+   "6": 4,
+   "7": 3,
+   "8": 3,
+   "9": 3.5
+  }
+ },
+ "supernovastride": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "takumisen10": {
+  "category": "レース",
+  "performance": 3.53,
+  "value": 3.5,
+  "items": {
+   "0": 3.5,
+   "1": 2,
+   "2": 4.5,
+   "3": 3.5,
+   "6": 5,
+   "7": 4,
+   "8": 3.5,
+   "9": 2.5
+  }
+ },
+ "dynablast4": {
+  "category": "デイリー",
+  "performance": 3.43,
+  "value": 4.5,
+  "items": {
+   "0": 3,
+   "1": 4,
+   "2": 2.5,
+   "3": 4.5,
+   "6": 1,
+   "7": 2,
+   "8": 2,
+   "9": 5
+  }
+ },
+ "gelcumulus26": {
+  "category": "デイリー",
+  "performance": 3.41,
+  "value": 2.5,
+  "items": {
+   "0": 2.5,
+   "1": 5,
+   "2": 3,
+   "3": 2.5,
+   "6": 3,
+   "7": 2,
+   "8": 3.5,
+   "9": 2.5
+  }
+ },
+ "gelcumulus27": {
+  "category": "デイリー",
+  "performance": 3.49,
+  "value": 2.5,
+  "items": {
+   "0": 3.5,
+   "1": 4.5,
+   "2": 2.5,
+   "3": 2.5,
+   "6": 2,
+   "7": 2,
+   "8": 3.5,
+   "9": 2.5
+  }
+ },
+ "gelkayano31": {
+  "category": "デイリー",
+  "performance": 3.68,
+  "value": 3,
+  "items": {
+   "0": 3.5,
+   "1": 4.5,
+   "2": 2,
+   "3": 3,
+   "6": 4,
+   "7": 2,
+   "8": 5,
+   "9": 3.5
+  }
+ },
+ "gelkayano32": {
+  "category": "デイリー",
+  "performance": 3.95,
+  "value": 4,
+  "items": {
+   "0": 3.5,
+   "1": 5,
+   "2": 2,
+   "3": 4,
+   "7": 1.5,
+   "8": 5,
+   "9": 4.5
+  }
+ },
+ "gelnimbus27": {
+  "category": "デイリー",
+  "performance": 4.01,
+  "value": 4,
+  "items": {
+   "0": 3.5,
+   "1": 4.5,
+   "2": 2,
+   "3": 4,
+   "6": 4,
+   "7": 1.5,
+   "8": 5,
+   "9": 4.5
+  }
+ },
+ "gelsonoma": {
+  "category": "トレイル",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "geltrabuco13": {
+  "category": "トレイル",
+  "performance": 3.64,
+  "value": null,
+  "items": {
+   "0": 2.5,
+   "1": 5,
+   "2": 2,
+   "6": 3,
+   "7": 2.5,
+   "8": 4.5,
+   "9": 5
+  }
+ },
+ "glideridemax": {
+  "category": "デイリー",
+  "performance": 4,
+  "value": 4.5,
+  "items": {
+   "0": 4,
+   "1": 5,
+   "2": 2,
+   "3": 4.5,
+   "6": 3,
+   "7": 2,
+   "8": 5,
+   "9": 4
+  }
+ },
+ "gt100013": {
+  "category": "デイリー",
+  "performance": 3.49,
+  "value": 5,
+  "items": {
+   "0": 2.5,
+   "1": 4.5,
+   "2": 2.5,
+   "3": 5,
+   "6": 3,
+   "7": 2,
+   "8": 2.5,
+   "9": 4.5
+  }
+ },
+ "gt200013": {
+  "category": "デイリー",
+  "performance": 3.69,
+  "value": 4.5,
+  "items": {
+   "0": 2.5,
+   "1": 4.5,
+   "2": 2.5,
+   "3": 4.5,
+   "6": 4,
+   "7": 2,
+   "8": 3,
+   "9": 5
+  }
+ },
+ "hyperracer": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "hyperspeed4": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "lyteracer": {
+  "category": "スピード",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "magicspeed4": {
+  "category": "スピード",
+  "performance": 3.48,
+  "value": 3.5,
+  "items": {
+   "0": 4,
+   "1": 2.5,
+   "2": 3.5,
+   "3": 3.5,
+   "6": 5,
+   "7": 3,
+   "8": 5,
+   "9": 4
+  }
+ },
+ "metaspeededge": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "metaspeedray": {
+  "category": "レース",
+  "performance": 4.42,
+  "value": 4.5,
+  "items": {
+   "0": 5,
+   "1": 1.5,
+   "2": 5,
+   "3": 4.5,
+   "6": 4,
+   "7": 5,
+   "8": 4.5,
+   "9": 3.5
+  }
+ },
+ "metaspeedsky": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "metaspeedtokyo": {
+  "category": "レース",
+  "performance": 4.36,
+  "value": 4.5,
+  "items": {
+   "0": 4,
+   "1": 2,
+   "2": 5,
+   "3": 4.5,
+   "6": 5,
+   "7": 5,
+   "8": 4.5,
+   "9": 3
+  }
+ },
+ "noosatri15": {
+  "category": "デイリー",
+  "performance": 3.54,
+  "value": 4,
+  "items": {
+   "0": 3.5,
+   "1": 3,
+   "2": 4,
+   "3": 4,
+   "6": 5,
+   "7": 2.5,
+   "8": 2.5,
+   "9": 4.5
+  }
+ },
+ "novablast5": {
+  "category": "デイリー",
+  "performance": 4.08,
+  "value": 5,
+  "items": {
+   "0": 4,
+   "1": 4,
+   "2": 3,
+   "3": 5,
+   "6": 3,
+   "7": 3.5,
+   "8": 3.5,
+   "9": 5
+  }
+ },
+ "novablast6": {
+  "category": "デイリー",
+  "performance": 4.02,
+  "value": 4.5,
+  "items": {
+   "0": 4,
+   "1": 3.5,
+   "2": 3,
+   "3": 4.5,
+   "7": 3.5,
+   "8": 5,
+   "9": 4.5
+  }
+ },
+ "sortiemagicrp6": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "superblast2": {
+  "category": "デイリー",
+  "performance": 3.96,
+  "value": 4,
+  "items": {
+   "0": 3.5,
+   "1": 4,
+   "2": 3,
+   "3": 4,
+   "6": 5,
+   "7": 3.5,
+   "8": 5,
+   "9": 5
+  }
+ },
+ "tartherrp3": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "versablast": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "yogiri": {
+  "category": "スピード",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "ghost16": {
+  "category": "デイリー",
+  "performance": 3.99,
+  "value": 4.5,
+  "items": {
+   "0": 3.5,
+   "1": 4.5,
+   "2": 2.5,
+   "3": 4.5,
+   "6": 4,
+   "7": 3,
+   "8": 3.5,
+   "9": 4.5
+  }
+ },
+ "ghost18": {
+  "category": "デイリー",
+  "performance": 4.11,
+  "value": 4.5,
+  "items": {
+   "0": 3.5,
+   "1": 5,
+   "2": 2,
+   "3": 4.5,
+   "7": 2.5,
+   "8": 4,
+   "9": 4.5
+  }
+ },
+ "arahi7": {
+  "category": "デイリー",
+  "performance": 3.26,
+  "value": 2.5,
+  "items": {
+   "0": 2,
+   "1": 5,
+   "2": 2.5,
+   "3": 2.5,
+   "6": 3,
+   "7": 2.5,
+   "8": 2.5,
+   "9": 4
+  }
+ },
+ "bondi9": {
+  "category": "デイリー",
+  "performance": 3.8,
+  "value": 3,
+  "items": {
+   "0": 4,
+   "1": 4,
+   "2": 1.5,
+   "3": 3,
+   "6": 3,
+   "7": 2.5,
+   "8": 3,
+   "9": 4
+  }
+ },
+ "bondix": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "carbonx3": {
+  "category": "スピード",
+  "performance": 2.92,
+  "value": null,
+  "items": {
+   "0": 2.5,
+   "1": 3,
+   "2": 3.5,
+   "6": 3,
+   "7": 3,
+   "8": 3.5
+  }
+ },
+ "cieloroad": {
+  "category": "スピード",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "cielox1": {
+  "category": "レース",
+  "performance": 3.37,
+  "value": 3,
+  "items": {
+   "0": 4,
+   "1": 3,
+   "2": 3,
+   "3": 3,
+   "6": 3,
+   "7": 4,
+   "8": 2.5,
+   "9": 4.5
+  }
+ },
+ "cielox1_3": {
+  "category": "レース",
+  "performance": 3.8,
+  "value": 2,
+  "items": {
+   "0": 5,
+   "1": 2,
+   "2": 4.5,
+   "3": 2,
+   "6": 4,
+   "7": 4,
+   "8": 4.5,
+   "9": 2.5
+  }
+ },
+ "clifton10": {
+  "category": "デイリー",
+  "performance": 3.68,
+  "value": 3,
+  "items": {
+   "0": 4,
+   "1": 3.5,
+   "2": 2.5,
+   "3": 3,
+   "6": 3,
+   "7": 2.5,
+   "8": 3.5,
+   "9": 4
+  }
+ },
+ "clifton9": {
+  "category": "デイリー",
+  "performance": 3.38,
+  "value": null,
+  "items": {
+   "0": 3,
+   "1": 5,
+   "2": 3,
+   "6": 3,
+   "7": 2.5,
+   "8": 2
+  }
+ },
+ "gaviota5": {
+  "category": "デイリー",
+  "performance": 3.33,
+  "value": 2,
+  "items": {
+   "0": 2.5,
+   "1": 4,
+   "2": 2,
+   "3": 2,
+   "6": 5,
+   "7": 1.5,
+   "8": 3,
+   "9": 4
+  }
+ },
+ "mach6": {
+  "category": "デイリー",
+  "performance": 3.79,
+  "value": 3.5,
+  "items": {
+   "0": 3.5,
+   "1": 4,
+   "2": 3.5,
+   "3": 3.5,
+   "6": 5,
+   "7": 3.5,
+   "8": 3.5,
+   "9": 4.5
+  }
+ },
+ "machx2": {
+  "category": "スピード",
+  "performance": 3.48,
+  "value": 3,
+  "items": {
+   "0": 4,
+   "1": 2.5,
+   "2": 3,
+   "3": 3,
+   "6": 4,
+   "7": 3.5,
+   "8": 3.5,
+   "9": 4.5
+  }
+ },
+ "rincon4": {
+  "category": "デイリー",
+  "performance": 3.25,
+  "value": 2,
+  "items": {
+   "0": 3.5,
+   "1": 4.5,
+   "2": 3.5,
+   "3": 2,
+   "6": 5,
+   "7": 3,
+   "8": 3,
+   "9": 2
+  }
+ },
+ "rocketx2": {
+  "category": "レース",
+  "performance": 3.54,
+  "value": 2.5,
+  "items": {
+   "0": 4,
+   "1": 2.5,
+   "2": 4,
+   "3": 2.5,
+   "6": 4,
+   "7": 4,
+   "9": 3
+  }
+ },
+ "skyflow": {
+  "category": "デイリー",
+  "performance": 3.61,
+  "value": 3,
+  "items": {
+   "0": 3.5,
+   "1": 4,
+   "2": 2,
+   "3": 3,
+   "6": 5,
+   "7": 2.5,
+   "8": 3,
+   "9": 4.5
+  }
+ },
+ "skywardx": {
+  "category": "デイリー",
+  "performance": 4.02,
+  "value": 2.5,
+  "items": {
+   "0": 3.5,
+   "1": 5,
+   "2": 1.5,
+   "3": 2.5,
+   "6": 5,
+   "7": 3,
+   "8": 3,
+   "9": 4.5
+  }
+ },
+ "energyrunnerz2": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "esperunzer2": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "maximizer26": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "neozen": {
+  "category": "スピード",
+  "performance": 3.58,
+  "value": 4.5,
+  "items": {
+   "0": 4.5,
+   "1": 2.5,
+   "2": 3.5,
+   "3": 4.5,
+   "6": 4,
+   "7": 3.5,
+   "8": 2.5,
+   "9": 4
+  }
+ },
+ "neovista": {
+  "category": "デイリー",
+  "performance": 3.77,
+  "value": 4,
+  "items": {
+   "0": 4.5,
+   "1": 3,
+   "2": 3,
+   "3": 4,
+   "6": 3,
+   "7": 2.5,
+   "8": 2.5,
+   "9": 5
+  }
+ },
+ "neovista2": {
+  "category": "デイリー",
+  "performance": 3.79,
+  "value": 3.5,
+  "items": {
+   "0": 5,
+   "1": 3,
+   "2": 2.5,
+   "3": 3.5,
+   "6": 4,
+   "7": 2.5,
+   "8": 3,
+   "9": 4.5
+  }
+ },
+ "waveduel4": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "waveinspire20": {
+  "category": "デイリー",
+  "performance": 3.47,
+  "value": 4,
+  "items": {
+   "0": 3,
+   "1": 4,
+   "2": 1.5,
+   "3": 4,
+   "6": 4,
+   "7": 1.5,
+   "8": 2.5,
+   "9": 4.5
+  }
+ },
+ "waveprophecy14": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "rebellionflash2": {
+  "category": "スピード",
+  "performance": 3.17,
+  "value": 3.5,
+  "items": {
+   "0": 4,
+   "1": 3,
+   "2": 3.5,
+   "3": 3.5,
+   "6": 3,
+   "7": 3,
+   "8": 3,
+   "9": 4
+  }
+ },
+ "rebellionpro3": {
+  "category": "レース",
+  "performance": 3.33,
+  "value": 3,
+  "items": {
+   "0": 5,
+   "1": 2.5,
+   "2": 3.5,
+   "3": 3,
+   "7": 3.5,
+   "8": 4,
+   "9": 3
+  }
+ },
+ "rebellionprolow": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "waverebellionsonic2": {
+  "category": "スピード",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "waverevolt3": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "waverider28": {
+  "category": "デイリー",
+  "performance": 3.21,
+  "value": 2.5,
+  "items": {
+   "0": 3.5,
+   "1": 3.5,
+   "2": 2.5,
+   "3": 2.5,
+   "6": 4,
+   "7": 2,
+   "8": 3.5,
+   "9": 3.5
+  }
+ },
+ "waverider30": {
+  "category": "デイリー",
+  "performance": 4.1,
+  "value": 5,
+  "items": {
+   "0": 4.5,
+   "1": 3.5,
+   "2": 2.5,
+   "3": 5,
+   "6": 4,
+   "7": 2,
+   "8": 4.5,
+   "9": 5
+  }
+ },
+ "wavesky8": {
+  "category": "デイリー",
+  "performance": 3.41,
+  "value": 2.5,
+  "items": {
+   "0": 4,
+   "1": 3.5,
+   "2": 2.5,
+   "3": 2.5,
+   "6": 3,
+   "7": 2.5,
+   "8": 2,
+   "9": 3
+  }
+ },
+ "waveskyrise5": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "arishiv4": {
+  "category": "デイリー",
+  "performance": 2.94,
+  "value": 4,
+  "items": {
+   "0": 2,
+   "1": 3,
+   "2": 3,
+   "3": 4,
+   "6": 4,
+   "7": 3,
+   "8": 2.5,
+   "9": 4.5
+  }
+ },
+ "evozv3": {
+  "category": "デイリー",
+  "performance": 3.74,
+  "value": 5,
+  "items": {
+   "0": 3.5,
+   "1": 4,
+   "2": 3,
+   "3": 5,
+   "6": 2,
+   "7": 3,
+   "8": 3.5,
+   "9": 4.5
+  }
+ },
+ "x1080v14": {
+  "category": "デイリー",
+  "performance": 3.84,
+  "value": 4,
+  "items": {
+   "0": 4,
+   "1": 4,
+   "2": 2,
+   "3": 4,
+   "6": 4,
+   "7": 2.5,
+   "8": 3.5,
+   "9": 4.5
+  }
+ },
+ "freshfoamx1440": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "xkaiharoad": {
+  "category": "デイリー",
+  "performance": 3.75,
+  "value": 5,
+  "items": {
+   "0": 3.5,
+   "1": 4,
+   "2": 2,
+   "3": 5,
+   "6": 4,
+   "7": 2.5,
+   "8": 3.5,
+   "9": 4
+  }
+ },
+ "x860v14": {
+  "category": "デイリー",
+  "performance": 3.39,
+  "value": 3.5,
+  "items": {
+   "0": 3,
+   "1": 4,
+   "2": 2,
+   "3": 3.5,
+   "6": 3,
+   "7": 3,
+   "8": 3.5,
+   "9": 3.5
+  }
+ },
+ "x880v14": {
+  "category": "デイリー",
+  "performance": 3.41,
+  "value": 3.5,
+  "items": {
+   "0": 3,
+   "1": 3.5,
+   "2": 3,
+   "3": 3.5,
+   "6": 3,
+   "7": 3,
+   "8": 3.5,
+   "9": 3.5
+  }
+ },
+ "hierrov8": {
+  "category": "トレイル",
+  "performance": 3.61,
+  "value": null,
+  "items": {
+   "0": 3.5,
+   "1": 3.5,
+   "2": 2,
+   "6": 2,
+   "7": 2.5,
+   "8": 2,
+   "9": 4.5
+  }
+ },
+ "morev5": {
+  "category": "デイリー",
+  "performance": 4.25,
+  "value": 4.5,
+  "items": {
+   "0": 4.5,
+   "1": 4.5,
+   "2": 1.5,
+   "3": 4.5,
+   "6": 5,
+   "7": 2,
+   "8": 4,
+   "9": 4.5
+  }
+ },
+ "fuelcell5280v2": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "propelv5": {
+  "category": "デイリー",
+  "performance": 3.43,
+  "value": 4,
+  "items": {
+   "0": 4,
+   "1": 3.5,
+   "2": 2.5,
+   "3": 4,
+   "6": 5,
+   "7": 3,
+   "8": 3,
+   "9": 3.5
+  }
+ },
+ "pvlsev1": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "rebelv4": {
+  "category": "スピード",
+  "performance": 3.78,
+  "value": 5,
+  "items": {
+   "0": 3.5,
+   "1": 3.5,
+   "2": 4,
+   "3": 5,
+   "6": 4,
+   "7": 3.5,
+   "8": 3.5,
+   "9": 4.5
+  }
+ },
+ "rebelv5": {
+  "category": "スピード",
+  "performance": 3.89,
+  "value": 5,
+  "items": {
+   "0": 4,
+   "1": 3.5,
+   "2": 4,
+   "3": 5,
+   "6": 3,
+   "7": 3.5,
+   "8": 3.5,
+   "9": 4.5
+  }
+ },
+ "elitev4": {
+  "category": "レース",
+  "performance": 3.62,
+  "value": 4,
+  "items": {
+   "0": 4,
+   "1": 3,
+   "2": 3.5,
+   "3": 4,
+   "6": 4,
+   "7": 4,
+   "8": 3,
+   "9": 4.5
+  }
+ },
+ "pacerv2": {
+  "category": "スピード",
+  "performance": 3.92,
+  "value": 4,
+  "items": {
+   "0": 3.5,
+   "1": 3,
+   "2": 4.5,
+   "3": 4,
+   "6": 5,
+   "7": 4.5,
+   "8": 3,
+   "9": 4.5
+  }
+ },
+ "trainerv3": {
+  "category": "スピード",
+  "performance": 3.29,
+  "value": 2.5,
+  "items": {
+   "0": 4,
+   "1": 3.5,
+   "2": 2.5,
+   "3": 2.5,
+   "6": 4,
+   "7": 3,
+   "8": 3.5,
+   "9": 3.5
+  }
+ },
+ "mhanzrv4": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "alphaflynext3": {
+  "category": "レース",
+  "performance": 3.68,
+  "value": 2,
+  "items": {
+   "0": 4,
+   "1": 2.5,
+   "2": 4,
+   "3": 2,
+   "6": 5,
+   "7": 4,
+   "8": 2.5,
+   "9": 2
+  }
+ },
+ "pegasus41": {
+  "category": "デイリー",
+  "performance": 3.22,
+  "value": 3,
+  "items": {
+   "0": 3,
+   "1": 4,
+   "2": 2,
+   "3": 3,
+   "6": 4,
+   "7": 2.5,
+   "8": 2,
+   "9": 4
+  }
+ },
+ "structure25": {
+  "category": "デイリー",
+  "performance": 3.54,
+  "value": 4.5,
+  "items": {
+   "0": 3.5,
+   "1": 4.5,
+   "2": 1.5,
+   "3": 4.5,
+   "6": 3,
+   "7": 2,
+   "8": 3,
+   "9": 4.5
+  }
+ },
+ "structure26": {
+  "category": "デイリー",
+  "performance": 3.23,
+  "value": 3,
+  "items": {
+   "0": 3.5,
+   "1": 3.5,
+   "2": 2,
+   "3": 3,
+   "7": 2.5,
+   "8": 3,
+   "9": 4.5
+  }
+ },
+ "vomero18": {
+  "category": "デイリー",
+  "performance": 3.64,
+  "value": 3.5,
+  "items": {
+   "0": 4,
+   "1": 4,
+   "2": 2,
+   "3": 3.5,
+   "6": 3,
+   "7": 2.5,
+   "8": 2.5,
+   "9": 3.5
+  }
+ },
+ "alphafly4": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "downshifter13": {
+  "category": "デイリー",
+  "performance": 3.12,
+  "value": 5,
+  "items": {
+   "0": 2.5,
+   "1": 3.5,
+   "2": 2.5,
+   "3": 5,
+   "6": 4,
+   "7": 2.5,
+   "8": 2.5,
+   "9": 4.5
+  }
+ },
+ "freernnn": {
+  "category": "デイリー",
+  "performance": 2.84,
+  "value": 3.5,
+  "items": {
+   "0": 2,
+   "1": 2.5,
+   "2": 4.5,
+   "3": 3.5,
+   "6": 2,
+   "7": 3,
+   "8": 2,
+   "9": 4.5
+  }
+ },
+ "interactrun": {
+  "category": "デイリー",
+  "performance": 2.86,
+  "value": 3,
+  "items": {
+   "0": 2,
+   "1": 3.5,
+   "2": 3,
+   "3": 3,
+   "6": 5,
+   "7": 2.5,
+   "8": 1.5,
+   "9": 3
+  }
+ },
+ "invincible3": {
+  "category": "デイリー",
+  "performance": 3.56,
+  "value": null,
+  "items": {
+   "0": 3.5,
+   "1": 4,
+   "2": 1.5,
+   "6": 4,
+   "7": 3,
+   "8": 3.5
+  }
+ },
+ "pegasusplus": {
+  "category": "デイリー",
+  "performance": 3.31,
+  "value": 2,
+  "items": {
+   "0": 3,
+   "1": 4,
+   "2": 3,
+   "3": 2,
+   "6": 3,
+   "7": 3.5,
+   "8": 3,
+   "9": 3.5
+  }
+ },
+ "pegasuspremium": {
+  "category": "デイリー",
+  "performance": 3.99,
+  "value": 2.5,
+  "items": {
+   "0": 4.5,
+   "1": 4.5,
+   "2": 1.5,
+   "3": 2.5,
+   "6": 5,
+   "7": 3,
+   "8": 3.5,
+   "9": 4
+  }
+ },
+ "quest5": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "reactinfinityrun3": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "renewride": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "revolution7": {
+  "category": "デイリー",
+  "performance": 2.8,
+  "value": 4.5,
+  "items": {
+   "0": 1.5,
+   "1": 3.5,
+   "2": 2,
+   "3": 4.5,
+   "6": 3,
+   "7": 1.5,
+   "8": 3,
+   "9": 4
+  }
+ },
+ "rivalfly4": {
+  "category": "スピード",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "streakfly2": {
+  "category": "レース",
+  "performance": 3.63,
+  "value": 3.5,
+  "items": {
+   "0": 2,
+   "1": 1.5,
+   "2": 5,
+   "3": 3.5,
+   "6": 5,
+   "7": 4.5,
+   "8": 3.5,
+   "9": 3
+  }
+ },
+ "vaporfly3": {
+  "category": "レース",
+  "performance": 3.96,
+  "value": 4.5,
+  "items": {
+   "0": 3.5,
+   "1": 3,
+   "2": 4.5,
+   "3": 4.5,
+   "6": 5,
+   "7": 4.5,
+   "8": 3.5,
+   "9": 5
+  }
+ },
+ "vaporfly4": {
+  "category": "レース",
+  "performance": 4.09,
+  "value": 4,
+  "items": {
+   "0": 3.5,
+   "1": 2.5,
+   "2": 5,
+   "3": 4,
+   "6": 4,
+   "7": 4.5,
+   "8": 3,
+   "9": 2
+  }
+ },
+ "vomero-plus": {
+  "category": "デイリー",
+  "performance": 4,
+  "value": 4,
+  "items": {
+   "0": 4,
+   "1": 4,
+   "2": 2,
+   "3": 4,
+   "7": 3,
+   "8": 3.5,
+   "9": 4.5
+  }
+ },
+ "vomero-premium": {
+  "category": "デイリー",
+  "performance": 4.36,
+  "value": 3.5,
+  "items": {
+   "0": 5,
+   "1": 4.5,
+   "2": 1.5,
+   "3": 3.5,
+   "6": 3,
+   "7": 2.5,
+   "8": 3.5,
+   "9": 4.5
+  }
+ },
+ "winflo11": {
+  "category": "デイリー",
+  "performance": 3.24,
+  "value": 4,
+  "items": {
+   "0": 3,
+   "1": 3,
+   "2": 2,
+   "3": 4,
+   "6": 4,
+   "7": 2,
+   "8": 3,
+   "9": 4
+  }
+ },
+ "zoomfly6": {
+  "category": "スピード",
+  "performance": 3.59,
+  "value": 4,
+  "items": {
+   "0": 4,
+   "1": 4,
+   "2": 3,
+   "3": 4,
+   "6": 3,
+   "7": 3.5,
+   "8": 3,
+   "9": 4.5
+  }
+ },
+ "cloud5": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "cloudboomecho3": {
+  "category": "レース",
+  "performance": 3.31,
+  "value": 2.5,
+  "items": {
+   "0": 3.5,
+   "1": 2.5,
+   "2": 3.5,
+   "3": 2.5,
+   "6": 5,
+   "7": 4,
+   "8": 2.5,
+   "9": 3.5
+  }
+ },
+ "cloudboomstrike": {
+  "category": "レース",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "cloudboomzone": {
+  "category": "スピード",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "cloudeclipse": {
+  "category": "デイリー",
+  "performance": 3.82,
+  "value": 3.5,
+  "items": {
+   "0": 4,
+   "1": 3.5,
+   "2": 2.5,
+   "3": 3.5,
+   "6": 4,
+   "7": 2.5,
+   "8": 3,
+   "9": 5
+  }
+ },
+ "cloudflow4": {
+  "category": "スピード",
+  "performance": 2.99,
+  "value": 3,
+  "items": {
+   "0": 3,
+   "1": 3,
+   "2": 3,
+   "3": 3,
+   "6": 4,
+   "7": 2.5,
+   "8": 2.5,
+   "9": 4
+  }
+ },
+ "cloudmonster2": {
+  "category": "デイリー",
+  "performance": 3.57,
+  "value": 3,
+  "items": {
+   "0": 3.5,
+   "1": 3.5,
+   "2": 2,
+   "3": 3,
+   "6": 2,
+   "7": 2.5,
+   "8": 3.5,
+   "9": 4.5
+  }
+ },
+ "cloudmonsterhyper": {
+  "category": "スピード",
+  "performance": 3.39,
+  "value": 3,
+  "items": {
+   "0": 3.5,
+   "1": 3.5,
+   "2": 3,
+   "3": 3,
+   "6": 3,
+   "7": 3,
+   "8": 2.5,
+   "9": 4.5
+  }
+ },
+ "cloudrunner2wp": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "cloudspark": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "cloudstratus3": {
+  "category": "デイリー",
+  "performance": 3.43,
+  "value": 3,
+  "items": {
+   "0": 3,
+   "1": 3,
+   "2": 2,
+   "3": 3,
+   "6": 4,
+   "7": 2.5,
+   "8": 3,
+   "9": 5
+  }
+ },
+ "cloudswift3": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "cloudx4": {
+  "category": "デイリー",
+  "performance": 2.74,
+  "value": 2,
+  "items": {
+   "0": 2,
+   "1": 3,
+   "2": 2.5,
+   "3": 2,
+   "6": 5,
+   "7": 2.5,
+   "8": 2,
+   "9": 3
+  }
+ },
+ "deviate_nitro_3": {
+  "category": "スピード",
+  "performance": 3.16,
+  "value": 2,
+  "items": {
+   "0": 3.5,
+   "1": 2.5,
+   "2": 2.5,
+   "3": 2,
+   "6": 3,
+   "7": 3,
+   "8": 4.5,
+   "9": 3
+  }
+ },
+ "deviate_nitro_elite_3": {
+  "category": "レース",
+  "performance": 3.87,
+  "value": 4,
+  "items": {
+   "0": 4,
+   "1": 2,
+   "2": 4,
+   "3": 4,
+   "6": 4,
+   "7": 4.5,
+   "8": 4.5,
+   "9": 3
+  }
+ },
+ "electrifyNitro3": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "fast_r_nitro_elite_2": {
+  "category": "レース",
+  "performance": 3.4,
+  "value": 3,
+  "items": {
+   "0": 4.5,
+   "1": 2.5,
+   "2": 2.5,
+   "3": 3,
+   "6": 5,
+   "7": 4,
+   "8": 4,
+   "9": 4
+  }
+ },
+ "fastTracNitro3": {
+  "category": "スピード",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "foreverrun_nitro_2": {
+  "category": "デイリー",
+  "performance": 3.51,
+  "value": 3,
+  "items": {
+   "0": 3.5,
+   "1": 3.5,
+   "2": 2,
+   "3": 3,
+   "6": 4,
+   "7": 2.5,
+   "8": 4,
+   "9": 4
+  }
+ },
+ "liberateNitro2": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "magmax_nitro": {
+  "category": "デイリー",
+  "performance": 3.43,
+  "value": 2,
+  "items": {
+   "0": 4,
+   "1": 4,
+   "2": 2,
+   "3": 2,
+   "6": 4,
+   "7": 2.5,
+   "8": 4,
+   "9": 3
+  }
+ },
+ "magnify_nitro_2": {
+  "category": "デイリー",
+  "performance": 3.61,
+  "value": 3.5,
+  "items": {
+   "0": 3.5,
+   "1": 4,
+   "2": 2,
+   "3": 3.5,
+   "6": 2,
+   "7": 2.5,
+   "8": 4,
+   "9": 4
+  }
+ },
+ "propio_nitro": {
+  "category": "スピード",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "redeemProRacer": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "softrideSeries": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "transport": {
+  "category": "デイリー",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "velocity_nitro_3": {
+  "category": "デイリー",
+  "performance": 3.41,
+  "value": 4,
+  "items": {
+   "0": 3,
+   "1": 3.5,
+   "2": 2.5,
+   "3": 4,
+   "6": 4,
+   "7": 2.5,
+   "8": 4,
+   "9": 4
+  }
+ },
+ "velocity_nitro_4": {
+  "category": "デイリー",
+  "performance": 3.63,
+  "value": 3.5,
+  "items": {
+   "0": 3.5,
+   "1": 3.5,
+   "2": 3.5,
+   "3": 3.5,
+   "6": 3,
+   "7": 4,
+   "8": 4.5,
+   "9": 3.5
+  }
+ },
+ "voyageNitro3": {
+  "category": "トレイル",
+  "performance": null,
+  "value": null,
+  "items": {}
+ },
+ "endorphinpro5": {
+  "category": "レース",
+  "performance": 3.98,
+  "value": 3.5,
+  "items": {
+   "0": 3.5,
+   "1": 3,
+   "2": 4,
+   "3": 3.5,
+   "7": 4.5,
+   "8": 4.5,
+   "9": 4
+  }
+ },
+ "endorphinspeed6": {
+  "category": "スピード",
+  "performance": null,
+  "value": null,
+  "items": {}
+ }
+}

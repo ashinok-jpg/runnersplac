@@ -1,4 +1,5 @@
 const { applyArticleRatings } = require('../lib/articles');
+const scores = require('./scores.json');
 
 const shoes = [
  
@@ -156,7 +157,7 @@ hostComment : {
   id: "geltrabuco13",
   name: "GEL-TRABUCO 13",
   image: "/images/asics_asics_.jpg",
-  weight: 310,
+  weight: 288,
   midsole: "",
   drop: 7,
   offset: "29/36",
@@ -565,7 +566,7 @@ hostComment : {
   id: "reactinfinityrun3",
   name: "REACT INFINITY RUN 3",
   image: "/images/nike_nike_31.jpg",
-  weight: 322,
+  weight: 297,
   midsole: "React",
   drop: 9,
   offset: "30/39",
@@ -655,7 +656,7 @@ hostComment : {
   id: "revolution7",
   name: "REVOLUTION 7",
   image: "/images/37.jpg",
-  weight: 256,
+  weight: 281,
   midsole: "不明",
   drop: 10,
   offset: "20/30",
@@ -745,7 +746,7 @@ hostComment : {
   id: "streakfly2",
   name: "STREAKFLY 2",
   image: "/images/nike_nike_30.jpg",
-  weight: 144,
+  weight: 128,
   midsole: "ZoomX + Carbon",
   drop: 4,
   offset: "23/27",
@@ -762,7 +763,7 @@ hostComment : {
     id: "vomero-plus",
     name: "VOMERO PLUS",
     image: "/images/nike_nike_36.jpg",
-    weight: 266,
+    weight: 289,
     midsole: "ZoomX Foam",
     drop: 10,
     offset: "35/45",
@@ -777,7 +778,7 @@ hostComment : {
     id: "vomero-premium",
     name: "VOMERO PREMIUM",
     image: "/images/nike_nike_32.jpg",
-    weight: 370,
+    weight: 326,
     midsole: "ZoomX Foam + Air Zoom units",
     drop: 10,
     offset: "45/55",
@@ -823,7 +824,7 @@ hostComment : {
     id: "invincible3",
     name: "INVINCIBLE 35",
     image: "/images/nike_nike_23.jpg",
-    weight: 282,
+    weight: 310,
     midsole: "ZoomX Foam",
     drop: 9,
     offset: "31/40",
@@ -871,7 +872,7 @@ hostComment : {
   id: "takumisen10",
   name: "TAKUMI SEN 10",
   image: "/images/adidas_adidas_18.jpg",
-  weight: null,
+  weight: 200,
   midsole: "Lightstrike Pro + Energy Rods 2.0",
   drop: 6,
   offset: "27/33",
@@ -991,7 +992,7 @@ hostComment : {
   id: "supernovarise2",
   name: "SUPERNOVA RISE 2",
   image: "/images/adidas_adidas_25.jpg",
-  weight: 277,
+  weight: 257,
   midsole: "Dreamstrike Plus + Support Rods",
   drop: 10,
   offset: "26/36",
@@ -1111,7 +1112,7 @@ hostComment : {
   id: "xkaiharoad",
   name: "Fresh Foam XKAIHA road",
   image: "/images/newbalance_newbalance_30.jpg",
-  weight: 300,
+  weight: 281,
   midsole: "Fresh Foam X",
   drop: 4,
   offset: "30/34",
@@ -1126,7 +1127,7 @@ hostComment : {
   id: "arishiv4",
   name: "Fresh Foam Arishiv4",
   image: "/images/newbalance_newbalance_.jpg",
-  weight: null,
+  weight: 242,
   midsole: "Fresh Foam",
   drop: 8,
   offset: "20/28",
@@ -1186,7 +1187,7 @@ hostComment : {
   id: "x880v14",
   name: "Fresh FoamX 880v14",
   image: "/images/newbalance_newbalance_27.jpg",
-  weight: 270,
+  weight: 251,
   midsole: "Fresh FoamX",
   drop: 8,
   offset: "23/31",
@@ -1276,7 +1277,7 @@ hostComment : {
   id: "trainerv3",
   name: "FuelCell SuperComp Trainer v3",
   image: "/images/newbalance_newbalance_19.jpg",
-  weight: 255,
+  weight: 278,
   midsole: "FuelCell PEBAX + エナジーアーク",
   drop: 6,
   offset: "34/40",
@@ -1456,7 +1457,7 @@ hostComment : {
   id: "waveinspire20",
   name: "WAVE INSPIRE 20",
   image: "/images/mizuno_mizuno_20.jpg",
-  weight: null,
+  weight: 302,
   midsole: "Mizuno Energy",
   drop: 12,
   offset: "26/38",
@@ -1741,7 +1742,7 @@ hostComment : {
   id: "cloudrunner2wp",
   name: "Cloudrunner 2 Waterproof",
   image: "/images/27.jpg",
-  weight: 270,
+  weight: 323,
   midsole: "Helion",
   drop: 7,
   offset: "29/36",
@@ -1771,7 +1772,7 @@ hostComment : {
   id: "cloudx4",
   name: "CloudX4",
   image: "/images/28.jpg",
-  weight: 288,
+  weight: 268,
   midsole: "Helion + Speedboard",
   drop: 7,
   offset: "19/26",
@@ -1876,7 +1877,7 @@ hostComment : {
   id: "arahi7",
   name: "Arahi 7",
   image: "/images/hoka_29.jpg",
-  weight: 282,
+  weight: 266,
   midsole: "CMEVA + J-Frame",
   drop: 5,
   offset: "29/34",
@@ -1996,7 +1997,7 @@ hostComment : {
   id: "carbonx3",
   name: "Carbon X 3",
   image: "/images/hoka_22.jpg",
-  weight: 222,
+  weight: 239,
   midsole: "SCF EVA + Carbon",
   drop: 5,
   offset: "36/41",
@@ -2026,7 +2027,7 @@ hostComment : {
   id: "gaviota5",
   name: "Gaviota 5",
   image: "/images/hoka_27.jpg",
-  weight: 215,
+  weight: 299,
   midsole: "EVA (dual) + H-Frame",
   drop: 6,
   offset: "26/32",
@@ -2161,7 +2162,7 @@ hostComment : {
     id: "velocity_nitro_4",
     name: "Velocity Nitro 4",
     image: "/images/puma_puma_40.jpg",
-    weight: 264,
+    weight: 224,
     midsole: "Nitro",
     drop: 10,
     offset: "36/26",
@@ -2328,13 +2329,121 @@ hostComment : {
 
 
 
+  {
+    "id": "adiospro5",
+    "name": "ADIZERO ADIOS PRO 5",
+    "image": "/article-assets/adiospro5/images/side.jpg",
+    "weight": 180,
+    "midsole": "LIGHTSTRIKE PRO（2層）",
+    "drop": 4,
+    "offset": "35/39",
+    "purpose": "レース（サブ3前後向け）",
+    "price": 29700,
+    "brand": "adidas",
+    "chartData": [4, 3, 5, 4, 3, 3, 3, 5, 4, 2]
+  },
+  {
+    "id": "cielox1_3",
+    "name": "CIELO X1 3.0",
+    "image": "/article-assets/cielox1_3/images/side.jpg",
+    "weight": 213,
+    "midsole": "デュアルデンシティ PEBA",
+    "drop": 7,
+    "offset": "31/38",
+    "purpose": "レース（ミッドフット接地の上級者向け）",
+    "price": 38500,
+    "brand": "hoka",
+    "chartData": [5, 1.5, 4, 2, 2.5, 3, 3, 5, 4, 2]
+  },
+  {
+    "id": "endorphinpro5",
+    "name": "ENDORPHIN PRO 5",
+    "image": "/article-assets/endorphinpro5/images/side.jpg",
+    "weight": 206,
+    "midsole": "Super Critical PWRRUN HG + PWRRUN PB",
+    "drop": 8,
+    "offset": "31.5/39.5",
+    "purpose": "レース（初カーボン・サブ3.5〜4向け）",
+    "price": 37400,
+    "brand": "Saucony",
+    "chartData": [3.5, 5, 3, 3.5, 4.5, 3, 3, 3.5, 3.5, 4.5]
+  },
+  {
+    "id": "alphafly4",
+    "name": "ALPHAFLY 4",
+    "image": "/article-assets/alphafly4/images/side.jpg",
+    "weight": 188,
+    "midsole": "ZoomX LT + ZoomX + Air Zoom",
+    "drop": 8,
+    "offset": "31/39",
+    "purpose": "レース（フルマラソン後半重視）",
+    "price": 39600,
+    "brand": "NIKE",
+    "chartData": [5, 3.5, 4.5, 2, 4.5, 3, 3, 5, 3, 2.5]
+  },
+  {
+    "id": "endorphinspeed6",
+    "name": "ENDORPHIN SPEED 6",
+    "image": "/article-assets/endorphinspeed6/images/side.jpg",
+    "weight": 230,
+    "midsole": "PWRRUN PBX（2層）",
+    "drop": 8,
+    "offset": "30/38",
+    "purpose": "スピード練習（閾値走・インターバル）",
+    "price": null,
+    "brand": "Saucony",
+    "chartData": [3, 3.5, 4, 3, 3, 3, 3, 4.5, 3, 3]
+  },
+  {
+    "id": "novablast6",
+    "name": "NOVABLAST 6",
+    "image": "/article-assets/novablast6/images/side.jpg",
+    "weight": 253,
+    "midsole": "FF BLAST MAX + FF TURBO SQUARED",
+    "drop": 8,
+    "offset": "33.5/41.5",
+    "purpose": "デイリートレーナー（キロ4:30〜5:30）",
+    "price": 17600,
+    "brand": "ASICS",
+    "chartData": [4, 3.5, 3.5, 4.5, 4.5, 3, 3, 4, 5, 4]
+  },
+  {
+    "id": "ghost18",
+    "name": "GHOST 18",
+    "image": "/article-assets/ghost18/images/side.jpg",
+    "weight": 290,
+    "midsole": "DNA LOFT v3",
+    "drop": 10,
+    "offset": "26/36",
+    "purpose": "デイリートレーナー（キロ5:00〜6:30）",
+    "price": 19800,
+    "brand": "Brooks",
+    "chartData": [3.5, 5, 2, 3.5, 5, 3, 3, 1.5, 2.5, 5]
+  },
+  {
+    "id": "waverider30",
+    "name": "WAVE RIDER 30",
+    "image": "/article-assets/waverider30/images/side.jpg",
+    "weight": 265,
+    "midsole": "MIZUNO ENERZY NXT",
+    "drop": 8,
+    "offset": "34.5/42.5",
+    "purpose": "万能デイリートレーナー（キロ4:30〜6:30）",
+    "price": 18700,
+    "brand": "Mizuno",
+    "chartData": [4.5, 4, 3, 5, 4.5, 3, 3, 3, 3, 5]
+  },
   // ほか追加したいだけ増やしてOK
 ];
 
+// 点数は scripts/score-shoes.js で計算する（ルールは research/scoring-rules.md）
 shoes.forEach(shoe => {
   applyArticleRatings(shoe);
-  const avg = shoe.chartData.reduce((sum, val) => sum + val, 0) / shoe.chartData.length;
-  shoe.rating = Number(avg.toFixed(2));
+  const score = scores[shoe.id] || {};
+  Object.entries(score.items || {}).forEach(([i, v]) => { shoe.chartData[i] = v; });
+  shoe.category = score.category || null;
+  shoe.rating = score.performance ?? null;
+  shoe.value = score.value ?? null;
 });
 
 module.exports = shoes;
