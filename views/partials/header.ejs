@@ -1,28 +1,28 @@
+<!doctype html>
+<html lang="ja">
 <head>
+<meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<title><%= typeof title !== 'undefined' ? title : 'Runnersplac｜ランニングシューズレビュー' %></title>
+<% if (typeof description !== 'undefined' && description) { %><meta name="description" content="<%= description %>"><% } %>
 <link rel="stylesheet" href="/css/base.css">
+<link rel="stylesheet" href="/css/site.css">
+<link rel="stylesheet" href="/css/prose.css">
 <meta name="google-site-verification" content="_5czcBL4tvbzQxBywCtZMynFRJHnP9ddVkyZN0i2zsI" />
 </head>
 <body>
 <nav class="nav">
   <div class="container nav-inner">
-    <a class="brand" href="/">
-      <img src="/img/runnesplac.png" alt="Runnersplac">
-      <span>Runnersplac</span>
-      <span class="badge">β</span>
-    </a>
+    <a class="site-brand" href="/">Runnersplac</a>
     <div class="menu">
-      <a href="/" aria-current="<%= current==='home' ? 'page' : 'false' %>">ホーム</a>
+      <a href="/home2" aria-current="<%= current==='home' ? 'page' : 'false' %>">シューズ</a>
+      <a href="/blog" aria-current="<%= current==='blog' ? 'page' : 'false' %>">ブログ</a>
       <a href="/wishlist" aria-current="<%= current==='wishlist' ? 'page' : 'false' %>">購入候補</a>
-      <a href="/about" aria-current="<%= current==='about' ? 'page' : 'false' %>">このサイトについて</a>
 <% if (typeof user !== 'undefined' && user) { %>
-  <span class="badge"><%= user.displayName || user.nickname || 'User' %></span>
-  <a class="btn" href="/logout">ログアウト</a>
+  <a href="/logout">ログアウト</a>
 <% } else { %>
-  <a class="btn" href="/login">ログイン</a>
+  <a href="/login" aria-current="<%= current==='login' ? 'page' : 'false' %>">ログイン</a>
 <% } %>
     </div>
   </div>
 </nav>
-</body>

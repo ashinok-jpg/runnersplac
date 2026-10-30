@@ -740,76 +740,6 @@ h3 { font-size: 1.25rem; }
   }
 }
 
-/* 本文（ホスト記事）のスタイル調整 */
-.host-article .prose{
-  max-width:42rem;
-  margin:0 auto;
-  font-size:1.0625rem;
-  line-height:1.9;
-  color:var(--fg);
-  overflow-wrap:anywhere;
-}
-.host-article .prose h1{
-  font-size:1.5rem;
-  line-height:1.4;
-  margin:0 0 1.25rem;
-  color:var(--fg);
-}
-.host-article .prose h2{
-  font-size:1.3rem;
-  line-height:1.4;
-  margin:2.5rem 0 1rem;
-  padding-bottom:.4rem;
-  border-bottom:1px solid #e5e7eb;
-  color:var(--fg);
-}
-.host-article .prose h3{
-  font-size:1.1rem;
-  line-height:1.5;
-  margin:2rem 0 .75rem;
-  color:var(--fg);
-  font-weight:600;
-}
-.host-article .prose p{
-  margin:0 0 1.25rem;
-}
-.host-article .prose .lead{
-  font-size:1.125rem;
-  font-weight:500;
-}
-.host-article .prose ul, .host-article .prose ol{
-  margin:0 0 1.25rem;
-  padding-left:1.5rem;
-}
-.host-article .prose li{
-  margin:.4rem 0;
-}
-.host-article .prose img{
-  display:block;
-  max-width:100%;
-  height:auto;
-  margin:1.5rem auto;
-  border-radius:12px;
-}
-.host-article .prose table{
-  display:block;
-  max-width:100%;
-  overflow-x:auto;
-  border-collapse:collapse;
-  margin:0 0 1.25rem;
-}
-.host-article .prose th, .host-article .prose td{
-  padding:.5rem .75rem;
-  border:1px solid #e5e7eb;
-  text-align:left;
-}
-.host-article .prose blockquote{
-  margin:0 0 1.25rem;
-  padding:.25rem 0 .25rem 1rem;
-  border-left:3px solid #e5e7eb;
-  color:var(--fg-secondary);
-}
-
 /* 10項目評価セクション */
 .performance-evaluation {
   margin: 2rem 0;
@@ -1181,3 +1111,63 @@ main {
   }
 }
 
+/* ===== 詳細ページの調整 ===== */
+:root{
+  --bg:#0b0f14;
+  --bg-secondary:#121820;
+  --card:#121820;
+  --line:#253041;
+  --line-strong:#3a4a60;
+  --fg:#e6edf3;
+  --fg-secondary:#c5d0da;
+  --muted:#9aa7b2;
+  --acc:#ff6a3d;
+  --acc-hover:#e85a2a;
+  --btn:#ff6a3d;
+  --btn-hover:#e85a2a;
+}
+.header,
+.header.header{
+  background:rgba(11,15,20,.92);
+  padding:.6rem max(4%, calc((100% - 1200px) / 2));
+}
+.logo{font-size:1.125rem;font-weight:800}
+.nav{gap:.15rem}
+.nav a, .nav button{padding:.45rem .65rem;font-size:.9375rem;white-space:nowrap}
+.detail{padding-top:1.25rem}
+.back-link{display:inline-block;margin-bottom:.75rem;color:var(--muted);font-size:.9375rem}
+.hero{
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  gap:2rem;
+  align-items:center;
+  margin-bottom:1.5rem;
+  padding:1.5rem;
+  background:var(--card);
+}
+.hero-brand{color:var(--muted);font-size:.9375rem}
+.hero h1{margin:.1rem 0 .75rem;font-weight:800;line-height:1.2}
+.hero-score{display:flex;align-items:baseline;gap:.5rem;margin-bottom:1.25rem;color:var(--muted)}
+.hero-score strong{font-size:2.75rem;font-weight:800;line-height:1;color:var(--fg)}
+.hero-spec{display:grid;grid-template-columns:1fr 1fr;gap:.75rem 1rem;margin:0 0 1.25rem}
+.hero-spec dt{color:var(--muted);font-size:.8125rem}
+.hero-spec dd{margin:0;font-weight:600}
+.hero-spec__wide{grid-column:1/-1}
+.hero .buy-btn{display:inline-block;padding:.7rem 1.75rem;border-radius:10px;background:var(--buy,#ff6a3d);color:#fff;font-weight:700}
+.hero-img,.hero-img:hover{padding:0;overflow:hidden;background:#fff;border:0;transform:none;box-shadow:none}
+.hero-img img{width:100%;max-height:340px;object-fit:contain;border-radius:0}
+.charts .chart-wrap{height:320px}
+.fixed-footer{display:none}
+@media (max-width:768px){
+  .detail{padding:1rem 4%}
+  .hero{grid-template-columns:1fr;gap:1rem;padding:0;overflow:hidden}
+  .hero-img{order:-1;border-radius:0}
+  .hero-img img{max-height:260px}
+  .hero-text{padding:0 1rem 1.25rem}
+  .card{padding:1.25rem 1rem}
+  .logo{font-size:1rem}
+  .nav a, .nav button{padding:.4rem;font-size:.8125rem}
+  .fixed-footer{display:flex;height:56px;padding:.25rem 1rem}
+  .fixed-footer .footer-btn{padding:.25rem 1rem}
+  body{padding-bottom:56px}
+}
+html,body{font-family:"Inter","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif}

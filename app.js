@@ -36,10 +36,13 @@ app.get('/firebase/config.js', (_req, res) => {
 
 // 記事の写真（articles/<id>/images/ だけを公開）
 const { ARTICLES_DIR } = require('./lib/articles');
-app.use('/article-assets', (req, res, next) => {
+const { BLOGS_DIR } = require('./lib/blogs');
+const onlyImages = (req, res, next) => {
   if (!/^\/[\w-]+\/images\//.test(req.path)) return res.status(404).end();
   next();
-}, express.static(ARTICLES_DIR));
+};
+app.use('/article-assets', onlyImages, express.static(ARTICLES_DIR));
+app.use('/blog-assets', onlyImages, express.static(BLOGS_DIR));
 
 // 旧URLの記事ページは詳細ページへ
 app.get('/articles/:file', (req, res) => {
@@ -72,7 +75,6 @@ app.use('/', require('./routes/wishlist'));
 
 // 認証や管理画面（セッション後に）
 app.use('/', require('./routes/auth'));
-app.use('/', require('./routes/admin.articles'));
 
 app.get('/__set_test_cookie', (req, res) => {
   res.cookie('__session_test', 'hello', {
@@ -110,10 +112,8 @@ app.get('/home', (req, res) => {
 app.use('/', require('./routes/home2'));
 app.use('/', require('./routes/profile'));
 
-// ブログページのルート
-app.get('/blog/oldspice', (req, res) => {
-  res.render('blog/oldspice');
-});
+// ブログ
+app.use('/blog', require('./routes/blog'));
 
 // ヘルス
 app.get('/__health', (_req,res)=>res.json({ok:true}));

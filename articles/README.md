@@ -38,3 +38,28 @@ articles/<シューズID>/
 ```
 
 下書きにしたいときは `"draft": true` を足します。本番では管理者以外に表示されません。
+
+# ブログの書き方
+
+ブログも 1 記事 1 フォルダです。
+
+```
+blogs/<スラッグ>/
+├── article.html   本文（書き方はシューズ記事と同じ）
+├── meta.json      タイトルなど
+└── images/        写真
+```
+
+`meta.json` の例:
+
+```json
+{
+  "title": "記事タイトル",
+  "excerpt": "一覧に出る短い説明",
+  "category": "GEAR",
+  "date": "2026-10-30",
+  "image": "images/cover.jpg"
+}
+```
+
+`"draft": true` で下書きになります。main に入れば公開されます。

@@ -1,0 +1,11 @@
+<% blogs.forEach(function(b){ %>
+  <a class="blog-card" href="/blog/<%= b.slug %>">
+    <% if (b.image) { %><img src="<%= b.image %>" alt="" loading="lazy"><% } %>
+    <div class="blog-card__body">
+      <% if (b.category) { %><span class="blog-card__category"><%= b.category %></span><% } %>
+      <h3><%= b.title %></h3>
+      <% if (b.excerpt) { %><p><%= b.excerpt %></p><% } %>
+      <% if (b.date) { %><time datetime="<%= b.date %>"><%= b.date %></time><% } %>
+    </div>
+  </a>
+<% }) %>

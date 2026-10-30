@@ -21,6 +21,7 @@
 
   <link rel="preload" href="/css/detail.css" as="style">
   <link rel="stylesheet" href="/css/detail.css">
+  <link rel="stylesheet" href="/css/prose.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
   <script type="application/ld+json">
@@ -50,9 +51,10 @@
 <body data-is-admin="<%= (user && user.isAdmin) ? '1' : '' %>">
 
   <header class="header">
-    <a href="/home" class="logo">Runnersplac</a>
+    <a href="/home2" class="logo">Runnersplac</a>
     <nav class="nav">
-      <a href="/home">Home</a>
+      <a href="/home2">シューズ</a>
+      <a href="/blog">ブログ</a>
       <a href="https://www.instagram.com/25553runner" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
         <i class="fab fa-instagram"></i>
       </a>
@@ -63,11 +65,21 @@
   </header>
 
   <main class="detail">
+    <a class="back-link" href="/home2">← シューズ一覧</a>
     <section class="hero">
       <div class="hero-text">
+        <span class="hero-brand"><%= shoe.brand %></span>
         <h1><%= shoe.name %></h1>
-        <p class="sub"><%= shoe.brand %> ｜ 重量 <%= shoe.weight %>g ／ オフセット <%= shoe.offset %> ／ ミッドソール <%= shoe.midsole %></p>
-        <p class="price">価格：<span><%= shoe.price.toLocaleString() %></span> 円</p>
+        <div class="hero-score">
+          <strong><%= shoe.rating.toFixed(1) %></strong><span>/ 5 総合評価</span>
+        </div>
+        <dl class="hero-spec">
+          <div><dt>価格</dt><dd>¥<%= shoe.price.toLocaleString() %></dd></div>
+          <div><dt>重量</dt><dd><%= shoe.weight %>g</dd></div>
+          <div><dt>オフセット</dt><dd><%= shoe.offset %></dd></div>
+          <div><dt>用途</dt><dd><%= shoe.purpose %></dd></div>
+          <div class="hero-spec__wide"><dt>ミッドソール</dt><dd><%= shoe.midsole %></dd></div>
+        </dl>
         <% if (shoe.buyUrl) { %>
           <a class="buy-btn" href="<%= shoe.buyUrl %>" target="_blank" rel="noopener noreferrer">購入ページへ</a>
         <% } %>
@@ -88,14 +100,8 @@
     </section>
     <% } %>
 
-     <section id="memo-root"
-  class="card"
-  data-shoe-id="<%= shoe.slug || shoe.id %>"
-  data-name='<%- JSON.stringify(shoe.name) %>'
-  data-chart='<%- JSON.stringify(shoe.chartData) %>'>
-</section>
   
-    <section class="charts">
+    <section class="charts" id="ratings">
       <div class="card">
         <h2>ホスト評価（レーダー）</h2>
         <div class="chart-wrap">
@@ -220,7 +226,7 @@
   </main>
 
   <footer class="footer fixed-footer">
-    <a href="/home" class="footer-btn home-btn">
+    <a href="/home2" class="footer-btn home-btn">
       <i class="fas fa-home"></i>
       <span>Home</span>
     </a>

@@ -1,0 +1,28 @@
+/* 記事本文（シューズ記事・ブログ共通） */
+.prose{
+  max-width:42rem;
+  margin:0 auto;
+  color:#e6edf3;
+  font-size:1.0625rem;
+  line-height:1.9;
+  overflow-wrap:anywhere;
+}
+.prose h1{margin:0 0 1.25rem;font-size:1.5rem;line-height:1.4;color:inherit}
+.prose h2{
+  margin:2.5rem 0 1rem;
+  padding-bottom:.4rem;
+  border-bottom:1px solid #253041;
+  font-size:1.3rem;
+  line-height:1.4;
+  color:inherit;
+}
+.prose h3{margin:2rem 0 .75rem;font-size:1.1rem;font-weight:600;line-height:1.5;color:inherit}
+.prose p{margin:0 0 1.25rem}
+.prose a{color:#ff8a65;text-decoration:underline}
+.prose .lead{font-size:1.125rem;font-weight:500}
+.prose ul,.prose ol{margin:0 0 1.25rem;padding-left:1.5rem}
+.prose li{margin:.4rem 0}
+.prose img{display:block;max-width:100%;height:auto;margin:1.5rem auto;border-radius:12px}
+.prose table{display:block;max-width:100%;margin:0 0 1.25rem;overflow-x:auto;border-collapse:collapse}
+.prose th,.prose td{padding:.5rem .75rem;border:1px solid #253041;text-align:left}
+.prose blockquote{margin:0 0 1.25rem;padding:.25rem 0 .25rem 1rem;border-left:3px solid #3a4a60;color:#9aa7b2}

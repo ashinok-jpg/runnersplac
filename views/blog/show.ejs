@@ -1,12 +1,12 @@
-<%- include('../partials/header', { current:'blog', user, req }) %>
+<%- include('../partials/header', { current:'blog', user, req, title: blog.title + '｜Runnersplac', description: blog.excerpt }) %>
 <section class="section">
-  <div class="container">
-    <article class="card">
-      <h1><%= blog.title %></h1>
-      <div class="muted">by <%= blog.author || 'Runnersplac' %> · <%= blog.updatedAt ? new Date(blog.updatedAt).toLocaleDateString() : '' %></div>
-      <hr>
-      <div class="blog-body"><%- blog.html || blog.content || '' %></div>
-    </article>
-  </div>
+  <article class="blog-post">
+    <a class="back-link" href="/blog">← ブログ一覧</a>
+    <% if (blog.category) { %><span class="blog-card__category"><%= blog.category %></span><% } %>
+    <h1><%= blog.title %></h1>
+    <% if (blog.date) { %><time class="blog-post__date" datetime="<%= blog.date %>"><%= blog.date %></time><% } %>
+    <% if (blog.image) { %><img class="blog-post__hero" src="<%= blog.image %>" alt=""><% } %>
+    <div class="prose"><%- blog.html %></div>
+  </article>
 </section>
 <%- include('../partials/footer') %>

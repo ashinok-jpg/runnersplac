@@ -1,0 +1,201 @@
+/* サイト共通（ヘッダー・一覧・ブログ・フッター） */
+[hidden]{display:none !important}
+body{font-family:"Inter","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif}
+
+.site-brand{
+  color:var(--text);
+  font-size:1.125rem;
+  font-weight:800;
+  letter-spacing:.01em;
+}
+.site-brand:hover{color:var(--text)}
+
+.nav-inner{padding:.6rem 0}
+.menu{gap:.15rem;flex-wrap:nowrap}
+.menu a{padding:.5rem .65rem;font-size:.9375rem;white-space:nowrap}
+
+.page-lead{color:var(--muted);margin:.25rem 0 0}
+.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
+.section-head h2{margin:0}
+.back-link{display:block;margin-bottom:1rem;color:var(--muted);font-size:.9375rem}
+
+/* 一覧の上部 */
+.list-hero{padding:48px 0 8px}
+.list-hero h1{font-size:clamp(26px,4vw,38px);font-weight:800;letter-spacing:-.01em}
+.list-search{display:flex;gap:8px;margin-top:20px;max-width:640px}
+.list-search .field{flex:1;min-width:0}
+.list-search .btn{white-space:nowrap;cursor:pointer}
+.list-search svg{flex:none;color:var(--muted)}
+.brand-tabs{
+  display:flex;
+  gap:8px;
+  margin-top:16px;
+  padding-bottom:4px;
+  overflow-x:auto;
+  scrollbar-width:none;
+}
+.brand-tabs::-webkit-scrollbar{display:none}
+.brand-tab{
+  padding:.4rem .9rem;
+  border:1px solid var(--border);
+  border-radius:999px;
+  color:var(--text);
+  font-size:.9375rem;
+  white-space:nowrap;
+}
+.brand-tab:hover{color:var(--text);border-color:var(--muted)}
+.brand-tab.active{background:var(--text);border-color:var(--text);color:var(--bg)}
+
+/* 件数・並び順 */
+.list-section{padding-top:20px}
+.list-bar{display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;margin-bottom:16px;color:var(--muted);font-size:.9375rem}
+.list-bar__count{margin-right:auto}
+.list-bar__count strong{color:var(--text);font-size:1.25rem}
+.list-bar__check,.list-bar__sort{display:inline-flex;align-items:center;gap:.4rem;cursor:pointer}
+.list-bar select{
+  padding:.35rem .5rem;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--surface);
+  color:var(--text);
+  font:inherit;
+}
+.list-empty{padding:48px 0;text-align:center;color:var(--muted)}
+
+/* シューズカード */
+.shoe-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:16px}
+.shoe-card{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--surface);
+  transition:border-color .15s ease,transform .15s ease;
+}
+.shoe-card:hover{border-color:var(--muted);transform:translateY(-2px)}
+.shoe-card.hidden-card{display:none}
+.shoe-card__link{display:block;flex:1;color:inherit}
+.shoe-card__link:hover{color:inherit}
+.shoe-card__media{position:relative;aspect-ratio:4/3;background:#fff}
+.shoe-card__media img{width:100%;height:100%;object-fit:contain;display:block}
+.shoe-card__tag{
+  position:absolute;
+  top:10px;
+  left:10px;
+  padding:.15rem .55rem;
+  border-radius:6px;
+  background:var(--buy);
+  color:#fff;
+  font-size:.75rem;
+  font-weight:700;
+}
+.shoe-card__body{padding:14px}
+.shoe-card__title{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.shoe-card__brand{color:var(--muted);font-size:.8125rem}
+.shoe-card h3{margin:0;font-size:1.0625rem;line-height:1.35}
+.shoe-card__score{font-size:1.5rem;font-weight:800;line-height:1.1;color:var(--text)}
+.shoe-card__spec{margin:.5rem 0 .75rem;color:var(--muted);font-size:.875rem}
+.score-bars{display:grid;gap:6px;margin:0}
+.score-bars div{display:grid;grid-template-columns:5em 1fr;align-items:center;font-size:.8125rem}
+.score-bars dt{color:var(--muted)}
+.score-bars dd{display:flex;align-items:center;gap:8px;margin:0}
+.score-bars b{width:1.75em;text-align:right}
+.score-bar{flex:1;height:5px;overflow:hidden;border-radius:999px;background:var(--border)}
+.score-bar i{display:block;height:100%;border-radius:999px;background:var(--brand)}
+.wish-btn{
+  margin:0 14px 14px;
+  padding:.5rem;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:transparent;
+  color:var(--text);
+  font:inherit;
+  font-size:.875rem;
+  cursor:pointer;
+}
+.wish-btn:hover{border-color:var(--buy);color:var(--buy)}
+.wish-btn:disabled{color:var(--muted);border-color:var(--border);cursor:default}
+.load-more{margin-top:24px;text-align:center}
+.load-more .btn{cursor:pointer}
+
+/* ブログ */
+.blog-section{border-top:1px solid var(--border)}
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px;margin-top:16px}
+.section-head + .blog-grid{margin-top:0}
+.blog-card{
+  display:flex;
+  flex-direction:column;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--surface);
+  color:inherit;
+  transition:border-color .15s ease;
+}
+.blog-card:hover{border-color:var(--muted);color:inherit}
+.blog-card img{width:100%;aspect-ratio:16/9;object-fit:cover;display:block}
+.blog-card__body{padding:14px}
+.blog-card__category{color:var(--buy);font-size:.75rem;font-weight:700;letter-spacing:.04em}
+.blog-card h3{margin:.25rem 0 .5rem;font-size:1.0625rem;line-height:1.5}
+.blog-card p{
+  display:-webkit-box;
+  margin:0 0 .5rem;
+  overflow:hidden;
+  color:var(--muted);
+  font-size:.875rem;
+  -webkit-box-orient:vertical;
+  -webkit-line-clamp:2;
+}
+.blog-card time{color:var(--muted);font-size:.8125rem}
+.blog-post{width:min(42rem,92%);margin-inline:auto}
+.blog-post h1{margin-top:.25rem;line-height:1.4}
+.blog-post__date{color:var(--muted);font-size:.875rem}
+.blog-post__hero{width:100%;max-height:420px;margin:1.5rem 0;object-fit:contain;border-radius:12px;background:#fff}
+.blog-post .prose{margin-top:1.5rem}
+
+/* 絞り込み */
+.filters-modal{position:fixed;inset:0;z-index:60;padding:16px;overflow:auto;background:rgba(0,0,0,.6)}
+.filters-modal__panel{
+  max-width:560px;
+  margin:40px auto;
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:var(--surface);
+}
+.filters-form{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.filters-form label{display:grid;gap:4px;color:var(--muted);font-size:.875rem}
+.filters-form input{
+  width:100%;
+  padding:.5rem .6rem;
+  border:1px solid var(--border);
+  border-radius:8px;
+  background:var(--bg);
+  color:var(--text);
+  font:inherit;
+}
+.filters-form__actions{grid-column:1/-1;display:flex;justify-content:flex-end;gap:8px;margin-top:4px}
+.filters-form__actions .btn{cursor:pointer}
+
+/* フッター */
+.site-footer{margin-top:24px;padding:28px 0;border-top:1px solid var(--border);color:var(--muted)}
+.site-footer__inner{display:flex;align-items:center;flex-wrap:wrap;gap:12px 24px}
+.site-footer__links{display:flex;gap:16px;margin-right:auto}
+.site-footer__links a{color:var(--muted)}
+.site-footer__links a:hover{color:var(--text)}
+
+@media (max-width:560px){
+  .list-hero{padding-top:28px}
+  .shoe-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+  .shoe-card__body{padding:10px}
+  .shoe-card h3{font-size:.9375rem}
+  .shoe-card__score{font-size:1.25rem}
+  .shoe-card__spec{font-size:.8125rem}
+  .score-bars div{grid-template-columns:1fr}
+  .wish-btn{margin:0 10px 10px;font-size:.8125rem}
+  .filters-form{grid-template-columns:1fr}
+  .nav-inner{gap:4px}
+  .site-brand{font-size:1rem}
+  .menu a{padding:.4rem .4rem;font-size:.8125rem}
+}

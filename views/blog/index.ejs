@@ -1,21 +1,13 @@
-<%- include('../partials/header', { current:'blog', user, req }) %>
+<%- include('../partials/header', { current:'blog', user, req, title:'ランニングブログ｜Runnersplac' }) %>
 <section class="section">
   <div class="container">
     <h1>ランニングブログ</h1>
-    <div class="blog-grid">
-      <% (blogs || []).forEach(function(b){ %>
-        <article class="blog-card">
-          <a href="/blog/<%= b.id || b.slug %>">
-            <img src="<%= b.image || '/img/blog-placeholder.jpg' %>" alt="<%= b.title %>">
-          </a>
-          <div class="blog-content">
-            <h3><a href="/blog/<%= b.id || b.slug %>"><%= b.title %></a></h3>
-            <p class="excerpt"><%= b.excerpt || '' %></p>
-            <div class="muted"><%= b.author || '' %> · <%= b.updatedAt ? new Date(b.updatedAt).toLocaleDateString() : '' %></div>
-          </div>
-        </article>
-      <% }) %>
-    </div>
+    <p class="page-lead">走ること，ギア，日々の気づきを書いています．</p>
+    <% if (blogs.length) { %>
+      <div class="blog-grid"><%- include('../partials/blog-cards', { blogs }) %></div>
+    <% } else { %>
+      <p class="page-lead">まだ記事がありません．</p>
+    <% } %>
   </div>
 </section>
 <%- include('../partials/footer') %>

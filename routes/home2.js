@@ -2,6 +2,14 @@
 const express = require('express');
 const router = express.Router();
 const { shoes } = require('../lib/data');
+const { listBlogs } = require('../lib/blogs');
+
+const BRANDS = Array.from(new Set(shoes.map((s) => s.brand).filter(Boolean)));
+const SORTERS = {
+  score: (a, b) => (b.score?.overall ?? -1) - (a.score?.overall ?? -1),
+  priceAsc: (a, b) => (a.price ?? Infinity) - (b.price ?? Infinity),
+  weightAsc: (a, b) => (a.weight ?? Infinity) - (b.weight ?? Infinity),
+};
 
 const toNum = (v) => {
   if (typeof v !== 'string') return undefined;
@@ -19,6 +27,8 @@ router.get('/home2', (req, res) => {
   const cushionMin   = toNum(req.query.cushionMin);
   const stabilityMin = toNum(req.query.stabilityMin);
   const speedMin     = toNum(req.query.speedMin);
+  const review       = req.query.review === '1';
+  const sort         = SORTERS[req.query.sort] ? req.query.sort : 'score';
 
   const lower = s => (s || '').toString().toLowerCase();
   let list = shoes.slice();
@@ -37,11 +47,9 @@ router.get('/home2', (req, res) => {
   if (stabilityMin !== undefined) list = list.filter(s => (typeof s.score?.stability === 'number' && s.score.stability >= stabilityMin));
   if (speedMin !== undefined)     list = list.filter(s => (typeof s.score?.speed     === 'number' && s.score.speed     >= speedMin));
 
-  list = list.sort((a,b)=>{
-    const A = typeof a.score?.overall === 'number' ? a.score.overall : -1;
-    const B = typeof b.score?.overall === 'number' ? b.score.overall : -1;
-    return B - A;
-  });
+  if (review) list = list.filter(s => s.hasArticle);
+
+  list = list.sort(SORTERS[sort]);
 
   const activeFilters = [];
   if (q) activeFilters.push('q');
@@ -52,13 +60,20 @@ router.get('/home2', (req, res) => {
   if (stabilityMin !== undefined) activeFilters.push('stabilityMin');
   if (speedMin !== undefined) activeFilters.push('speedMin');
 
-  // デバッグ確認したければ下を一時的に有効化
-  // console.log('[search]', req.query, '→', list.length);
+  // 並び順・レビュー絞り込みを変えても他の条件を保つ
+  const keepParams = {};
+  ['q', 'brand', 'priceMax', 'weightMax', 'cushionMin', 'stabilityMin', 'speedMin'].forEach((k) => {
+    if (req.query[k]) keepParams[k] = req.query[k];
+  });
 
   res.render('home2', {
     shoes: list,
     q, brand, priceMax, weightMax, cushionMin, stabilityMin, speedMin,
     activeFilters,
+    review, sort, keepParams,
+    brands: BRANDS,
+    totalCount: shoes.length,
+    blogs: listBlogs(),
     user: res.locals.user,
     req
   });
