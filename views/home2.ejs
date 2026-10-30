@@ -74,7 +74,7 @@
                   <span class="shoe-card__brand"><%= s.brand %><% if (s.category) { %> ・ <%= s.category %><% } %></span>
                   <h3><%= s.name %></h3>
                 </div>
-                <% if (typeof s.score?.overall === 'number') { %><span class="shoe-card__score" aria-label="性能点 <%= s.score.overall %>"><%= s.score.overall.toFixed(1) %><small>性能点</small></span><% } else { %><span class="shoe-card__score shoe-card__score--none">データなし</span><% } %>
+                <% if (typeof s.score?.overall === 'number') { %><span class="shoe-card__score" aria-label="性能点 <%= s.score.overall %>"><%= s.score.overall.toFixed(1) %><small>性能点</small></span><% } else if (typeof s.estimate === 'number') { %><span class="shoe-card__score shoe-card__score--estimate" aria-label="予想性能点 <%= s.estimate %>"><%= s.estimate.toFixed(1) %><small>予想</small></span><% } else { %><span class="shoe-card__score shoe-card__score--none">データなし</span><% } %>
               </div>
               <p class="shoe-card__spec">
                 <%= s.price ? '¥' + s.price.toLocaleString() : '価格未定' %><% if (s.weight) { %> ・ <%= s.weight %>g<% } %><% if (typeof s.value === 'number') { %> ・ コスパ <%= s.value.toFixed(1) %><% } %><% if (s.purpose) { %> ・ <%= s.purpose %><% } %>

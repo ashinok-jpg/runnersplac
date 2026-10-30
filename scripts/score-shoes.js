@@ -1,6 +1,6 @@
 // シューズ点数の試算（ルールは research/scoring-rules.md）
 const fs=require('fs');
-const src='research/shoe-data-filled-2026-10-30.csv';
+const src='research/shoe-data-filled-round2-2026-10-30.csv';
 const text=fs.readFileSync(src,'utf8').replace(/^\ufeff/,'');
 const rows=[];let row=[],cell='',q=false;
 for(let i=0;i<text.length;i++){const c=text[i];
@@ -30,7 +30,8 @@ const DAILY=new Set(['bondix','velocity_nitro_3','velocity_nitro_4','skyflow','r
 const TRAIL=new Set(['geltrabuco13','hierrov8','gelsonoma','voyageNitro3']);
 const cat=d=>{if(TRAIL.has(d['シューズID']))return'trail';if(SPEED.has(d['シューズID']))return'speed';if(DAILY.has(d['シューズID']))return'daily';const p=d['サイトの用途'];if(/レース|駅伝|マラソン|スパイク/.test(p))return'race';if(/テンポ|スピード|インターバル/.test(p))return'speed';return'daily'};
 const EXCL=new Set(['renewride']); // 別世代の計測値
-const OVER={ghost18:{'摩擦係数':'0.57','曲げ剛性(N)':'12.3'},alphafly4:{'27cm重量(g)':'194'}};
+const OVER={ghost18:{'摩擦係数':'0.57','曲げ剛性(N)':'12.3'},// RTINGS のエネルギーリターンは方式が違うので使わない
+ metaspeededge:{'エネルギーリターン前足部(%)':''}};
 const out=[];
 for(const d0 of D){const id=d0['シューズID'],s=byId[id];const d={...d0,...(OVER[id]||{})};const ex=EXCL.has(id);
  const g=k=>ex?null:num(d[k]);

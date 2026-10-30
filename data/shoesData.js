@@ -1,5 +1,6 @@
 const { applyArticleRatings } = require('../lib/articles');
 const scores = require('./scores.json');
+const estimates = require('./score-estimates.json');
 
 const shoes = [
  
@@ -2444,6 +2445,7 @@ shoes.forEach(shoe => {
   shoe.category = score.category || null;
   shoe.rating = score.performance ?? null;
   shoe.value = score.value ?? null;
+  shoe.estimate = shoe.rating == null ? estimates[shoe.id] ?? null : null;
 });
 
 module.exports = shoes;

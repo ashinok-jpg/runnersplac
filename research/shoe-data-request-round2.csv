@@ -1,0 +1,50 @@
+﻿シューズID,ブランド,モデル名,区分,サイトの重量(g),サイトの価格(円),27cm重量(g),現行定価(円),かかとの幅(mm),ヒール剛性(1-5),衝撃吸収かかと(SA),エネルギーリターン前足部(%),摩擦係数,摩耗深度(mm),想定寿命(km),通気性(1-5),出典URL,備考
+evo1,adidas,evo1,レース,138,82000,,,,,,,,,,,,
+hyperracer,ASICS,HYPER RACER,レース,185,13000,,,,,,,,,,,,RunRepeatレビューなし（日本・アジア限定モデル）
+hyperspeed4,ASICS,HYPERSPEED 4,レース,192,9890,,,,,,,,,,,,RunRepeatレビューなし（検索2回で確認できず）
+metaspeededge,ASICS,METASPEED EDGE,レース,185,27500,,,,,,,,,,,,
+metaspeedsky,ASICS,METASPEED SKY,レース,185,27500,,,,,,,,,,,,
+sortiemagicrp6,ASICS,SORTIEMAGIC RP 6,レース,145,15840,,,,,,,,,,,,
+tartherrp3,ASICS,TARTHER RP3,レース,200,16500,,,,,,,,,,,,
+waveduel4,Mizuno,WAVE DUEL 4,レース,190,17600,,,,,,,,,,,,
+rebellionprolow,Mizuno,WAVE REBELLION PRO LOW,レース,215,29700,,,,,,,,,,,,
+fuelcell5280v2,New Balance,FuelCell 5280 v2,レース,150,26400,,,,,,,,,,,,
+pvlsev1,New Balance,FuelCell Pvlse v1,レース,180,14850,,,,,,,,,,,,
+alphafly4,NIKE,ALPHAFLY 4,レース,188,39600,,39600,,,,,,,,,,重量は26.5cmで約188g／重量は26.5cmで約188g。RunRepeatレビュー未掲載（2026-10-30時点、言い換え検索2回実施）
+cloudboomstrike,on,Cloudboom Strike,レース,215,36300,201,,,,139,73.4,,,,,https://runrepeat.com/on-cloudboom-strike,RunRepeat実測US9。サイト重量215gに対し実測201g。レビュー本文を取得できず検索スニペットのみ（幅・ヒール剛性・曲げ剛性・摩擦・通気性・摩耗は未取得）
+lyteracer,ASICS,LYTERACER,スピード,220,9350,,,,,,,,,,,,RunRepeatレビューなし（日本限定モデル）
+yogiri,ASICS,YOGIRI,スピード,240,22000,,,,,,,,,,,,
+cieloroad,hoka,Cielo Road,スピード,213,26400,,,,,,,,,,,,
+waverebellionsonic2,Mizuno,WAVE REBELLION SONIC 2,スピード,240,14300,,,,,,,,,,,,
+rivalfly4,NIKE,RIVAL FLY 4,スピード,235,11000,,,,,,,,,,,,
+cloudboomzone,on,Cloudboom Zone,スピード,265,25300,,,,,,,,,,,,RunRepeatにレビューなし
+fastTracNitro3,PUMA,Fast-Trac Nitro 3,スピード,272,15000,,,,,,,,,,,,
+propio_nitro,PUMA,Propio Nitro,スピード,142,16500,,,,,,,,,,,,
+endorphinspeed6,Saucony,ENDORPHIN SPEED 6,スピード,230,,227-230,,,,,,,,,,,US9の値。国内価格は未定（US$175-180）
+duramosl2,adidas,DURAMO SL2,デイリー,299,8250,,,,,,,,,,,,
+supernovacomfort,adidas,SUPERNOVA COMFORT,デイリー,235,14300,,,,,,,,,,,,
+supernovastride,adidas,SUPERNOVA STRIDE,デイリー,323,13200,,,,,,,,,,,,
+versablast,ASICS,VERSABLAST,デイリー,210,8690,,,,,,,,,,,,
+bondix,hoka,Bondi X,デイリー,303,30800,,,,,,,,,,,,
+energyrunnerz2,Mizuno,ENERGY RUNNERZ 2,デイリー,255,8690,,,,,,,,,,,,
+esperunzer2,Mizuno,ESPERUNZER 2,デイリー,240,6930,,,,,,,,,,,,
+maximizer26,Mizuno,MAXIMIZER 26,デイリー,260,6490,,,,,,,,,,,,
+waveprophecy14,Mizuno,WAVE PROPHECY 14,デイリー,370,26400,,,,,,,,,,,,
+waverevolt3,Mizuno,WAVE REVOLT 3,デイリー,260,9900,,,,,,,,,,,,
+waveskyrise5,Mizuno,WAVE SKYRISE 5,デイリー,280,14850,,,,,,,,,,,,
+freshfoamx1440,New Balance,Fresh Foam X1440,デイリー,254,11000,,,,,,,,,,,,
+mhanzrv4,New Balance,MHANZRv4,デイリー,220,14850,,,,,,,,,,,,
+quest5,NIKE,QUEST 5,デイリー,260,7799,,,,2,108,49.5,0.11,,,3,https://runrepeat.com/nike-quest-5,硬度はShore A実測（28.5 HA）。前足部幅はアッパー最広部の実測値。重量はレビュー本文に記載なし
+reactinfinityrun3,NIKE,REACT INFINITY RUN 3,デイリー,322,18480,297,,,,119,58.7,0.37,,,,https://runrepeat.com/nike-react-infinity-run-flyknit-3,RunRepeat実測US9。硬度はShore A実測（15.0 HA）。前足部幅はアッパー最広部の実測値
+renewride,NIKE,RENEW RIDE,デイリー,366,11000,,,,,,,,,,,https://stage-4.runrepeat.com/nike-renew-ride-3,RunRepeatレビューはRenew Ride 3の実測（US9）。硬度はShore A実測（23.5 HA）
+cloud5,on,Cloud 5,デイリー,250,18700,,,,,,,,,,,,RunRepeatにCloud 5単体のレビューなし（Coast・Push・Waterproof版のみ）
+cloudrunner2wp,on,Cloudrunner 2 Waterproof,デイリー,270,22000,323,,96.2,5,,,,0.8,,1,https://runrepeat.com/on-cloudrunner-2-waterproof,RunRepeat実測US9。サイト重量270gに対し実測323g。レビューにSA・エネルギーリターン・摩擦係数の測定なし。曲げ剛性は旧方式（90°曲げ）のみのため未記入
+cloudspark,on,Cloudspark,デイリー,282,20900,269,,91.5,2,,,,1.1,,3,https://runrepeat.com/on-cloudspark,RunRepeat実測US9（全モデルUS9メンズで測定と本文に明記）。サイト重量282gに対し実測269g。前足部幅は旧方式methodology 1.7のキャリパー実測（ゲル法ではない）。レビューにSA・エネルギーリターン・摩擦係数の測定なし。曲げ剛性は旧方式（90°曲げ）のみのため未記入。女性向け設計モデル（メンズ販売あり）
+cloudswift3,on,Cloudswift 3,デイリー,282,19580,,,,1,113,57.2,0.25,,,4,https://runrepeat.com/uk/on-cloudswift-3,実測重量は本文にUS9で300g超との記載のみのため未記入。アウトソール摩耗深度（mm）の記載なし。かかと幅の実測値なし
+electrifyNitro3,PUMA,Electrify Nitro 3,デイリー,275,9240,,,,,,,,,,,,
+liberateNitro2,PUMA,Liberate Nitro 2,デイリー,200,16500,,,,,,,,,,,,
+redeemProRacer,PUMA,Redeem Pro Racer,デイリー,228,9900,,,,,,,,,,,,
+softrideSeries,PUMA,SoftRide（シリーズ）,デイリー,270,8000,,,,,,,,,,,,
+transport,PUMA,Transport,デイリー,270,6490,,,,,,,,,,,,
+gelsonoma,ASICS,GEL-SONOMA,トレイル,320,14300,,,,,,,,,,,,RunRepeatレビューなし（検索2回で確認できず）
+voyageNitro3,PUMA,Voyage Nitro 3,トレイル,275,20900,,,,,,,,,,,,

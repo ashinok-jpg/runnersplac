@@ -1,6 +1,6 @@
 # シューズ点数の計算ルール
 
-2026-10-30 確定。計算は `node scripts/score-shoes.js`、入力は `research/shoe-data-filled-2026-10-30.csv`、結果は `data/scores.json`（サイトが読む）と `research/score-preview.csv`。旧点数との比較は `research/score-comparison-2026-10-30.csv`。
+2026-10-30 確定。計算は `node scripts/score-shoes.js`、入力は `research/shoe-data-filled-round2-2026-10-30.csv`、結果は `data/scores.json`（サイトが読む）と `research/score-preview.csv`。旧点数との比較は `research/score-comparison-2026-10-30.csv`。
 
 ## 表示する点数
 
@@ -66,6 +66,17 @@
 - フォーム硬度：AC と HA が混ざっている
 - 曲げ剛性：旧方式の値が混ざっている
 - RENEW RIDE の計測値：別世代（Renew Ride 3）の値
+- METASPEED EDGE のエネルギーリターン：RTINGS の値で方式が違う
+
+## 予想値
+
+計測が足りない靴の参考値。計算は `node scripts/estimate-shoes.js`、結果は `research/score-estimates.csv`。`data/scores.json` には入れない。
+
+- サイトには予想性能点だけを「予想」と明記して出す（`data/score-estimates.json`）。予想コスパ点は誤差が大きいので出さない
+- 性能点の高い順では、計測に基づく点数の靴より後ろに並べる
+
+- 計測値のある項目はそのまま使い、ない項目だけを計算済みの靴から回帰で予想する（用途、重量、価格、サイトの主観点）
+- GEL-SONOMA、LYTERACER、SoftRide、RENEW RIDE はモデルや世代を特定できないので出さない
 
 ## 用途の区分
 
