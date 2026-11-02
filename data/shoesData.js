@@ -244,7 +244,7 @@ hostComment : {
 {
   id: "superblast2",
   name: "SUPERBLAST 2",
-  image: "/images/asics_asics_34.jpg",
+  image: "/article-assets/superblast2/images/side.jpg",
   weight: 256,
   midsole: "FF Turbo Plus + FF Blast Plus Eco",
   drop: 8,
@@ -311,7 +311,7 @@ hostComment : {
 {
   id: "gelnimbus27",
   name: "GEL-NIMBUS 27",
-  image: "/images/asics_asics_24.jpg",
+  image: "/article-assets/gelnimbus27/images/side.jpg",
   weight: 305,
   midsole: "PURE-GEL BLASTECO",
   drop: 8,
@@ -581,7 +581,7 @@ hostComment : {
 {
   id: "pegasus41",
   name: "AIR ZOOM PEGASUS 41",
-  image: "/images/nike_nike_21.jpg",
+  image: "/article-assets/pegasus41/images/side.jpg",
   weight: 285,
   midsole: "ReactX + Zoom Air(2つ)",
   drop: 10,
@@ -596,7 +596,7 @@ hostComment : {
 {
   id: "vomero18",
   name: "AIR ZOOM VOMERO 18",
-  image: "/images/nike_nike_25.jpg",
+  image: "/article-assets/vomero18/images/side.jpg",
   weight: 290,
   midsole: "ZoomX + ReactX",
   drop: 10,
@@ -932,7 +932,7 @@ hostComment : {
 {
   id: "evosl",
   name: "EVO SL",
-  image: "/images/adidas_adidas_22.jpg",
+  image: "/article-assets/evosl/images/side.jpg",
   weight: 224,
   midsole: "Lightstrike Pro + Plastic Shank",
   drop: 6.5,
@@ -1157,7 +1157,7 @@ hostComment : {
 {
   id: "x1080v14",
   name: "Fresh Foam X1080 v14",
-  image: "/images/newbalance_newbalance_26.jpg",
+  image: "/article-assets/x1080v14/images/side.jpg",
   weight: 290,
   midsole: "Fresh Foam X",
   drop: 6,
@@ -1832,7 +1832,7 @@ hostComment : {
 {
   id: "clifton10",
   name: "Clifton 10",
-  image: "/images/hoka_41.jpg",
+  image: "/article-assets/clifton10/images/side.jpg",
   weight: 278,
   midsole: "CMEVA",
   drop: 5,
@@ -2298,7 +2298,7 @@ hostComment : {
   {
     "id": "metaspeedtokyo",
     "name": "METASPEED SKY TOKYO",
-    "image": "images/metaspeedtokyo.jpg",
+    "image": "/article-assets/metaspeedtokyo/images/side.jpg",
     "weight":170,
     "midsole": "FF LEAP™フォーム＋FF TURBO™ PLUSクッション",
     "drop": 5,
