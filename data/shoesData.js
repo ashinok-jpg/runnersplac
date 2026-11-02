@@ -2341,6 +2341,7 @@ hostComment : {
     "purpose": "レース（サブ3前後向け）",
     "price": 29700,
     "brand": "adidas",
+    "buyUrl": "https://link.amazon/B0b1Xu0b0",
     "chartData": [4, 3, 5, 4, 3, 3, 3, 5, 4, 2]
   },
   {
@@ -2354,6 +2355,7 @@ hostComment : {
     "purpose": "レース（ミッドフット接地の上級者向け）",
     "price": 38500,
     "brand": "hoka",
+    "buyUrl": "https://link.amazon/B068VTaye",
     "chartData": [5, 1.5, 4, 2, 2.5, 3, 3, 5, 4, 2]
   },
   {
@@ -2367,6 +2369,7 @@ hostComment : {
     "purpose": "レース（初カーボン・サブ3.5〜4向け）",
     "price": 37400,
     "brand": "Saucony",
+    "buyUrl": "https://link.amazon/B03mBMUjj",
     "chartData": [3.5, 5, 3, 3.5, 4.5, 3, 3, 3.5, 3.5, 4.5]
   },
   {
@@ -2380,6 +2383,7 @@ hostComment : {
     "purpose": "レース（フルマラソン後半重視）",
     "price": 39600,
     "brand": "NIKE",
+    "buyUrl": "https://link.amazon/B0cUrrjgi",
     "chartData": [5, 3.5, 4.5, 2, 4.5, 3, 3, 5, 3, 2.5]
   },
   {
@@ -2393,6 +2397,7 @@ hostComment : {
     "purpose": "スピード練習（閾値走・インターバル）",
     "price": null,
     "brand": "Saucony",
+    "buyUrl": "https://link.amazon/B0ed2n5cH",
     "chartData": [3, 3.5, 4, 3, 3, 3, 3, 4.5, 3, 3]
   },
   {
@@ -2406,6 +2411,7 @@ hostComment : {
     "purpose": "デイリートレーナー（キロ4:30〜5:30）",
     "price": 17600,
     "brand": "ASICS",
+    "buyUrl": "https://link.amazon/B0d9mEEee",
     "chartData": [4, 3.5, 3.5, 4.5, 4.5, 3, 3, 4, 5, 4]
   },
   {
@@ -2419,6 +2425,7 @@ hostComment : {
     "purpose": "デイリートレーナー（キロ5:00〜6:30）",
     "price": 19800,
     "brand": "Brooks",
+    "buyUrl": "https://link.amazon/B08IKwNiC",
     "chartData": [3.5, 5, 2, 3.5, 5, 3, 3, 1.5, 2.5, 5]
   },
   {
@@ -2432,6 +2439,7 @@ hostComment : {
     "purpose": "万能デイリートレーナー（キロ4:30〜6:30）",
     "price": 18700,
     "brand": "Mizuno",
+    "buyUrl": "https://link.amazon/B0fi0ur8f",
     "chartData": [4.5, 4, 3, 5, 4.5, 3, 3, 3, 3, 5]
   },
   // ほか追加したいだけ増やしてOK
