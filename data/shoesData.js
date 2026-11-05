@@ -2313,7 +2313,7 @@ hostComment : {
   {
     "id": "metaspeedray",
     "name": "METASPEED RAY",
-    "image": "images/metaspeedray.jpg",
+    "image": "/images/metaspeedray.jpg",
     "weight": 129,
     "midsole": "FF LEAP™フォーム（フルレングス）",
     "drop": 5,
