@@ -200,5 +200,9 @@ body{font-family:"Inter","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui
   .filters-form{grid-template-columns:1fr}
   .nav-inner{gap:4px}
   .site-brand{font-size:1rem}
-  .menu a{padding:.4rem .4rem;font-size:.8125rem}
+  .site-brand{flex-shrink:0}
+  /* メニューが画面に収まらないときは、ページではなくメニューだけを横にスクロールさせる */
+  .menu{min-width:0;gap:0;overflow-x:auto;scrollbar-width:none}
+  .menu::-webkit-scrollbar{display:none}
+  .menu a{padding:.4rem .3rem;font-size:.8125rem}
 }

@@ -8,6 +8,8 @@
 <link rel="stylesheet" href="/css/base.css">
 <link rel="stylesheet" href="/css/site.css">
 <link rel="stylesheet" href="/css/prose.css">
+<% if (typeof extraCss !== 'undefined') extraCss.forEach(function(href){ %><link rel="stylesheet" href="<%= href %>">
+<% }) %>
 <meta name="google-site-verification" content="_5czcBL4tvbzQxBywCtZMynFRJHnP9ddVkyZN0i2zsI" />
 </head>
 <body>
@@ -16,6 +18,7 @@
     <a class="site-brand" href="/">Runnersplac</a>
     <div class="menu">
       <a href="/home2" aria-current="<%= current==='home' ? 'page' : 'false' %>">シューズ</a>
+      <a href="/protein" aria-current="<%= current==='protein' ? 'page' : 'false' %>">プロテイン</a>
       <a href="/blog" aria-current="<%= current==='blog' ? 'page' : 'false' %>">ブログ</a>
       <a href="/wishlist" aria-current="<%= current==='wishlist' ? 'page' : 'false' %>">購入候補</a>
 <% if (typeof user !== 'undefined' && user) { %>

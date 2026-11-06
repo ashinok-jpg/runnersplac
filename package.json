@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node app.js",
     "new-article": "node scripts/new-article.js",
+    "protein:score": "node research/protein/score-protein.js && node scripts/build-protein-data.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

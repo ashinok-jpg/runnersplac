@@ -115,6 +115,9 @@ app.use('/', require('./routes/profile'));
 // ブログ
 app.use('/blog', require('./routes/blog'));
 
+// プロテイン比較
+app.use('/protein', require('./routes/protein'));
+
 // ヘルス
 app.get('/__health', (_req,res)=>res.json({ok:true}));
 

@@ -1,6 +1,6 @@
 # プロテイン点数の計算ルール
 
-2026-11-05 確定。シューズのルール（`research/scoring-rules.md`）と同じ考え方で作る。データ収集は `research/protein/protein-data-request.csv`。計算は `node research/protein/score-protein.js`、結果は `research/protein/score-preview.csv`。
+2026-11-05 確定。runnersplac のシューズのルールと同じ考え方で作る。データ収集は `research/protein/protein-data-request.csv`。計算は `npm run protein:score`、結果は `research/protein/score-preview.csv`。
 
 ## 基本方針
 
@@ -71,7 +71,7 @@
 
 ## 集めるデータ（次のCSVの列）
 
-商品ID、ブランド、商品名、種類（WPC／WPI／WPH／グラスフェッド／ソイ／カゼイン／ミルク／エッグ／植物ミックス／ヘンプ／混合）、代表の味、容量(g)、通常価格(円)、価格確認日、1食の量(g)、1食のタンパク質(g)、1食の糖質(g)、1食の脂質(g)、1食のカロリー(kcal)、ロイシン(g/1食)、第三者認証、成分分析の公開、製造国・工場認証、人工甘味料の有無、溶けやすさ(1-5)、味(1-5)、出典URL、備考
+商品ID、ブランド、商品名、種類（WPC／WPI／WPH／グラスフェッド／ソイ／カゼイン／ミルク／エッグ／植物ミックス／ヘンプ／混合）、代表の味、味の種類（「／」区切り）、容量(g)、通常価格(円)、価格確認日、1食の量(g)、1食のタンパク質(g)、1食の糖質(g)、1食の脂質(g)、1食のカロリー(kcal)、ロイシン(g/1食)、第三者認証、成分分析の公開、製造国・工場認証、人工甘味料の有無、溶けやすさ(1-5)、味(1-5)、出典URL、備考
 
 ## 確定事項（2026-11-05）
 

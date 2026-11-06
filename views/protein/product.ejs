@@ -1,0 +1,68 @@
+<%- include('../partials/header', { current:'protein', title, description, extraCss:['/css/protein.css'] }) %>
+<%
+  const f = (v, d = 1) => (v == null ? '—' : Number(v).toFixed(d).replace(/\.0+$/, ''));
+  const bar = (v) => v == null ? '' : `<span class="score-bar"><i style="width:${v / 5 * 100}%"></i></span>`;
+%>
+<section class="section">
+  <div class="container detail">
+    <a class="back-link" href="/protein">← プロテイン一覧</a>
+    <span class="p-card__meta"><span class="type-chip" data-type="<%= p.type %>"><%= p.type %></span><%= p.brand %></span>
+    <h1><%= p.name %></h1>
+    <p class="page-lead"><%= p.flavor ? p.flavor + ' ・ ' : '' %><%= p.volume ? (p.volume >= 1000 ? f(p.volume / 1000, 2) + 'kg' : p.volume + 'g') : '' %><%= p.price ? ' ・ ' + p.price.toLocaleString() + '円' : '' %></p>
+
+    <% if (p.scored) { %>
+      <div class="detail-scores">
+        <% uses.forEach(function(u){ %>
+          <div class="detail-score">
+            <span class="detail-score__use"><%= u %></span>
+            <span class="p-score"><b><%= f(p.performance[u], 2) %></b><small>性能点</small></span>
+            <span class="p-score p-score--value"><b><%= f(p.value[u]) %></b><small>コスパ点</small></span>
+            <span class="detail-score__rank"><%= ranks[u].of %>商品中 <%= ranks[u].rank %>位</span>
+          </div>
+        <% }) %>
+      </div>
+
+      <h2>項目ごとの点</h2>
+      <dl class="score-bars detail-bars">
+        <div><dt>タンパク質の割合</dt><dd><%- bar(p.items.pRatio) %><b><%= f(p.items.pRatio) %></b><small>粉100gに<%= f(p.items.ratio) %>g</small></dd></div>
+        <div><dt>糖質＋脂質の少なさ</dt><dd><%- bar(p.items.pCarbFat) %><b><%= f(p.items.pCarbFat) %></b><small>タンパク質20gあたり<%= f(p.items.carbFatPer20, 1) %>g</small></dd></div>
+        <div><dt>品質の裏付け</dt><dd><%- bar(p.items.pQuality) %><b><%= f(p.items.pQuality) %></b><small><%= p.certification && p.certification !== '記載なし' ? p.certification : (p.factory || '記載なし') %></small></dd></div>
+        <div><dt>ロイシン</dt><dd><span class="muted-text">表示のある商品がまだ少ないため、点数に入れていません<%= p.leucine ? '（タンパク質20gあたり' + f(p.items.leucinePer20, 2) + 'g）' : '' %></span></dd></div>
+        <div><dt>飲みやすさ</dt><dd><span class="muted-text">試飲前のため、まだ点数に入れていません</span></dd></div>
+      </dl>
+      <p class="list-note">タンパク質1gあたり <b><%= f(p.yenPerGram) %>円</b>（通常価格で計算）</p>
+    <% } else { %>
+      <p class="pending-note">データが足りないため、まだ点数を出していません。<% if (p.note) { %><br><small><%= p.note %></small><% } %></p>
+    <% } %>
+
+    <h2>味</h2>
+    <% const flavors = p.flavors && p.flavors.length ? p.flavors : (p.flavor ? [p.flavor] : []); %>
+    <% if (flavors.length) { %>
+      <ul class="flavor-list">
+        <% flavors.forEach(function(fl){ %>
+          <li class="flavor<%= fl === p.flavor ? ' flavor--main' : '' %>"><%= fl %><% if (fl === p.flavor && flavors.length > 1) { %><small>成分はこの味</small><% } %></li>
+        <% }) %>
+      </ul>
+      <p class="muted-text"><%= flavors.length > 1 ? `全${flavors.length}種類。` : '' %>点数と下の成分表示は「<%= p.flavor %>」の数値です。味によって成分は少し変わります。</p>
+    <% } else { %>
+      <p class="muted-text">味の情報はまだありません。</p>
+    <% } %>
+
+    <h2>成分表示（1食<%= p.serving ? f(p.serving) + 'g' : '' %>あたり）</h2>
+    <table class="spec-table">
+      <tr><th>タンパク質</th><td><%= p.protein != null ? f(p.protein) + 'g' : '—' %></td></tr>
+      <tr><th>糖質</th><td><%= p.carb != null ? f(p.carb) + 'g' : '—' %></td></tr>
+      <tr><th>脂質</th><td><%= p.fat != null ? f(p.fat) + 'g' : '—' %></td></tr>
+      <tr><th>エネルギー</th><td><%= p.kcal != null ? f(p.kcal, 0) + 'kcal' : '—' %></td></tr>
+      <tr><th>ロイシン</th><td><%= p.leucine != null ? f(p.leucine, 2) + 'g' : '表示なし' %></td></tr>
+      <tr><th>人工甘味料</th><td><%= p.sweetener || '—' %></td></tr>
+      <tr><th>第三者認証</th><td><%= p.certification || '—' %></td></tr>
+      <tr><th>製造</th><td><%= p.factory || '—' %></td></tr>
+      <tr><th>価格の確認日</th><td><%= p.checkedAt ? p.checkedAt.replace(/-/g, '/') : '—' %></td></tr>
+    </table>
+    <% if (p.scored && p.note) { %><p class="list-note">メモ：<%= p.note %></p><% } %>
+    <% if (p.source) { %><p><a class="btn" href="<%= p.source %>" target="_blank" rel="noopener nofollow">出典ページを見る</a></p><% } %>
+  </div>
+</section>
+<%- include('_disclaimer') %>
+<%- include('../partials/footer') %>

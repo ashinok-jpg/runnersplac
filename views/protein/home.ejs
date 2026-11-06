@@ -1,0 +1,99 @@
+<%- include('../partials/header', { current:'protein', title, description, extraCss:['/css/protein.css'] }) %>
+<%
+  const params = (over) => { const o = Object.assign({ use, sort, type, q }, over); return '/protein?' + Object.entries(o).filter(([, v]) => v).map(([k, v]) => k + '=' + encodeURIComponent(v)).join('&'); };
+%>
+<section class="list-hero">
+  <div class="container">
+    <h1>プロテインを、点数で比べる。</h1>
+    <p class="page-lead"><%= total %>種類のプロテインを、成分表示と価格から同じルールで点数にしました。</p>
+
+    <form class="list-search" method="GET" action="/protein" role="search">
+      <input type="hidden" name="use" value="<%= use %>">
+      <% if (type) { %><input type="hidden" name="type" value="<%= type %>"><% } %>
+      <div class="field">
+        <input class="input" name="q" placeholder="商品名・ブランド・味で検索" value="<%= q %>" aria-label="プロテイン検索">
+      </div>
+      <button class="btn" type="submit">検索</button>
+    </form>
+
+    <div class="use-tabs" role="tablist" aria-label="用途">
+      <% uses.forEach(function(u){ %>
+        <a role="tab" class="use-tab <%= use === u ? 'active' : '' %>" aria-selected="<%= use === u %>" href="<%= params({ use: u }) %>"><%= u %></a>
+      <% }) %>
+    </div>
+    <p class="use-lead"><%= useLead %></p>
+
+    <div class="brand-tabs" aria-label="種類で絞り込み">
+      <a href="<%= params({ type: '' }) %>" class="brand-tab <%= !type ? 'active' : '' %>">すべての種類</a>
+      <% types.forEach(function(t){ %>
+        <a href="<%= params({ type: t }) %>" class="brand-tab <%= type === t ? 'active' : '' %>"><%= t %></a>
+      <% }) %>
+    </div>
+  </div>
+</section>
+
+<section class="section list-section">
+  <div class="container">
+    <form class="list-bar" method="GET" action="/protein">
+      <input type="hidden" name="use" value="<%= use %>">
+      <% if (type) { %><input type="hidden" name="type" value="<%= type %>"><% } %>
+      <% if (q) { %><input type="hidden" name="q" value="<%= q %>"><% } %>
+      <span class="list-bar__count"><strong><%= products.length %></strong> 商品</span>
+      <label class="list-bar__sort">
+        並び順
+        <select name="sort" onchange="this.form.submit()">
+          <% sorts.forEach(function([v, label]){ %>
+            <option value="<%= v %>" <%= sort === v ? 'selected' : '' %>><%= label %></option>
+          <% }) %>
+        </select>
+      </label>
+      <noscript><button class="btn" type="submit">並べ替え</button></noscript>
+    </form>
+
+    <% if (!products.length) { %>
+      <div class="list-empty">
+        <p>条件に合うプロテインが見つかりませんでした。</p>
+        <a class="btn" href="/protein?use=<%= encodeURIComponent(use) %>">条件をリセット</a>
+      </div>
+    <% } %>
+
+    <ol class="p-list">
+      <% products.forEach(function(p, i){ %>
+        <li class="p-card">
+          <a class="p-card__link" href="/protein/<%= p.id %>">
+            <span class="p-card__rank"><%= i + 1 %></span>
+            <div class="p-card__main">
+              <span class="p-card__meta"><span class="type-chip" data-type="<%= p.type %>"><%= p.type %></span><%= p.brand %></span>
+              <h3><%= p.name %></h3>
+              <p class="p-card__spec">
+                タンパク質 <%= p.items.ratio.toFixed(0) %>%
+                ・ 1gあたり <%= p.yenPerGram.toFixed(1) %>円
+                <% if (p.flavors && p.flavors.length > 1) { %>・ 味 <%= p.flavors.length %>種類<% } else if (p.flavor) { %>・ <%= p.flavor %><% } %>
+              </p>
+            </div>
+            <div class="p-card__scores">
+              <span class="p-score"><b><%= p.performance[use].toFixed(1) %></b><small>性能点</small></span>
+              <span class="p-score p-score--value"><b><%= p.value[use].toFixed(1) %></b><small>コスパ点</small></span>
+            </div>
+          </a>
+        </li>
+      <% }) %>
+    </ol>
+
+    <p class="list-note">
+      性能点・コスパ点は5点満点です。飲みやすさはまだ試飲していないため、今は点数に入れていません。
+      価格は<%= updatedAt ? updatedAt.replace(/-/g, '/') : '' %>時点の通常価格（セール前）です。<a href="/protein/method">点数の付け方</a>
+    </p>
+
+    <% if (pending.length) { %>
+      <details class="pending">
+        <summary>データが足りず点数をまだ出していない商品（<%= pending.length %>）</summary>
+        <ul>
+          <% pending.forEach(function(p){ %><li><a href="/protein/<%= p.id %>"><%= p.brand %> <%= p.name %></a></li><% }) %>
+        </ul>
+      </details>
+    <% } %>
+  </div>
+</section>
+<%- include('_disclaimer') %>
+<%- include('../partials/footer') %>
