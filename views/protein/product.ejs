@@ -8,6 +8,7 @@
     <a class="back-link" href="/protein">← プロテイン一覧</a>
     <span class="p-card__meta"><span class="type-chip" data-type="<%= p.type %>"><%= p.type %></span><%= p.brand %></span>
     <h1><%= p.name %></h1>
+    <% if (p.photo) { %><img class="detail-photo" src="<%= p.photo %>" alt="<%= p.brand %> <%= p.name %>" width="240" height="240"><% } %>
     <p class="page-lead"><%= p.flavor ? p.flavor + ' ・ ' : '' %><%= p.volume ? (p.volume >= 1000 ? f(p.volume / 1000, 2) + 'kg' : p.volume + 'g') : '' %><%= p.price ? ' ・ ' + p.price.toLocaleString() + '円' : '' %></p>
 
     <% if (p.scored) { %>

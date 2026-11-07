@@ -12,7 +12,7 @@
 .type-chip[data-type="WPC"]{background:#1f6feb33;color:#79b0ff}
 .type-chip[data-type="WPI"],.type-chip[data-type="WPH"]{background:#a371f733;color:#c9a7ff}
 .type-chip[data-type="ソイ"]{background:#d2992233;color:#f0c46a}
-.type-chip[data-type="植物ミックス"],.type-chip[data-type="ヘンプ"]{background:#2ecc7133;color:#7ee2a8}
+.type-chip[data-type="植物ミックス"],.type-chip[data-type="ピー"],.type-chip[data-type="ヘンプ"]{background:#2ecc7133;color:#7ee2a8}
 .type-chip[data-type="カゼイン"],.type-chip[data-type="ミルク"],.type-chip[data-type="混合"]{background:#9aa7b233;color:#d0d7de}
 .type-chip[data-type="エッグ"],.type-chip[data-type="グラスフェッド"]{background:#ff6a3d33;color:#ffa58a}
 
@@ -22,6 +22,9 @@
 .p-card:hover{border-color:var(--muted)}
 .p-card__link{display:grid;grid-template-columns:2.2rem 1fr auto;align-items:center;gap:14px;padding:14px 16px;color:inherit}
 .p-card__link:hover{color:inherit}
+.p-card--photo .p-card__link{grid-template-columns:2.2rem 56px 1fr auto}
+.p-card__photo{width:56px;height:56px;object-fit:contain;border-radius:10px;background:#fff}
+.detail-photo{display:block;width:240px;max-width:100%;height:auto;aspect-ratio:1;object-fit:contain;margin:12px 0;border-radius:14px;background:#fff}
 .p-card__rank{color:var(--muted);font-size:1.25rem;font-weight:800;text-align:center}
 .p-card__main{min-width:0}
 .p-card__meta{display:flex;align-items:center;color:var(--muted);font-size:.8125rem}
@@ -68,7 +71,9 @@
 @media (max-width:560px){
   .use-tab{padding:.4rem .75rem;font-size:.875rem}
   .p-card__link{grid-template-columns:1.6rem 1fr;gap:10px;padding:12px}
-  .p-card__scores{grid-column:2;gap:20px}
+  .p-card__scores{grid-column:2/-1;gap:20px}
+  .p-card--photo .p-card__link{grid-template-columns:1.6rem 48px 1fr}
+  .p-card__photo{width:48px;height:48px}
   .p-score{flex-direction:row;align-items:baseline;gap:4px}
   .p-score b{font-size:1.25rem}
   .detail-scores{grid-template-columns:1fr}

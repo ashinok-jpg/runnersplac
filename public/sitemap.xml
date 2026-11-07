@@ -52,7 +52,6 @@
   <loc>https://runnersplac.onrender.com/shoes/takumisen10</loc>
   <priority>0.9</priority>
 </url>
-
 <url>
   <loc>https://runnersplac.onrender.com/protein</loc>
   <priority>0.8</priority>
@@ -75,6 +74,10 @@
 </url>
 <url>
   <loc>https://runnersplac.onrender.com/protein/weider-musclefit</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/kentai-cfm</loc>
   <priority>0.8</priority>
 </url>
 <url>
@@ -134,7 +137,31 @@
   <priority>0.8</priority>
 </url>
 <url>
+  <loc>https://runnersplac.onrender.com/protein/winzone-whey</loc>
+  <priority>0.8</priority>
+</url>
+<url>
   <loc>https://runnersplac.onrender.com/protein/winzone-egg</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/ogarmade-whey</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/ogarmade-soy</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/verifyst-whey</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/vitas-whey</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/reys-whey</loc>
   <priority>0.8</priority>
 </url>
 <url>
@@ -163,6 +190,102 @@
 </url>
 <url>
   <loc>https://runnersplac.onrender.com/protein/ultora-wpi</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/theprotein-egg</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/nutrimuscle-egg</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/nichiga-casein</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/bulksports-bigcasein</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/goldsgym-milkprotein</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/kentai-whey-peptide</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/nichie-wph</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/choice-golden-whey</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/choice-golden-isolate</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/hemps-hemp-protein</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/valx-soy</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/kentai-soy</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/highclear-soy</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/winzone-pea</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/savas-aqua-whey</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/valx-wpi-perfect</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/ultora-soy</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/naturecan-clear-whey</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/naturecan-wpc</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/highclear-wpc</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/highclear-wpi</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/goldsgym-cfm</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/dns-isolate-stoic</loc>
+  <priority>0.8</priority>
+</url>
+<url>
+  <loc>https://runnersplac.onrender.com/protein/kentai-powerbody</loc>
   <priority>0.8</priority>
 </url>
 

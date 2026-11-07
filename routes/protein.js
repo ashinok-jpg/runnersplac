@@ -5,7 +5,18 @@ const fs = require('fs');
 
 const router = express.Router();
 const DATA_FILE = path.join(__dirname, '..', 'data', 'protein', 'products.json');
-const loadData = () => JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+const PHOTO_DIR = path.join(__dirname, '..', 'public', 'images', 'protein');
+const PHOTO_EXTS = ['webp', 'jpg', 'png'];
+// 商品写真は public/images/protein/<商品ID>.webp|jpg|png。置いてあるものだけ表示する
+const photoOf = id => {
+  const ext = PHOTO_EXTS.find(e => fs.existsSync(path.join(PHOTO_DIR, `${id}.${e}`)));
+  return ext ? `/images/protein/${id}.${ext}` : null;
+};
+const loadData = () => {
+  const data = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+  data.products.forEach(p => { p.photo = photoOf(p.id); });
+  return data;
+};
 
 const USES = ['毎日用', '減量用', '競技者用'];
 const USE_LEAD = {
