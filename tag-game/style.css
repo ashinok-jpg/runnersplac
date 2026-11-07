@@ -1,0 +1,4 @@
+:root { color-scheme: dark; }
+html, body { margin: 0; height: 100%; background: #111; color: #eee; font-family: system-ui, sans-serif; }
+#app { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100%; gap: 8px; }
+#game { background: #1d2a1d; max-width: 100%; height: auto; }
