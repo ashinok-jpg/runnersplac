@@ -37,7 +37,7 @@ const shoes = [
   {
   id: "gelkayano32",
   name: "GEL-KAYANO 32",
-  image: "/images/asics_asics_.41.jpg",
+  image: "/article-assets/gelkayano32/images/side.jpg",
   weight: 300,
   midsole: "FFBLASTPLUS PUREGEL",
   drop: 8,
@@ -887,7 +887,7 @@ hostComment : {
 {
   id: "japan9",
   name: "JAPAN 9",
-  image: "/images/adidas_adidas_19.jpg",
+  image: "/article-assets/japan9/images/side.jpg",
   weight: 177,
   midsole: "Lightstrike Pro + Nylon Shank",
   drop: 10,
@@ -1037,7 +1037,7 @@ hostComment : {
 {
   id: "adistarbyd",
   name: "adi starBYD",
-  image: "/images/adidas_adidas_31.jpg",
+  image: "/article-assets/adistarbyd/images/side.jpg",
   weight: 290,
   midsole: "REPETITOR 2.0 + Lightstrike Pro",
   drop: 6,
@@ -1247,7 +1247,7 @@ hostComment : {
 {
   "id": "rebelv5",
   "name": "FuelCell REBEL v5",
-  "image": "/images/newbalance_newbalance_30.webp",
+  "image": "/article-assets/rebelv5/images/side.jpg",
   "weight": 224,
   "midsole": "FuelCell（PEBA/EVAブレンド）",
   "drop": 6,
@@ -1292,7 +1292,7 @@ hostComment : {
 {
   id: "pacerv2",
   name: "FuelCell SuperComp Pacerv2",
-  image: "/images/newbalance_newbalance_18.jpg",
+  image: "/article-assets/pacerv2/images/side.jpg",
   weight: 210,
   midsole: "エナジーアーク",
   drop: 6,
@@ -1667,7 +1667,7 @@ hostComment : {
 {
   id: "cloudeclipse",
   name: "Cloudeclipse",
-  image: "/images/21.jpg",
+  image: "/article-assets/cloudeclipse/images/side.jpg",
   weight: 285,
   midsole: "Helion + Speedboard",
   drop: 6,
@@ -1847,7 +1847,7 @@ hostComment : {
 {
   id: "bondi9",
   name: "Bondi 9",
-  image: "/images/hoka_28.jpg",
+  image: "/article-assets/bondi9/images/side.jpg",
   weight: 297,
   midsole: "SCF EVA",
   drop: 5,
@@ -1952,7 +1952,7 @@ hostComment : {
 {
   id: "mach6",
   name: "Mach 6",
-  image: "/images/hoka_20.jpg",
+  image: "/article-assets/mach6/images/side.jpg",
   weight: 232,
   midsole: "SCF EVA",
   drop: 5,
