@@ -6,7 +6,7 @@
   "description": "手鬼ごっこ（Tag Dash）— ブラウザ用 2D 鬼ごっこ",
   "scripts": {
     "serve": "node scripts/serve.js",
-    "test": "node --test tests/",
+    "test": "node --test \"tests/*.test.js\"",
     "test:e2e": "node tests/e2e/smoke.e2e.js",
     "check": "node scripts/check.js"
   }

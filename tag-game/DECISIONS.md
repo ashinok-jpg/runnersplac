@@ -4,5 +4,11 @@
 |---|---|---|---|
 | 2026-11-07 | P0 | スタブ関数は `throw new Error("not implemented")` にする | P1 のテストが「失敗」として正しく動くため |
 | 2026-11-07 | P0 | `serve.js` は 127.0.0.1 のみで待ち受け、`Cache-Control: no-store` を付ける | 外部公開しない・開発中の古いキャッシュを避ける |
-| 2026-11-07 | P0 | `npm run test` は `node --test tests/` にする | DESIGN §7.2 P1 のゲートに合わせる |
+| 2026-11-07 | P1 | `npm run test` は `node --test "tests/*.test.js"` にする（旧: `tests/`） | 共通ヘルパ `helpers.js`・`sim.js` をテストとして実行させないため |
 | 2026-11-07 | P0 | `tag-game/.gitignore` に `screenshots/` と `node_modules/` を入れる | DESIGN §7.3 で screenshots は対象外指定 |
+| 2026-11-07 | P1 | `createWorld({ seed, duration })` に任意の `duration` を追加（既定 `ROUND_SEC`） | §7.3 の `?round=5` を実現するため。§4.2 のシグネチャ拡張 |
+| 2026-11-07 | P1 | `decide(world, selfId, rng, prev)` に任意の第 4 引数 `prev`（前回の Input）を追加し、Input に `decidedAt` を持たせる | 反応遅延（§4.3）を純粋関数のまま実現するため |
+| 2026-11-07 | P1 | `world.events` はラウンド全体の累積にする | シミュ・E2E で交代回数やバテを数えやすい（1 ラウンド十数件なので軽い） |
+| 2026-11-07 | P1 | 最初の鬼も開始時に `TAG_FREEZE_SEC` だけ硬直 | 開始直後に近くの相手が即タッチされるのを防ぐ |
+| 2026-11-07 | P1 | 硬直中の鬼は誰にもタッチできない。`noTagBackId` は硬直が解けたら消える | 「直後 1.0 秒は元の鬼にタッチ不可」を単純に満たす |
+| 2026-11-07 | P1 | 同時に複数と重なったら一番近い相手が鬼になる | 1 ステップ最大 1 回の交代を決定的に |
