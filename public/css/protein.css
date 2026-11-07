@@ -24,6 +24,7 @@
 .p-card__link:hover{color:inherit}
 .p-card--photo .p-card__link{grid-template-columns:2.2rem 56px 1fr auto}
 .p-card__photo{width:56px;height:56px;object-fit:contain;border-radius:10px;background:#fff}
+.p-card__photo--none{display:block;background:var(--surface);border:1px dashed var(--border)}
 .detail-photo{display:block;width:240px;max-width:100%;height:auto;aspect-ratio:1;object-fit:contain;margin:12px 0;border-radius:14px;background:#fff}
 .p-card__rank{color:var(--muted);font-size:1.25rem;font-weight:800;text-align:center}
 .p-card__main{min-width:0}
