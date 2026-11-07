@@ -1,0 +1,41 @@
+<%- include('../partials/header', { current:'clinic', title, description, robots, extraCss:['/css/protein.css', '/css/clinic.css'] }) %>
+<%
+  const v = k => form[k] || '';
+  const kind = v('kind') || (target ? '載っている内容を直してほしい' : '新しく載せてほしい');
+%>
+<section class="section">
+  <div class="container detail">
+    <p class="muted-text"><a href="/clinic">治療院を探す</a> › 掲載申込・修正依頼</p>
+    <h1>掲載申込・修正依頼</h1>
+
+    <% if (sent) { %>
+      <div class="c-sent">
+        <p><strong>送信しました。</strong>内容を確認して、入力いただいたメールアドレスに連絡します。</p>
+        <p><a href="/clinic">治療院の一覧へ戻る</a></p>
+      </div>
+    <% } else { %>
+      <p class="page-lead">掲載は無料です。東京23区と神奈川県の院が対象です。いただいた情報は公開情報と照らし合わせてから載せます。</p>
+      <% if (error) { %><p class="c-error" role="alert"><%= error %></p><% } %>
+
+      <form class="c-form" method="POST" action="/clinic/apply">
+        <fieldset>
+          <legend>依頼の種類</legend>
+          <% ['新しく載せてほしい', '載っている内容を直してほしい', '掲載をやめてほしい'].forEach(function(k){ %>
+            <label class="c-check"><input type="radio" name="kind" value="<%= k %>" <%= kind === k ? 'checked' : '' %> required><%= k %></label>
+          <% }) %>
+        </fieldset>
+        <input type="hidden" name="clinicId" value="<%= target ? target.id : v('clinicId') %>">
+        <label>院名 <span class="c-req">必須</span><input class="input" name="clinicName" required maxlength="100" value="<%= target ? target.name : v('clinicName') %>"></label>
+        <label>公式サイトのURL<input class="input" name="site" type="url" maxlength="300" value="<%= target ? target.site : v('site') %>"></label>
+        <label>お名前 <span class="c-req">必須</span><input class="input" name="contactName" required maxlength="60" value="<%= v('contactName') %>"></label>
+        <label>院でのお立場（院長、スタッフなど）<input class="input" name="role" maxlength="60" value="<%= v('role') %>"></label>
+        <label>メールアドレス <span class="c-req">必須</span><input class="input" name="email" type="email" required maxlength="120" value="<%= v('email') %>"></label>
+        <label>内容（ランナー向けにしていること、直してほしい箇所など）<textarea class="input" name="message" rows="6" maxlength="3000"><%= v('message') %></textarea></label>
+        <div class="c-hp" aria-hidden="true"><label>空欄のまま<input name="website2" tabindex="-1" autocomplete="off"></label></div>
+        <p class="muted-text">「治る」「効果がある」といった表現や体験談は、いただいても載せません。<a href="/clinic/about">載せ方と注意点</a></p>
+        <button class="btn" type="submit">送信する</button>
+      </form>
+    <% } %>
+  </div>
+</section>
+<%- include('../partials/footer') %>

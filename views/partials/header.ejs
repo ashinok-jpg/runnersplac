@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title><%= typeof title !== 'undefined' ? title : 'Runnersplac｜ランニングシューズレビュー' %></title>
 <% if (typeof description !== 'undefined' && description) { %><meta name="description" content="<%= description %>"><% } %>
+<% if (typeof robots !== 'undefined' && robots) { %><meta name="robots" content="<%= robots %>"><% } %>
 <link rel="stylesheet" href="/css/base.css">
 <link rel="stylesheet" href="/css/site.css">
 <link rel="stylesheet" href="/css/prose.css">
@@ -19,6 +20,7 @@
     <div class="menu">
       <a href="/home2" aria-current="<%= current==='home' ? 'page' : 'false' %>">シューズ</a>
       <a href="/protein" aria-current="<%= current==='protein' ? 'page' : 'false' %>">プロテイン</a>
+      <a href="/clinic" aria-current="<%= current==='clinic' ? 'page' : 'false' %>">治療院</a>
       <a href="/blog" aria-current="<%= current==='blog' ? 'page' : 'false' %>">ブログ</a>
       <a href="/wishlist" aria-current="<%= current==='wishlist' ? 'page' : 'false' %>">購入候補</a>
 <% if (typeof user !== 'undefined' && user) { %>

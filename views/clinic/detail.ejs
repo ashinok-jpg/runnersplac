@@ -1,0 +1,49 @@
+<%- include('../partials/header', { current:'clinic', title, description, extraCss:['/css/protein.css', '/css/clinic.css'] }) %>
+<section class="section">
+  <div class="container detail">
+    <p class="muted-text"><a href="/clinic">治療院を探す</a> › <a href="/clinic?pref=<%= encodeURIComponent(c.pref) %>&city=<%= encodeURIComponent(c.city) %>"><%= c.city %></a></p>
+    <span class="c-type" data-type="<%= c.type %>"><%= c.type %></span>
+    <h1><%= c.name %></h1>
+    <% if (c.intro) { %><p class="page-lead"><%= c.intro %></p><% } %>
+
+    <div class="c-actions">
+      <% if (c.booking) { %><a class="btn" href="<%= c.booking %>" target="_blank" rel="noopener nofollow">予約ページ</a><% } %>
+      <% if (c.site) { %><a class="btn btn--ghost" href="<%= c.site %>" target="_blank" rel="noopener nofollow">公式サイト</a><% } %>
+      <% if (c.tel) { %><a class="btn btn--ghost" href="tel:<%= c.tel.replace(/[^\d+]/g, '') %>">電話 <%= c.tel %></a><% } %>
+    </div>
+
+    <h2>受付と場所</h2>
+    <table class="spec-table">
+      <tr><th>住所</th><td><%= c.pref %><%= c.city %><%= c.address %></td></tr>
+      <% if (c.station) { %><tr><th>最寄り駅</th><td><%= c.station %><% if (c.walk != null) { %> 徒歩<%= c.walk %>分<% } %></td></tr><% } %>
+      <% if (c.hours) { %><tr><th>受付時間</th><td class="c-pre"><%= c.hours %></td></tr><% } %>
+      <tr><th>土曜／日曜祝日／19時以降</th><td><%= c.saturday ? '受付あり' : 'なし' %>／<%= c.sunday ? '受付あり' : 'なし' %>／<%= c.night ? '受付あり' : 'なし' %></td></tr>
+    </table>
+
+    <h2>ランナー向けの設備・サービス</h2>
+    <% if (c.features.length) { %>
+      <ul class="flavor-list"><% c.features.forEach(function(x){ %><li class="flavor"><%= x %></li><% }) %></ul>
+    <% } else { %><p class="muted-text">公開情報では確認できませんでした。</p><% } %>
+
+    <h2>相談できる部位</h2>
+    <% if (c.parts.length) { %>
+      <ul class="flavor-list"><% c.parts.forEach(function(x){ %><li class="flavor"><%= x %></li><% }) %></ul>
+    <% } else { %><p class="muted-text">公開情報では確認できませんでした。</p><% } %>
+
+    <h2>資格と料金</h2>
+    <table class="spec-table">
+      <tr><th>施術する人の資格</th><td><%= c.licenses.length ? c.licenses.join('・') : '確認できませんでした' %></td></tr>
+      <tr><th>健康保険</th><td><%= c.insurance || '確認できませんでした' %>
+        <% if (c.insurance === '使える場合がある') { %><br><small class="muted-text">整骨院・接骨院で保険が使えるのは、急なけが（ねんざ・打撲など）のときです。慢性的な痛みや疲れは自費になります。</small><% } %></td></tr>
+      <tr><th>初回の料金の目安</th><td><%= c.firstFee != null ? c.firstFee.toLocaleString('ja-JP') + '円' : '確認できませんでした' %></td></tr>
+    </table>
+
+    <p class="muted-text c-source">
+      この情報は<%= c.origin === '院からの申込' ? '院からいただいた情報と公開情報' : '公開情報' %>をもとに載せています<% if (c.checkedAt) { %>（<%= c.checkedAt.replace(/-/g, '/') %>確認）<% } %>。
+      <% if (c.source) { %><a href="<%= c.source %>" target="_blank" rel="noopener nofollow">出典</a><% } %>
+      <br>院の方へ：内容の修正や掲載をやめたいときは<a href="/clinic/apply?id=<%= c.id %>">こちら</a>から連絡してください。
+    </p>
+  </div>
+</section>
+<%- include('_disclaimer') %>
+<%- include('../partials/footer') %>

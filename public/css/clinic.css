@@ -1,0 +1,57 @@
+/* 治療院（/clinic）。protein.css の .spec-table .flavor .detail などを使い回す */
+
+/* 絞り込み */
+.c-filter{display:grid;gap:10px;margin-top:20px}
+.c-filter__row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
+.c-filter select{padding:.5rem .6rem;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font:inherit;font-size:.9375rem;max-width:100%}
+.c-filter .input{flex:1 1 220px;min-width:0}
+.c-check{display:inline-flex;align-items:center;gap:6px;color:var(--text);font-size:.9375rem;cursor:pointer}
+.c-check input{accent-color:var(--brand);width:1rem;height:1rem}
+.c-reset{color:var(--muted);font-size:.875rem}
+
+/* 種類の色 */
+.c-type{display:inline-block;margin-right:.5rem;padding:.05rem .5rem;border-radius:6px;background:#253041;color:var(--text);font-size:.75rem;font-weight:700}
+.c-type[data-type="整骨院・接骨院"]{background:#1f6feb33;color:#79b0ff}
+.c-type[data-type="鍼灸院"]{background:#a371f733;color:#c9a7ff}
+.c-type[data-type="整体・コンディショニング"]{background:#2ecc7133;color:#7ee2a8}
+.c-type[data-type="スポーツ整形外科"]{background:#ff6a3d33;color:#ffa58a}
+
+/* 一覧 */
+.c-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
+.c-card{border:1px solid var(--border);border-radius:14px;background:var(--surface);transition:border-color .15s ease}
+.c-card:hover{border-color:var(--muted)}
+.c-card__link{display:block;padding:14px 16px;color:inherit;height:100%}
+.c-card__link:hover{color:inherit}
+.c-card__meta{display:flex;flex-wrap:wrap;align-items:center;gap:2px 0;color:var(--muted);font-size:.8125rem}
+.c-card h3{margin:.35rem 0 0;font-size:1.0625rem;line-height:1.4}
+.c-card__tags{display:flex;flex-wrap:wrap;gap:6px;margin:.6rem 0 0}
+.c-tag{padding:.1rem .5rem;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:.75rem}
+.c-tag--on{border-color:var(--brand);color:var(--text)}
+.c-card__parts{margin:.5rem 0 0;color:var(--muted);font-size:.8125rem}
+
+/* 詳細 */
+.c-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.btn--ghost{background:transparent;border:1px solid var(--border);color:var(--text)}
+.btn--ghost:hover{border-color:var(--muted)}
+.c-pre{white-space:pre-line}
+.c-source{margin-top:2rem;line-height:1.8}
+
+/* 申込フォーム */
+.c-form{display:grid;gap:14px;margin-top:20px;max-width:560px}
+.c-form label{display:block;font-size:.9375rem}
+.c-form .input,.c-filter .input{display:block;box-sizing:border-box;padding:.55rem .75rem;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.c-form .input{margin-top:6px}
+.c-form .input:focus,.c-filter .input:focus{border-color:var(--brand)}
+.c-form label.c-check{display:inline-flex}
+.c-form fieldset{display:grid;gap:8px;margin:0;padding:12px 14px;border:1px solid var(--border);border-radius:12px}
+.c-form legend{padding:0 4px;font-size:.875rem;color:var(--muted)}
+.c-form textarea{resize:vertical;font:inherit}
+.c-req{margin-left:4px;color:var(--brand);font-size:.75rem;font-weight:700}
+.c-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.c-error{padding:10px 14px;border:1px solid #f85149;border-radius:10px;color:#ff9b95}
+.c-sent{margin-top:16px;padding:16px;border:1px solid var(--brand);border-radius:12px}
+
+@media (max-width:560px){
+  .c-list{grid-template-columns:1fr}
+  .c-filter select{flex:1 1 45%}
+}

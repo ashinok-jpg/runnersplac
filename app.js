@@ -118,6 +118,9 @@ app.use('/blog', require('./routes/blog'));
 // プロテイン比較
 app.use('/protein', require('./routes/protein'));
 
+// ランナー向け治療院
+app.use('/clinic', require('./routes/clinic'));
+
 // ヘルス
 app.get('/__health', (_req,res)=>res.json({ok:true}));
 

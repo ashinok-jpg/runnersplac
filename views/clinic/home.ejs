@@ -1,0 +1,73 @@
+<%- include('../partials/header', { current:'clinic', title, description, robots, extraCss:['/css/protein.css', '/css/clinic.css'] }) %>
+<%
+  const sel = (name, value, options, all) => `<select name="${name}" aria-label="${all}"><option value="">${all}</option>` +
+    options.map(o => `<option value="${o}" ${o === value ? 'selected' : ''}>${o}</option>`).join('') + '</select>';
+%>
+<section class="list-hero">
+  <div class="container">
+    <h1>走って痛めたとき、相談できる院を探す。</h1>
+    <p class="page-lead">東京23区と神奈川県の整骨院・接骨院、鍼灸院、整体、スポーツ整形外科を、痛めた部位や受付の曜日から探せます。</p>
+
+    <form class="c-filter" method="GET" action="/clinic" role="search">
+      <div class="c-filter__row">
+        <%- sel('pref', f.pref, vocab.PREFS, '東京23区・神奈川') %>
+        <% if (cities.length) { %><%- sel('city', f.city, cities, 'すべての市区町村') %><% } %>
+        <%- sel('type', f.type, vocab.TYPES, 'すべての種類') %>
+        <%- sel('part', f.part, vocab.PARTS, '痛めた部位') %>
+        <%- sel('feature', f.feature, vocab.FEATURES, '設備・サービス') %>
+      </div>
+      <div class="c-filter__row">
+        <label class="c-check"><input type="checkbox" name="weekend" value="1" <%= f.weekend ? 'checked' : '' %>>土日も受付</label>
+        <label class="c-check"><input type="checkbox" name="night" value="1" <%= f.night ? 'checked' : '' %>>19時以降も受付</label>
+        <label class="c-check"><input type="checkbox" name="insurance" value="1" <%= f.insurance ? 'checked' : '' %>>健康保険が使える場合あり</label>
+      </div>
+      <div class="c-filter__row">
+        <input class="input" name="q" placeholder="院名・駅名で検索" value="<%= f.q %>" aria-label="院名・駅名で検索">
+        <button class="btn" type="submit">探す</button>
+        <% if (filtered) { %><a class="c-reset" href="/clinic">条件をリセット</a><% } %>
+      </div>
+    </form>
+  </div>
+</section>
+
+<section class="section list-section">
+  <div class="container">
+    <p class="list-bar__count"><strong><%= clinics.length %></strong> 院<% if (filtered) { %>（全<%= total %>院中）<% } %></p>
+
+    <% if (!total) { %>
+      <div class="list-empty">
+        <p>いま載せる院の情報を集めています。もうしばらくお待ちください。</p>
+        <p>院の方は<a href="/clinic/apply">掲載の申込</a>ができます（無料）。</p>
+      </div>
+    <% } else if (!clinics.length) { %>
+      <div class="list-empty">
+        <p>条件に合う院が見つかりませんでした。</p>
+        <a class="btn" href="/clinic">条件をリセット</a>
+      </div>
+    <% } %>
+
+    <ul class="c-list">
+      <% clinics.forEach(function(c){ %>
+        <li class="c-card">
+          <a class="c-card__link" href="/clinic/<%= c.id %>">
+            <span class="c-card__meta"><span class="c-type" data-type="<%= c.type %>"><%= c.type %></span><%= c.pref === '東京都' ? '' : c.pref %><%= c.city %><% if (c.station) { %>・<%= c.station %><% if (c.walk != null) { %> 徒歩<%= c.walk %>分<% } %><% } %></span>
+            <h3><%= c.name %></h3>
+            <p class="c-card__tags">
+              <% if (c.saturday || c.sunday) { %><span class="c-tag c-tag--on"><%= [c.saturday && '土', c.sunday && '日祝'].filter(Boolean).join('・') %>も受付</span><% } %>
+              <% if (c.night) { %><span class="c-tag c-tag--on">19時以降も受付</span><% } %>
+              <% c.features.slice(0, 3).forEach(function(x){ %><span class="c-tag"><%= x %></span><% }) %>
+            </p>
+            <% if (c.parts.length) { %><p class="c-card__parts">相談できる部位：<%= c.parts.join('・') %></p><% } %>
+          </a>
+        </li>
+      <% }) %>
+    </ul>
+
+    <p class="list-note">
+      並びは地域と院名の順で、おすすめの順ではありません。院の情報は各院の公式サイトなどの公開情報から載せています<% if (updatedAt) { %>（<%= updatedAt.replace(/-/g, '/') %>までに確認）<% } %>。
+      <a href="/clinic/about">載せ方と注意点</a> ・ <a href="/clinic/apply">院の方へ：掲載申込・修正依頼</a>
+    </p>
+  </div>
+</section>
+<%- include('_disclaimer') %>
+<%- include('../partials/footer') %>
