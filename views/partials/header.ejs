@@ -17,17 +17,31 @@
 <nav class="nav">
   <div class="container nav-inner">
     <a class="site-brand" href="/">Runnersplac</a>
-    <div class="menu">
-      <a href="/home2" aria-current="<%= current==='home' ? 'page' : 'false' %>">シューズ</a>
-      <a href="/protein" aria-current="<%= current==='protein' ? 'page' : 'false' %>">プロテイン</a>
-      <a href="/clinic" aria-current="<%= current==='clinic' ? 'page' : 'false' %>">治療院</a>
-      <a href="/blog" aria-current="<%= current==='blog' ? 'page' : 'false' %>">ブログ</a>
-      <a href="/wishlist" aria-current="<%= current==='wishlist' ? 'page' : 'false' %>">購入候補</a>
+    <div class="nav-actions">
 <% if (typeof user !== 'undefined' && user) { %>
-  <a href="/logout">ログアウト</a>
+      <a class="nav-login" href="/logout">ログアウト</a>
 <% } else { %>
-  <a href="/login" aria-current="<%= current==='login' ? 'page' : 'false' %>">ログイン</a>
+      <a class="nav-login" href="/login" aria-current="<%= current==='login' ? 'page' : 'false' %>">ログイン</a>
 <% } %>
+      <details class="nav-menu">
+        <summary aria-label="メニューを開く">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+          <span>メニュー</span>
+        </summary>
+        <div class="nav-menu__panel">
+          <a href="/home2" aria-current="<%= current==='home' ? 'page' : 'false' %>">シューズ</a>
+          <a href="/protein" aria-current="<%= current==='protein' ? 'page' : 'false' %>">プロテイン</a>
+          <a href="/clinic" aria-current="<%= current==='clinic' ? 'page' : 'false' %>">治療院</a>
+          <a href="/blog" aria-current="<%= current==='blog' ? 'page' : 'false' %>">ブログ</a>
+          <a href="/wishlist" aria-current="<%= current==='wishlist' ? 'page' : 'false' %>">購入候補</a>
+        </div>
+      </details>
     </div>
+    <script>
+      // メニューの外を押したら閉じる
+      document.addEventListener('click', function (e) {
+        document.querySelectorAll('.nav-menu[open]').forEach(function (m) { if (!m.contains(e.target)) m.removeAttribute('open'); });
+      });
+    </script>
   </div>
 </nav>

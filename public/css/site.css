@@ -14,6 +14,51 @@ body{font-family:"Inter","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui
 .menu{gap:.15rem;flex-wrap:nowrap}
 .menu a{padding:.5rem .65rem;font-size:.9375rem;white-space:nowrap}
 
+/* ヘッダー右側：ログインとメニュー */
+.nav-actions{display:flex;align-items:center;gap:8px;flex-shrink:0}
+.nav-login{
+  padding:.4rem .85rem;
+  border:1px solid var(--border);
+  border-radius:999px;
+  color:var(--text);
+  font-size:.875rem;
+  white-space:nowrap;
+}
+.nav-login:hover,.nav-login[aria-current="page"]{border-color:var(--muted);color:var(--text)}
+.nav-menu{position:relative}
+.nav-menu summary{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  padding:.4rem .85rem;
+  border-radius:999px;
+  background:var(--text);
+  color:var(--bg);
+  font-size:.875rem;
+  font-weight:700;
+  white-space:nowrap;
+  list-style:none;
+  cursor:pointer;
+  user-select:none;
+}
+.nav-menu summary::-webkit-details-marker{display:none}
+.nav-menu__panel{
+  position:absolute;
+  top:calc(100% + 8px);
+  right:0;
+  z-index:70;
+  display:grid;
+  min-width:200px;
+  padding:6px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:var(--surface);
+  box-shadow:0 12px 32px rgba(0,0,0,.35);
+}
+.nav-menu__panel a{padding:.65rem .85rem;border-radius:8px;color:var(--text);font-size:.9375rem}
+.nav-menu__panel a:hover{background:rgba(127,127,127,.15);color:var(--text)}
+.nav-menu__panel a[aria-current="page"]{background:rgba(127,127,127,.15);font-weight:700}
+
 .page-lead{color:var(--muted);margin:.25rem 0 0}
 .section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:16px}
 .section-head h2{margin:0}
