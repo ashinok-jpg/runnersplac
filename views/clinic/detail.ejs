@@ -10,6 +10,7 @@
       <% if (c.booking) { %><a class="btn" href="<%= c.booking %>" target="_blank" rel="noopener nofollow">予約ページ</a><% } %>
       <% if (c.site) { %><a class="btn btn--ghost" href="<%= c.site %>" target="_blank" rel="noopener nofollow">公式サイト</a><% } %>
       <% if (c.tel) { %><a class="btn btn--ghost" href="tel:<%= c.tel.replace(/[^\d+]/g, '') %>">電話 <%= c.tel %></a><% } %>
+      <a class="btn btn--ghost" href="#posts">ランナーの体験談 <%= visibleCount %>件</a>
     </div>
 
     <h2>受付と場所</h2>
@@ -43,6 +44,8 @@
       <% if (c.source) { %><a href="<%= c.source %>" target="_blank" rel="noopener nofollow">出典</a><% } %>
       <br>院の方へ：内容の修正や掲載をやめたいときは<a href="/clinic/apply?id=<%= c.id %>">こちら</a>から連絡してください。
     </p>
+
+    <%- include('_posts') %>
   </div>
 </section>
 <%- include('_disclaimer') %>

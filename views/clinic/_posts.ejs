@@ -1,0 +1,187 @@
+<%
+  const fmt = d => d ? `${d.getFullYear()}/${d.getMonth() + 1}/${d.getDate()}` : '';
+  const pageUrl = 'https://runnersplac.onrender.com/clinic/' + c.id;
+%>
+<section class="cp" id="posts">
+  <h2>ランナーの体験談</h2>
+  <p class="cp-note">ここにあるのは、この院に通ったランナー一人ひとりの体験です。<strong>医学的な助言や、施術の効果を約束するものではありません。</strong>同じケガでも合う治療は人によって違います。強い痛みや腫れ、しびれがあるときは整形外科を受診してください。</p>
+
+  <% if (posted) { %><p class="c-sent" role="status">体験談を載せました。ありがとうございます。</p><% } %>
+  <% if (loadError) { %><p class="c-error">体験談を読み込めませんでした。時間をおいて開き直してください。</p><% } %>
+
+  <% if (visibleCount) { %>
+    <nav class="cp-filter" aria-label="ケガ・症状で絞り込む">
+      <a class="cp-chip<%= !injury ? ' cp-chip--on' : '' %>" href="/clinic/<%= c.id %>#posts">すべて <%= visibleCount %></a>
+      <% choices.INJURIES.filter(x => counts[x]).forEach(function(x){ %>
+        <a class="cp-chip<%= injury === x ? ' cp-chip--on' : '' %>" href="/clinic/<%= c.id %>?injury=<%= encodeURIComponent(x) %>#posts"><%= x %> <%= counts[x] %></a>
+      <% }) %>
+    </nav>
+  <% } %>
+
+  <% if (!posts.length && !loadError) { %>
+    <p class="muted-text"><%= injury ? `「${injury}」の体験談はまだありません。` : 'まだ体験談はありません。この院に通ったことがあれば、最初の1件を書いてみませんか。' %></p>
+  <% } %>
+
+  <ol class="cp-list">
+  <% posts.forEach(function(p){ const mine = me && me.uid === p.uid; %>
+    <li class="cp-item<%= p.hidden ? ' cp-item--hidden' : '' %>" id="post-<%= p.id %>">
+      <% if (p.hidden) { %><p class="cp-hidden-label">非表示中（管理者にだけ見えています）</p><% } %>
+      <div class="cp-head">
+        <span class="cp-injury"><%= p.injury %></span>
+        <span class="cp-outcome" data-outcome="<%= choices.OUTCOMES.indexOf(p.outcome) %>"><%= p.outcome %></span>
+      </div>
+      <% if (p.injuryNote) { %><p class="cp-sub"><%= p.injuryNote %></p><% } %>
+      <dl class="cp-facts">
+        <div><dt>受けた施術</dt><dd><%= p.treatment %></dd></div>
+        <div><dt>通った期間</dt><dd><%= p.period %></dd></div>
+      </dl>
+      <p class="cp-body"><%= p.body %></p>
+      <% if (p.photoIds.length) { %>
+        <div class="cp-photos">
+          <% p.photoIds.forEach(function(pid){ %><a href="/clinic/photo/<%= pid %>" target="_blank" rel="noopener"><img src="/clinic/photo/<%= pid %>" alt="<%= p.nickname %>さんの写真" loading="lazy"></a><% }) %>
+        </div>
+      <% } %>
+      <div class="cp-foot">
+        <span class="muted-text"><%= p.nickname %>さん・<%= fmt(p.createdAt) %></span>
+        <span class="cp-tools">
+          <button type="button" class="cp-helpful<%= liked.has(p.id) ? ' cp-helpful--on' : '' %>" data-id="<%= p.id %>" aria-pressed="<%= liked.has(p.id) %>">参考になった <b><%= p.helpfulCount %></b></button>
+          <a class="cp-share" href="https://twitter.com/intent/tweet?text=<%= encodeURIComponent(`${p.injury}で「${c.name}」に通ったランナーの体験談`) %>&url=<%= encodeURIComponent(pageUrl + '#post-' + p.id) %>" target="_blank" rel="noopener" data-share-url="<%= pageUrl %>#post-<%= p.id %>" data-share-title="<%= p.injury %>で「<%= c.name %>」に通ったランナーの体験談">シェア</a>
+          <% if (isAdmin) { %>
+            <form method="post" action="/clinic/posts/<%= p.id %>/hide"><input type="hidden" name="hidden" value="<%= p.hidden ? '' : '1' %>"><button class="cp-mod"><%= p.hidden ? '表示に戻す' : '非表示にする' %></button></form>
+          <% } %>
+          <% if (mine || isAdmin) { %>
+            <form method="post" action="/clinic/posts/<%= p.id %>/delete" onsubmit="return confirm('この体験談を削除します。元に戻せません。よろしいですか？')"><button class="cp-mod">削除</button></form>
+          <% } %>
+        </span>
+      </div>
+    </li>
+  <% }) %>
+  </ol>
+
+  <h3 id="post-form">体験談を書く</h3>
+  <% if (!me) { %>
+    <p>体験談を書くにはログインしてください。<a class="btn" href="/login?redirect=<%= encodeURIComponent('/clinic/' + c.id + '#post-form') %>">ログインして書く</a></p>
+  <% } else { %>
+    <% if (error) { %><p class="c-error" role="alert"><%= error %></p><% } %>
+    <form class="c-form cp-form" method="post" action="/clinic/<%= c.id %>/posts" enctype="multipart/form-data">
+      <label>ケガ・症状<span class="c-req">必須</span>
+        <select class="input" name="injury" required>
+          <option value="">選んでください</option>
+          <% choices.INJURIES.forEach(function(x){ %><option<%= form.injury === x ? ' selected' : '' %>><%= x %></option><% }) %>
+        </select>
+      </label>
+      <label>症状をひとことで（任意）
+        <input class="input" name="injuryNote" maxlength="<%= choices.LIMITS.injuryNote %>" value="<%= form.injuryNote || '' %>" placeholder="例：右すねの内側、走り始めに痛む">
+      </label>
+      <label>受けた施術<span class="c-req">必須</span>
+        <textarea class="input" name="treatment" rows="3" maxlength="<%= choices.LIMITS.treatment %>" required placeholder="例：エコーで確認→電気と手技、ふくらはぎのストレッチ指導、インソール作成"><%= form.treatment || '' %></textarea>
+      </label>
+      <div class="cp-row">
+        <label>通った期間<span class="c-req">必須</span>
+          <select class="input" name="period" required>
+            <option value="">選んでください</option>
+            <% choices.PERIODS.forEach(function(x){ %><option<%= form.period === x ? ' selected' : '' %>><%= x %></option><% }) %>
+          </select>
+        </label>
+        <label>その後の状態<span class="c-req">必須</span>
+          <select class="input" name="outcome" required>
+            <option value="">選んでください</option>
+            <% choices.OUTCOMES.forEach(function(x){ %><option<%= form.outcome === x ? ' selected' : '' %>><%= x %></option><% }) %>
+          </select>
+        </label>
+      </div>
+      <label>体験の詳しい内容<span class="c-req">必須</span>
+        <textarea class="input" name="body" rows="6" maxlength="<%= choices.LIMITS.body %>" required placeholder="いつ・どう痛めたか、通ってみての感想、走れるようになるまでの流れなど"><%= form.body || '' %></textarea>
+      </label>
+      <label>写真（任意・<%= choices.LIMITS.photos %>枚まで）
+        <input class="input" type="file" name="photos" accept="image/*" multiple data-max="<%= choices.LIMITS.photos %>">
+        <small class="muted-text">テーピングやインソール、復帰レースの写真など。自動で縮小し、撮影場所の情報は消して保存します。顔や他の人が写っている写真は避けてください。</small>
+      </label>
+      <div class="cp-previews" aria-live="polite"></div>
+      <label>表示する名前（任意）
+        <input class="input" name="nickname" maxlength="<%= choices.LIMITS.nickname %>" value="<%= form.nickname || '' %>" placeholder="ランナー">
+      </label>
+      <input class="c-hp" name="website2" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <label class="c-check cp-agree"><input type="checkbox" name="agree" value="1" required> 自分の体験として書いています。院や人への悪口・個人情報・宣伝は書きません。ルールに合わない投稿は管理者が非表示にすることがあります。</label>
+      <div><button class="btn" type="submit">体験談を載せる</button></div>
+    </form>
+  <% } %>
+</section>
+
+<script>
+(function () {
+  // 参考になった
+  document.querySelectorAll('.cp-helpful').forEach(function (btn) {
+    btn.addEventListener('click', async function () {
+      btn.disabled = true;
+      try {
+        const r = await fetch('/clinic/posts/' + btn.dataset.id + '/helpful', { method: 'POST', headers: { Accept: 'application/json' } });
+        if (r.status === 401) { location.href = '/login?redirect=' + encodeURIComponent(location.pathname + '#post-' + btn.dataset.id); return; }
+        const j = await r.json();
+        if (j.ok) {
+          btn.classList.toggle('cp-helpful--on', j.on);
+          btn.setAttribute('aria-pressed', String(j.on));
+          btn.querySelector('b').textContent = j.count;
+        }
+      } finally { btn.disabled = false; }
+    });
+  });
+
+  // シェア（スマホは端末のシェア画面、それ以外は X）
+  document.querySelectorAll('.cp-share').forEach(function (a) {
+    a.addEventListener('click', function (e) {
+      if (!navigator.share) return;
+      e.preventDefault();
+      navigator.share({ title: a.dataset.shareTitle, url: a.dataset.shareUrl }).catch(function () {});
+    });
+  });
+
+  // 写真：送る前に長辺1600pxの JPEG に縮める（撮影場所などの Exif もここで落ちる）
+  const input = document.querySelector('.cp-form input[type=file]');
+  if (!input || !window.DataTransfer) return;
+  const previews = document.querySelector('.cp-previews');
+  const max = Number(input.dataset.max) || 4;
+  function shrink(file) {
+    return new Promise(function (resolve, reject) {
+      const url = URL.createObjectURL(file);
+      const img = new Image();
+      img.onload = function () {
+        const scale = Math.min(1, 1600 / Math.max(img.naturalWidth, img.naturalHeight));
+        const canvas = document.createElement('canvas');
+        canvas.width = Math.round(img.naturalWidth * scale);
+        canvas.height = Math.round(img.naturalHeight * scale);
+        canvas.getContext('2d').drawImage(img, 0, 0, canvas.width, canvas.height);
+        URL.revokeObjectURL(url);
+        (function tryQ(q) {
+          canvas.toBlob(function (blob) {
+            if (blob.size > 880 * 1024 && q > 0.5) return tryQ(q - 0.1);
+            resolve(new File([blob], file.name.replace(/\.\w+$/, '') + '.jpg', { type: 'image/jpeg' }));
+          }, 'image/jpeg', q);
+        })(0.82);
+      };
+      img.onerror = function () { URL.revokeObjectURL(url); reject(new Error('read')); };
+      img.src = url;
+    });
+  }
+  input.addEventListener('change', async function () {
+    const files = Array.from(input.files).slice(0, max);
+    previews.textContent = files.length ? '写真を縮めています…' : '';
+    try {
+      const out = await Promise.all(files.map(shrink));
+      const dt = new DataTransfer();
+      out.forEach(function (f) { dt.items.add(f); });
+      input.files = dt.files;
+      previews.textContent = '';
+      out.forEach(function (f) {
+        const im = document.createElement('img');
+        im.src = URL.createObjectURL(f);
+        im.alt = '';
+        previews.appendChild(im);
+      });
+    } catch (e) {
+      input.value = '';
+      previews.textContent = 'この写真は読み込めませんでした。別の写真を選んでください。';
+    }
+  });
+})();
+</script>

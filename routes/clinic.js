@@ -80,15 +80,143 @@ router.post('/apply', async (req, res) => {
   }
 });
 
-router.get('/:id', (req, res, next) => {
-  const { clinics } = loadData();
-  const c = clinics.find(x => x.id === req.params.id);
-  if (!c) return next();
-  res.render('clinic/detail', {
+// ---------- 体験談（投稿） ----------
+const multer = require('multer');
+const { requireAdmin, isLocalDev } = require('../lib/session');
+const posts = require('../lib/clinic-posts');
+
+const upload = multer({
+  storage: multer.memoryStorage(),
+  limits: { files: posts.LIMITS.photos, fileSize: posts.LIMITS.photoBytes, fields: 20, fieldSize: 8 * 1024 },
+});
+const POST_ID = /^[A-Za-z0-9]{10,40}$/;
+// 投稿できる人。ローカル開発（NODE_ENV=development かつ localhost）では Google ログインなしで試せるようにする
+const poster = req => req.user || (isLocalDev(req) ? { uid: 'dev-user', email: null, isAdmin: true } : null);
+const findClinic = id => loadData().clinics.find(x => x.id === id);
+
+async function renderDetail(req, res, c, { status = 200, error = '', form = {} } = {}) {
+  const me = poster(req);
+  const isAdmin = !!me?.isAdmin;
+  let all = [], liked = new Set(), loadError = false;
+  try {
+    all = await posts.listByClinic(c.id, { includeHidden: isAdmin });
+    liked = await posts.helpfulBy(me?.uid, all.map(p => p.id));
+  } catch (e) {
+    console.error('[clinic/posts]', e);
+    loadError = true;
+  }
+  const injury = posts.INJURIES.includes(str(req.query.injury)) ? str(req.query.injury) : '';
+  const counts = {};
+  all.filter(p => !p.hidden).forEach(p => { counts[p.injury] = (counts[p.injury] || 0) + 1; });
+  const visibleCount = all.filter(p => !p.hidden).length;
+  res.status(status).render('clinic/detail', {
     title: `${c.name}（${c.city}・${c.type}）｜ランナー向け治療院｜Runnersplac`,
-    description: `${c.pref}${c.city}の${c.type}「${c.name}」の受付時間、相談できる部位、ランナー向けの設備・サービス。`,
-    c,
+    description: `${c.pref}${c.city}の${c.type}「${c.name}」の受付時間、相談できる部位、ランナー向けの設備・サービス`
+      + (visibleCount ? `。ランナーの体験談${visibleCount}件。` : '。'),
+    c, me, isAdmin, liked, loadError, injury, counts, visibleCount,
+    posts: injury ? all.filter(p => p.injury === injury) : all,
+    choices: { INJURIES: posts.INJURIES, PERIODS: posts.PERIODS, OUTCOMES: posts.OUTCOMES, LIMITS: posts.LIMITS },
+    error, form, posted: req.query.posted === '1',
   });
+}
+
+router.get('/photo/:photoId', async (req, res, next) => {
+  if (!POST_ID.test(req.params.photoId)) return next();
+  try {
+    const photo = await posts.getPhoto(req.params.photoId);
+    if (!photo) return next();
+    const post = await posts.getPost(photo.postId);
+    if (!post || (post.hidden && !poster(req)?.isAdmin)) return next();
+    res.set('Cache-Control', post.hidden ? 'private, no-store' : 'public, max-age=86400');
+    res.type(photo.type).send(photo.data);
+  } catch (e) { next(e); }
+});
+
+router.post('/:id/posts', (req, res, next) => {
+  const c = findClinic(req.params.id);
+  if (!c) return next();
+  const me = poster(req);
+  if (!me) return res.redirect('/login?redirect=' + encodeURIComponent(`/clinic/${c.id}#post-form`));
+
+  upload.array('photos', posts.LIMITS.photos)(req, res, async err => {
+    const b = req.body || {};
+    const L = posts.LIMITS;
+    const form = {
+      nickname: str(b.nickname).slice(0, L.nickname), injury: str(b.injury), injuryNote: str(b.injuryNote).slice(0, L.injuryNote),
+      treatment: str(b.treatment).slice(0, L.treatment), period: str(b.period), outcome: str(b.outcome),
+      body: str(b.body).slice(0, L.body),
+    };
+    const fail = msg => renderDetail(req, res, c, { status: 400, error: msg, form });
+    if (err) {
+      return fail(err.code === 'LIMIT_FILE_SIZE' ? '写真が大きすぎます。1枚900KBまでです（ページのJavaScriptが動いていれば自動で縮めます）。'
+        : err.code === 'LIMIT_FILE_COUNT' || err.code === 'LIMIT_UNEXPECTED_FILE' ? `写真は${L.photos}枚までです。`
+        : '送信内容を読み取れませんでした。');
+    }
+    if (str(b.website2)) return res.redirect(`/clinic/${c.id}`); // 見えない欄が埋まっていたら機械の送信
+    if (!posts.INJURIES.includes(form.injury) || !posts.PERIODS.includes(form.period) || !posts.OUTCOMES.includes(form.outcome)) {
+      return fail('ケガ・症状、通った期間、その後の状態を選んでください。');
+    }
+    if (form.treatment.length < 5 || form.body.length < 20) {
+      return fail('受けた施術（5文字以上）と、体験の詳しい内容（20文字以上）を書いてください。');
+    }
+    if (b.agree !== '1') return fail('投稿のルールを確認して、チェックを入れてください。');
+    const photos = [];
+    for (const f of req.files || []) {
+      const clean = posts.stripJpegExif(f.buffer);
+      if (!clean) return fail('写真は JPEG で送ってください（ページのJavaScriptが動いていれば自動で変換します）。');
+      photos.push(clean);
+    }
+    try {
+      if (!me.isAdmin && await posts.countRecentByUser(me.uid) >= posts.MAX_POSTS_PER_DAY) {
+        return fail(`投稿は1日${posts.MAX_POSTS_PER_DAY}件までです。`);
+      }
+      const id = await posts.createPost({ clinicId: c.id, user: me, fields: { ...form, nickname: form.nickname || 'ランナー' }, photos });
+      res.redirect(303, `/clinic/${c.id}?posted=1#post-${id}`);
+    } catch (e) {
+      console.error('[clinic/posts create]', e);
+      renderDetail(req, res, c, { status: 500, error: '保存できませんでした。時間をおいてもう一度お試しください。', form });
+    }
+  });
+});
+
+router.post('/posts/:postId/helpful', async (req, res) => {
+  const me = poster(req);
+  if (!me) return res.status(401).json({ ok: false, login: true });
+  if (!POST_ID.test(req.params.postId)) return res.status(400).json({ ok: false });
+  try {
+    const r = await posts.toggleHelpful(req.params.postId, me.uid);
+    if (!r) return res.status(404).json({ ok: false });
+    res.json({ ok: true, ...r });
+  } catch (e) {
+    console.error('[clinic/posts helpful]', e);
+    res.status(500).json({ ok: false });
+  }
+});
+
+// 管理者：非表示にする／戻す
+router.post('/posts/:postId/hide', requireAdmin, async (req, res, next) => {
+  if (!POST_ID.test(req.params.postId)) return next();
+  const post = await posts.getPost(req.params.postId).catch(() => null);
+  if (!post) return next();
+  await posts.setHidden(post.id, req.body?.hidden === '1', req.user?.uid);
+  res.redirect(303, `/clinic/${post.clinicId}#post-${post.id}`);
+});
+
+// 投稿した本人（と管理者）は消せる
+router.post('/posts/:postId/delete', async (req, res, next) => {
+  const me = poster(req);
+  if (!POST_ID.test(req.params.postId)) return next();
+  const post = await posts.getPost(req.params.postId).catch(() => null);
+  if (!post) return next();
+  if (!me || (me.uid !== post.uid && !me.isAdmin)) return res.status(403).send('この投稿は消せません');
+  await posts.deletePost(post);
+  res.redirect(303, `/clinic/${post.clinicId}#posts`);
+});
+
+router.get('/:id', async (req, res, next) => {
+  const c = findClinic(req.params.id);
+  if (!c) return next();
+  try { await renderDetail(req, res, c); } catch (e) { next(e); }
 });
 
 module.exports = router;
