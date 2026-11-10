@@ -10,13 +10,13 @@
   <meta name="keywords" content="ランニングシューズ,<%= shoe.brand %>,<%= shoe.name %>,レビュー,マラソン,ジョギング,クッション,安定性,初心者,評価">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link rel="canonical" href="https://runnersplac.onrender.com/shoes/<%= shoe.id %>">
-  <meta property="og:url" content="https://runnersplac.onrender.com/shoes/<%= shoe.id %>">
+  <link rel="canonical" href="https://runnersplac.com/shoes/<%= shoe.id %>">
+  <meta property="og:url" content="https://runnersplac.com/shoes/<%= shoe.id %>">
   
   <meta property="og:title" content="<%= shoe.name %>｜ランニングシューズ徹底レビュー">
   <meta property="og:description" content="クッション性と安定性に優れた<%= shoe.name %>を徹底解説。実際のユーザー評価付き。">
   <meta property="og:type" content="article">
-  <meta property="og:image" content="https://runnersplac.onrender.com<%= heroSrc %>">
+  <meta property="og:image" content="https://runnersplac.com<%= heroSrc %>">
   <meta name="twitter:card" content="summary_large_image">
 
   <link rel="preload" href="/css/detail.css" as="style">
@@ -29,7 +29,7 @@
     "@context":"https://schema.org",
     "@type":"Product",
     "name":"<%= shoe.name %>",
-    "image":"https://runnersplac.onrender.com<%= heroSrc %>",
+    "image":"https://runnersplac.com<%= heroSrc %>",
     "description":"<%= shoe.name %> の詳細レビュー。クッション性・グリップ・耐久性などを解説。",
     "brand":{"@type":"Brand","name":"<%= shoe.brand %>"},
     "sku":"<%= shoe.id %>",
@@ -37,7 +37,7 @@
       "@type":"Offer",
       "price":"<%= shoe.price %>",
       "priceCurrency":"JPY",
-      "url":"https://runnersplac.onrender.com/<%= shoe.id %>",
+      "url":"https://runnersplac.com/shoes/<%= shoe.id %>",
       "availability":"https://schema.org/InStock"
     }<% if (typeof communityAvg === 'number') { %>,
     "aggregateRating":{

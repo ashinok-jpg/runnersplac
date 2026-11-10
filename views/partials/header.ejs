@@ -6,6 +6,7 @@
 <title><%= typeof title !== 'undefined' ? title : 'Runnersplac｜ランニングシューズレビュー' %></title>
 <% if (typeof description !== 'undefined' && description) { %><meta name="description" content="<%= description %>"><% } %>
 <% if (typeof robots !== 'undefined' && robots) { %><meta name="robots" content="<%= robots %>"><% } %>
+<% if (typeof req !== 'undefined' && req && !(typeof robots !== 'undefined' && robots && /noindex/.test(robots))) { %><link rel="canonical" href="https://runnersplac.com<%= req.originalUrl.split('?')[0] %>"><% } %>
 <link rel="stylesheet" href="/css/base.css">
 <link rel="stylesheet" href="/css/site.css">
 <link rel="stylesheet" href="/css/prose.css">

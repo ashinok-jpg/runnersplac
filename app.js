@@ -5,6 +5,16 @@ const cookieParser = require('cookie-parser');
 
 const app = express();
 
+// 正式な住所は runnersplac.com。onrender.com で開かれたら、同じページへ恒久転送する（検索の評価を1つにまとめるため）
+const SITE_URL = 'https://runnersplac.com';
+app.locals.siteUrl = SITE_URL;
+app.use((req, res, next) => {
+  if (req.hostname === 'runnersplac.onrender.com' && (req.method === 'GET' || req.method === 'HEAD') && req.path !== '/__health') {
+    return res.redirect(301, SITE_URL + req.originalUrl);
+  }
+  next();
+});
+
 // ----- 基本ミドルウェア（順序大事） -----
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ extended: true }));
@@ -103,7 +113,7 @@ app.use('/', authRouter);
 app.get('/', (req, res) => {
   const i = req.originalUrl.indexOf('?');
   const qs = i >= 0 ? req.originalUrl.slice(i) : '';
-  res.redirect(302, '/home2' + qs);
+  res.redirect(301, '/home2' + qs);
 });
 app.get('/home', (req, res) => {
   const i = req.originalUrl.indexOf('?');
