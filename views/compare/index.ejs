@@ -1,0 +1,20 @@
+<%- include('../partials/header', { current:'compare', user, req, title:'シューズ比較｜どっちがいい？を計測データで比べる｜Runnersplac', description:'迷いやすいランニングシューズ2足を、重さ・クッション・反発・グリップ・価格の計測データで比べました。', extraCss: ['/css/compare.css'] }) %>
+<section class="section">
+  <div class="container cmp">
+    <h1>シューズ比較</h1>
+    <p class="page-lead">迷いやすい2足を、計測データで比べました。気になる組み合わせを選んでください。</p>
+    <% groups.forEach(function (g) { %>
+    <h2 class="cmp-group"><%= g.cat %></h2>
+    <div class="cmp-grid">
+      <% g.pairs.forEach(function (p) { %>
+      <a class="cmp-card" href="/compare/<%= p.slug %>">
+        <div class="cmp-card__imgs"><img src="<%= p.a.image %>" alt="" loading="lazy"><span>VS</span><img src="<%= p.b.image %>" alt="" loading="lazy"></div>
+        <strong><%= p.a.name %> と <%= p.b.name %></strong>
+        <small>性能点 <%= p.a.rating.toFixed(2) %> 対 <%= p.b.rating.toFixed(2) %></small>
+      </a>
+      <% }) %>
+    </div>
+    <% }) %>
+  </div>
+</section>
+<%- include('../partials/footer') %>

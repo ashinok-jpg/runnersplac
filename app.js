@@ -68,6 +68,7 @@ app.use('/review', reviewRouter);
 
 // シューズ詳細は catch-all より前に
 app.use('/shoes', require('./routes/shoes'));
+app.use('/compare', require('./routes/compare'));
 
 // API（※ 重複マウントを削除して1回だけ）
 app.use('/api/comments', require('./routes/api/comments'));

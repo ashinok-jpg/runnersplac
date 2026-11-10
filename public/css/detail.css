@@ -1174,3 +1174,7 @@ main {
   body{padding-bottom:56px}
 }
 html,body{font-family:"Inter","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif}
+
+/* よく比べられる靴（/compare へのリンク） */
+.compare-links ul{margin:.5rem 0 0;padding-left:1.2em;display:grid;gap:.4rem}
+.compare-links a{color:var(--brand, #1f6feb)}

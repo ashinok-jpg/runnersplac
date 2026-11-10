@@ -108,7 +108,17 @@
     </section>
     <% } %>
 
-  
+    <% if (typeof comparisons !== 'undefined' && comparisons.length) { %>
+    <section class="card compare-links">
+      <h2>よく比べられる靴</h2>
+      <ul>
+        <% comparisons.forEach(function (p) { const other = p.a.id === shoe.id ? p.b : p.a; %>
+        <li><a href="/compare/<%= p.slug %>"><%= shoe.name %> と <%= other.name %> を比べる</a></li>
+        <% }) %>
+      </ul>
+    </section>
+    <% } %>
+
     <section class="charts" id="ratings">
       <div class="card">
         <h2>ホスト評価（レーダー）</h2>

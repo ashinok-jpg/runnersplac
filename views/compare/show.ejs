@@ -1,0 +1,103 @@
+<%
+  const yen = (n) => n == null ? '—' : '¥' + Number(n).toLocaleString('en-US');
+  const fmt = (v, unit, d) => v == null ? '—' : (d != null ? Number(v).toFixed(d) : v) + (unit || '');
+  const pageTitle = a.name + 'と' + b.name + 'を比較｜どっちがいい？｜Runnersplac';
+  const desc = a.name + '（' + yen(a.price) + '、性能点' + a.rating.toFixed(2) + '）と' + b.name + '（' + yen(b.price) + '、性能点' + b.rating.toFixed(2) + '）を、重さ・クッション・反発・グリップの計測データで比べました。';
+  // 計測値の行：better は 'high'（大きいほうが良い）か 'low'（小さいほうが良い）
+  const rows = [
+    ['価格', a.price, b.price, (v) => yen(v), 'low'],
+    ['実測重量', a.m.weight, b.m.weight, (v) => fmt(v, 'g'), 'low'],
+    ['衝撃吸収（かかと）', a.m.shock, b.m.shock, (v) => fmt(v, 'SA'), 'high'],
+    ['エネルギーリターン前足部', a.m.returnFore, b.m.returnFore, (v) => fmt(v, '%'), 'high'],
+    ['かかとの幅', a.m.heelWidth, b.m.heelWidth, (v) => fmt(v, 'mm'), 'high'],
+    ['摩擦係数（グリップ）', a.m.grip, b.m.grip, (v) => fmt(v, '', 2), 'high'],
+    ['摩耗深度', a.m.wear, b.m.wear, (v) => fmt(v, 'mm'), 'low'],
+    ['1kmあたりの費用', a.m.yenPerKm, b.m.yenPerKm, (v) => v == null ? '—' : '約' + v + '円', 'low'],
+    ['ドロップ', a.drop, b.drop, (v) => fmt(v, 'mm'), null],
+  ];
+  const win = (x, y, better) => better && x != null && y != null && x !== y && (better === 'high' ? x > y : x < y);
+%>
+<%- include('../partials/header', { current:'compare', user, req, title: pageTitle, description: desc, robots: curated ? null : 'noindex', extraCss: ['/css/compare.css'] }) %>
+<section class="section">
+  <div class="container cmp">
+    <a class="back-link" href="/compare">← シューズ比較の一覧</a>
+    <p class="cmp-kicker">COMPARE｜計測データで比べる</p>
+    <h1><%= a.name %> と <%= b.name %>、どっちがいい？</h1>
+
+    <div class="cmp-heads">
+      <% [a, b].forEach(function (s, i) { %>
+      <a class="cmp-head<%= i === 1 ? ' cmp-head--b' : '' %>" href="/shoes/<%= s.id %>">
+        <img src="<%= s.image %>" alt="<%= s.brand %> <%= s.name %>" loading="lazy">
+        <span class="cmp-head__brand"><%= s.brand %></span>
+        <strong class="cmp-head__name"><%= s.name %></strong>
+        <span class="cmp-head__price"><%= yen(s.price) %></span>
+        <span class="cmp-head__score"><b><%= s.rating.toFixed(2) %></b> 性能点（<%= s.category %>）</span>
+      </a>
+      <% }) %>
+    </div>
+
+    <div class="prose cmp-body">
+      <h2 data-en="VERDICT">結論</h2>
+      <p><%= verdict %></p>
+      <div class="rp-verdict">
+        <div class="rp-card rp-good"><h3><%= a.name %>が向く人</h3>
+          <% if (forA.length) { %><ul><% forA.forEach(function (t) { %><li><%= t %></li><% }) %></ul><% } else { %><p>計測値で大きく上回る項目はありません。</p><% } %>
+        </div>
+        <div class="rp-card rp-good"><h3><%= b.name %>が向く人</h3>
+          <% if (forB.length) { %><ul><% forB.forEach(function (t) { %><li><%= t %></li><% }) %></ul><% } else { %><p>計測値で大きく上回る項目はありません。</p><% } %>
+        </div>
+      </div>
+
+      <h2 data-en="SCORES">点数の比較</h2>
+      <div class="cmp-duel">
+        <div class="cmp-duel__legend"><span class="is-a"><%= a.name %></span><span class="is-b"><%= b.name %></span></div>
+        <% a.items.forEach(function (it, i) { const bv = b.items[i].v; %>
+        <div class="cmp-duel__row">
+          <em class="<%= win(it.v, bv, 'high') ? 'is-win' : '' %>"><%= it.v == null ? '—' : it.v.toFixed(1) %></em>
+          <div class="cmp-duel__track is-a"><i style="width:<%= (it.v || 0) * 20 %>%"></i></div>
+          <span><%= it.label %></span>
+          <div class="cmp-duel__track is-b"><i style="width:<%= (bv || 0) * 20 %>%"></i></div>
+          <em class="<%= win(bv, it.v, 'high') ? 'is-win' : '' %>"><%= bv == null ? '—' : bv.toFixed(1) %></em>
+        </div>
+        <% }) %>
+        <p>5点満点。計測値を当サイトのルールで点数にしたもの。</p>
+      </div>
+
+      <h2 data-en="DATA">計測値の比較</h2>
+      <div class="rp-table"><table>
+        <thead><tr><th></th><th><%= a.name %></th><th><%= b.name %></th></tr></thead>
+        <tbody>
+        <% rows.forEach(function (r) { %>
+          <tr><th><%= r[0] %></th>
+            <td class="<%= win(r[1], r[2], r[4]) ? 'is-me' : '' %>"><%= r[3](r[1]) %></td>
+            <td class="<%= win(r[2], r[1], r[4]) ? 'is-me' : '' %>"><%= r[3](r[2]) %></td></tr>
+        <% }) %>
+          <tr><th>ミッドソール</th><td><%= a.midsole || '—' %></td><td><%= b.midsole || '—' %></td></tr>
+          <tr><th>コスパ点</th><td class="<%= win(a.value, b.value, 'high') ? 'is-me' : '' %>"><%= a.value ?? '—' %></td><td class="<%= win(b.value, a.value, 'high') ? 'is-me' : '' %>"><%= b.value ?? '—' %></td></tr>
+        </tbody>
+      </table></div>
+      <p class="cmp-note">色の付いたマスが、その項目で上回っている方です。</p>
+
+      <h2 data-en="DETAIL">詳しく見る</h2>
+      <div class="cmp-links">
+        <% [a, b].forEach(function (s) { %>
+        <div class="cmp-link">
+          <strong><%= s.name %></strong>
+          <a class="btn" href="/shoes/<%= s.id %>">詳細ページ</a>
+          <% if (s.buyUrl) { %><a class="btn buy" href="<%= s.buyUrl %>" target="_blank" rel="sponsored noopener">Amazonで見る</a><% } %>
+        </div>
+        <% }) %>
+      </div>
+
+      <% if (related.length) { %>
+      <h2 data-en="MORE">ほかの比較</h2>
+      <ul class="cmp-related">
+        <% related.forEach(function (p) { %><li><a href="/compare/<%= p.slug %>"><%= p.a.name %> と <%= p.b.name %></a></li><% }) %>
+      </ul>
+      <% } %>
+
+      <p class="rp-source">※海外ラボ（RunRepeat）の計測データ（US9・約27cm）とメーカー公表値、当サイトの計算をもとにした比較です。1kmあたりの費用は摩耗深度から推定した寿命での概算です。価格は当サイトの掲載値で、変更されている場合があります。購入リンクにはAmazonアソシエイトのリンクが含まれます。</p>
+    </div>
+  </div>
+</section>
+<%- include('../partials/footer') %>

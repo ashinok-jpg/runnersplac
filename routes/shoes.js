@@ -4,6 +4,7 @@ const path = require('path');
 const router = express.Router();
 const { loadArticle } = require('../lib/articles');
 const { isLocalDev } = require('../lib/session');
+const { pairsFor } = require('../lib/compare');
 
 const modPath = path.join(__dirname, '..', 'data', 'shoesData.js');
 const norm = s => String(s||'').normalize('NFKC').toLowerCase().replace(/\s+/g,'-');
@@ -33,8 +34,9 @@ router.get('/:id', async (req, res, next) => {
     const canSeeDraft = req.user?.isAdmin || isLocalDev(req);
     shoe.articleHtml = article && (!article.draft || canSeeDraft) ? article.html : '';
 
-    res.render('shoe-detail', { 
-      shoe, 
+    res.render('shoe-detail', {
+      shoe,
+      comparisons: pairsFor(shoe.id),
       communityAvg: null, 
       communityCount: 0 
     });
