@@ -27,7 +27,7 @@ const W={race:{スピード:30,軽さ:25,安定性:15,クッション:10,履き�
 // 用途の区分（2026-10-30 確定）。指定がない靴はサイトの用途欄から判定する
 const SPEED=new Set(['rebelv4','machx2','primex2strung','magicspeed4','evosl','pacerv2','yogiri','rebelv5','cloudflow4','carbonx3','rivalfly4','cloudboomzone','deviate_nitro_3']);
 const DAILY=new Set(['bondix','velocity_nitro_3','velocity_nitro_4','skyflow','rincon4','cloudmonster2','propelv5','noosatri15','mach6','neovista','neovista2']);
-const TRAIL=new Set(['geltrabuco13','hierrov8','gelsonoma','voyageNitro3']);
+const TRAIL=new Set(['geltrabuco13','hierrov8','gelsonoma','voyageNitro3','speedgoat6','mafatespeed4','speedcross6','cascadia18','trabucomax4','peregrine15','pegasustrail5']);
 const cat=d=>{if(TRAIL.has(d['シューズID']))return'trail';if(SPEED.has(d['シューズID']))return'speed';if(DAILY.has(d['シューズID']))return'daily';const p=d['サイトの用途'];if(/レース|駅伝|マラソン|スパイク/.test(p))return'race';if(/テンポ|スピード|インターバル/.test(p))return'speed';return'daily'};
 const EXCL=new Set(['renewride']); // 別世代の計測値
 const OVER={ghost18:{'摩擦係数':'0.57','曲げ剛性(N)':'12.3'},// RTINGS のエネルギーリターンは方式が違うので使わない

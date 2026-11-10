@@ -154,6 +154,9 @@
             <tr>
               <td><%= label %></td>
               <td class="stars">
+                <% if (score == null) { %>
+                <span class="num">データなし</span>
+                <% } else { %>
                 <% for (let s = 1; s <= 5; s++) { %>
                   <% if (score >= s) { %>
                     <span class="star full">★</span>
@@ -164,6 +167,7 @@
                   <% } %>
                 <% } %>
                 <span class="num"><%= score.toFixed ? score.toFixed(1) : score %></span>
+                <% } %>
               </td>
               <td class="hostComment"><%= (shoe.hostComment && shoe.hostComment[label]) || 'コメントなし' %></td>
             </tr>

@@ -2442,6 +2442,97 @@ hostComment : {
     "buyUrl": "https://link.amazon/B0fi0ur8f",
     "chartData": [4.5, 4, 3, 5, 4.5, 3, 3, 3, 3, 5]
   },
+  {
+    "id": "speedgoat6",
+    "name": "SPEEDGOAT 6",
+    "image": "/images/no-photo.svg",
+    "weight": 278,
+    "midsole": "CMEVA",
+    "drop": 4.9,
+    "offset": "27.2/32.1",
+    "purpose": "トレイル",
+    "price": 24200,
+    "brand": "HOKA",
+    "chartData": [null, null, null, null, null, null, null, null, null, null]
+  },
+  {
+    "id": "mafatespeed4",
+    "name": "MAFATE SPEED 4",
+    "image": "/images/no-photo.svg",
+    "weight": 293,
+    "midsole": "PROFLY+",
+    "drop": 7.2,
+    "offset": "30.8/38.0",
+    "purpose": "トレイル",
+    "price": 27500,
+    "brand": "HOKA",
+    "chartData": [null, null, null, null, null, null, null, null, null, null]
+  },
+  {
+    "id": "speedcross6",
+    "name": "SPEEDCROSS 6",
+    "image": "/images/no-photo.svg",
+    "weight": 296,
+    "midsole": "EVA",
+    "drop": 14.1,
+    "offset": "22.4/36.5",
+    "purpose": "トレイル",
+    "price": 18700,
+    "brand": "Salomon",
+    "chartData": [null, null, null, null, null, null, null, null, null, null]
+  },
+  {
+    "id": "cascadia18",
+    "name": "Cascadia 18",
+    "image": "/images/no-photo.svg",
+    "weight": 310,
+    "midsole": "DNA LOFT v2",
+    "drop": 8.8,
+    "offset": "23.8/32.6",
+    "purpose": "トレイル",
+    "price": 22000,
+    "brand": "Brooks",
+    "chartData": [null, null, null, null, null, null, null, null, null, null]
+  },
+  {
+    "id": "trabucomax4",
+    "name": "Trabuco Max 4",
+    "image": "/images/no-photo.svg",
+    "weight": 312,
+    "midsole": "FF BLAST PLUS",
+    "drop": 6.1,
+    "offset": "33.2/39.3",
+    "purpose": "トレイル",
+    "price": 19800,
+    "brand": "ASICS",
+    "chartData": [null, null, null, null, null, null, null, null, null, null]
+  },
+  {
+    "id": "peregrine15",
+    "name": "PEREGRINE 15",
+    "image": "/images/no-photo.svg",
+    "weight": 266,
+    "midsole": "PWRRUN",
+    "drop": 3.7,
+    "offset": "25.8/29.5",
+    "purpose": "トレイル",
+    "price": 20900,
+    "brand": "Saucony",
+    "chartData": [null, null, null, null, null, null, null, null, null, null]
+  },
+  {
+    "id": "pegasustrail5",
+    "name": "PEGASUS TRAIL 5",
+    "image": "/images/no-photo.svg",
+    "weight": 286,
+    "midsole": "ReactX",
+    "drop": 9.6,
+    "offset": "25.0/34.6",
+    "purpose": "トレイル",
+    "price": 17930,
+    "brand": "Nike",
+    "chartData": [null, null, null, null, null, null, null, null, null, null]
+  },
   // ほか追加したいだけ増やしてOK
 ];
 
