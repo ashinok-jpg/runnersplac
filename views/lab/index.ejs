@@ -1,0 +1,46 @@
+<%- include('../partials/header', { current:'lab', user, req, title:'シューズ実験室｜ボールを落として反発、曲げて離して硬さを比べる｜Runnersplac', description:'ランニングシューズのフォームにボールを落としたらどこまで跳ね返る？ソールを曲げて離したらどこまで飛ぶ？計測データをそのまま動きにして比べられます。', extraCss: ['/css/lab.css'] }) %>
+<section class="section">
+  <div class="container lab">
+    <p class="lab-kicker">SHOE LAB</p>
+    <h1>シューズ実験室</h1>
+    <p class="page-lead">計測データを、そのまま動きにしました。気になる靴を最大3足選んで試してください。</p>
+
+    <div class="lab-tabs" role="tablist">
+      <button type="button" role="tab" class="lab-tab" data-tab="drop" aria-selected="true">ボールを落とす（反発）</button>
+      <button type="button" role="tab" class="lab-tab" data-tab="bend" aria-selected="false">曲げて離す（硬さ）</button>
+    </div>
+
+    <!-- ボールを落とす -->
+    <div class="lab-panel" data-panel="drop">
+      <p class="lab-how">フォームに1mの高さからボールを落とします。跳ね返る高さは、前足部のエネルギーリターン（反発）の割合です。着地でへこむ深さは衝撃吸収の値から出しています。</p>
+      <div class="lab-picks" data-kind="ret"></div>
+      <div class="lab-stage">
+        <canvas class="lab-canvas" id="dropCanvas" aria-label="ボールが落ちて跳ね返るアニメーション"></canvas>
+      </div>
+      <div class="lab-actions">
+        <button type="button" class="btn lab-go" id="dropGo">落とす</button>
+        <label class="lab-slow"><input type="checkbox" id="dropSlow" checked> スロー</label>
+      </div>
+      <ol class="lab-result" id="dropResult"></ol>
+    </div>
+
+    <!-- 曲げて離す -->
+    <div class="lab-panel" data-panel="bend" hidden>
+      <p class="lab-how">靴のつま先をつかんで上に引っぱり、離してください（スマホは指で）。3足とも同じ角度まで曲がります。曲げるのに必要な力は計測値で、硬い靴ほど大きくなります。離したときにつま先のボールが飛ぶ距離は、この力から計算したイメージです。</p>
+      <div class="lab-picks" data-kind="flex"></div>
+      <div class="lab-stage">
+        <canvas class="lab-canvas lab-canvas--bend" id="bendCanvas" aria-label="靴を曲げて離すアニメーション"></canvas>
+      </div>
+      <div class="lab-actions">
+        <button type="button" class="btn lab-go" id="bendGo">30度まで曲げて離す</button>
+      </div>
+      <ol class="lab-result" id="bendResult"></ol>
+    </div>
+
+    <p class="lab-note">データ: RunRepeat の実測値（前足部のエネルギーリターン、かかとの衝撃吸収、曲げに必要な力）。曲げの力は旧方式の値が混ざっているため、50Nを超える値は使っていません。ボールの飛距離は計測したものではなく、曲げる力から計算したイメージです。</p>
+    <p class="lab-more"><a href="/compare">2足をくわしく比べる（シューズ比較）</a></p>
+  </div>
+</section>
+<script>window.LAB = { items: <%- JSON.stringify(items).replace(/</g, '\\u003c') %>, pick: <%- JSON.stringify(pick) %> };</script>
+<script src="/js/lab.js" defer></script>
+<%- include('../partials/footer') %>

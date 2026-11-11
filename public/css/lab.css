@@ -1,0 +1,29 @@
+/* シューズ実験室（/lab） */
+.lab{max-width:56rem}
+.lab h1{margin:.25rem 0 .5rem;font-size:clamp(26px,4vw,38px);line-height:1.3}
+.lab-kicker{margin:0;color:var(--buy);font-size:.8125rem;font-weight:800;letter-spacing:.12em}
+.lab-tabs{display:flex;gap:8px;margin:1.5rem 0 1rem;flex-wrap:wrap}
+.lab-tab{flex:1 1 12rem;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--muted);font:inherit;font-weight:700;cursor:pointer}
+.lab-tab[aria-selected="true"]{border-color:var(--brand);background:var(--brand);color:#fff}
+.lab-how{margin:0 0 12px;color:var(--muted);font-size:.9375rem;line-height:1.7}
+.lab-picks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-bottom:12px}
+.lab-pick{display:block;border-left:4px solid var(--c);border-radius:10px}
+.lab-pick select{width:100%;min-width:0;padding:10px 8px;border:1px solid var(--border);border-left:0;border-radius:0 10px 10px 0;background:var(--surface);color:var(--text);font:inherit;font-size:.875rem}
+.lab-stage{border:1px solid var(--border);border-radius:14px;background:var(--surface);overflow:hidden}
+.lab-canvas{display:block;width:100%}
+.lab-canvas--bend{touch-action:none;cursor:grab}
+.lab-canvas--bend:active{cursor:grabbing}
+.lab-actions{display:flex;align-items:center;gap:14px;margin:12px 0}
+.lab-go{background:var(--buy);border-color:transparent;color:#fff;font-weight:800;padding:12px 22px}
+.lab-slow{color:var(--muted);font-size:.875rem;display:flex;align-items:center;gap:6px}
+.lab-result{margin:0 0 1rem;padding:0;list-style:none;counter-reset:r}
+.lab-result li{counter-increment:r;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;padding:10px 12px;border-left:4px solid var(--c);border-bottom:1px solid var(--border)}
+.lab-result li::before{content:counter(r) "位";color:var(--muted);font-size:.8125rem}
+.lab-result a{color:var(--text);font-weight:700}
+.lab-result span{color:var(--muted);font-size:.875rem}
+.lab-result b{color:var(--text);font-size:1.0625rem}
+.lab-note{margin-top:1.5rem;color:var(--muted);font-size:.8125rem;line-height:1.7}
+.lab-more{margin:.5rem 0 0}
+@media (max-width:560px){
+  .lab-picks{grid-template-columns:1fr}
+}

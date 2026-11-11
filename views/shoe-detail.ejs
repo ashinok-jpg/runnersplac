@@ -119,6 +119,17 @@
     </section>
     <% } %>
 
+    <% if (typeof labTabs !== 'undefined' && labTabs.length) { %>
+    <section class="card compare-links">
+      <h2>シューズ実験室で試す</h2>
+      <ul>
+        <% labTabs.forEach(function (t) { %>
+        <li><a href="/lab?tab=<%= t.tab %>&amp;shoes=<%= shoe.id %>"><%= shoe.name %> で<%= t.label %></a></li>
+        <% }) %>
+      </ul>
+    </section>
+    <% } %>
+
     <section class="charts" id="ratings">
       <div class="card">
         <h2>ホスト評価（レーダー）</h2>
