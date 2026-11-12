@@ -63,7 +63,13 @@
         <p>5点満点。計測値を当サイトのルールで点数にしたもの。</p>
       </div>
 
-      <h2 data-en="DATA">計測値の比較</h2>
+      <% sections.forEach(function (s) { %>
+      <h2 data-en="<%= s.en %>"><%= s.title %></h2>
+      <% s.text.forEach(function (t) { %><p><%= t %></p><% }) %>
+      <% if (s.extra) { %><p class="cmp-lab"><a href="/lab?tab=<%= s.extra.lab %>&amp;shoes=<%= a.id %>,<%= b.id %>">シューズ実験室で<%= s.extra.label %> →</a></p><% } %>
+      <% }) %>
+
+      <h2 data-en="DATA">計測値の一覧</h2>
       <div class="rp-table"><table>
         <thead><tr><th></th><th><%= a.name %></th><th><%= b.name %></th></tr></thead>
         <tbody>
@@ -77,6 +83,16 @@
         </tbody>
       </table></div>
       <p class="cmp-note">色の付いたマスが、その項目で上回っている方です。</p>
+
+      <% if (faq.length) { %>
+      <h2 data-en="Q&amp;A">よくある質問</h2>
+      <dl class="cmp-faq">
+        <% faq.forEach(function (f) { %><dt><%= f.q %></dt><dd><%= f.a %></dd><% }) %>
+      </dl>
+      <% if (curated) { %>
+      <script type="application/ld+json"><%- JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(function (f) { return { '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } }; }) }).replace(/</g, '\\u003c') %></script>
+      <% } %>
+      <% } %>
 
       <h2 data-en="DETAIL">詳しく見る</h2>
       <div class="cmp-links">

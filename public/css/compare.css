@@ -81,3 +81,12 @@
   .cmp .prose .rp-table tbody th{white-space:normal}
   .cmp .prose .rp-table th,.cmp .prose .rp-table td{padding:.5rem .45rem}
 }
+
+/* 項目ごとの解説・よくある質問 */
+.cmp-lab{margin-top:-.5rem}
+.cmp-lab a{font-weight:700;text-decoration:none;border-bottom:1.5px solid var(--buy)}
+.cmp-faq{margin:0 0 1.25rem;border-top:1.5px solid var(--ink)}
+.cmp-faq dt{padding:.9rem 0 .25rem;font-weight:800}
+.cmp-faq dt::before{content:"Q.";margin-right:.4em;color:var(--buy);font-family:var(--font-num)}
+.cmp-faq dd{margin:0;padding:0 0 .9rem;border-bottom:1px solid var(--border);color:var(--muted)}
+.cmp-faq dd::before{content:"A.";margin-right:.4em;color:var(--text);font-family:var(--font-num);font-weight:600}
