@@ -29,5 +29,8 @@
     "jsdom": "^26.1.0",
     "marked": "^18.0.4",
     "multer": "^2.0.2"
+  },
+  "resolutions": {
+    "firebase-admin/@firebase/database-compat": "2.1.7"
   }
 }
