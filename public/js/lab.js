@@ -63,6 +63,31 @@
   }
   const css = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
 
+  // 靴の写真（読み込めたら描き直す）
+  const photos = {};
+  function photo(s, redraw) {
+    if (!s || !s.image) return null;
+    let p = photos[s.id];
+    if (!p) {
+      p = photos[s.id] = { img: new Image(), ok: false };
+      p.img.onload = () => { p.ok = true; redraw(); };
+      p.img.src = s.image;
+    }
+    return p.ok ? p.img : null;
+  }
+  // 白い枠の中に、縦横比を保って収める
+  function drawPhoto(ctx, img, x, y, w, h, color) {
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(x, y, w, h);
+    if (img) {
+      const k = Math.min((w - 6) / img.naturalWidth, (h - 6) / img.naturalHeight);
+      const iw = img.naturalWidth * k, ih = img.naturalHeight * k;
+      ctx.drawImage(img, x + (w - iw) / 2, y + (h - ih) / 2, iw, ih);
+    }
+    ctx.fillStyle = color;
+    ctx.fillRect(x, y, w, 3);
+  }
+
   // ---------- ボールを落とす ----------
   const drop = { cv: document.getElementById('dropCanvas'), lanes: [], raf: 0, last: 0 };
   // 衝撃吸収（SA）→ へこむ深さ(px)。SA が大きいほど深く沈む
@@ -73,7 +98,7 @@
     drop.lanes = chosen.ret.map((id, i) => ({
       s: byId[id], color: COLORS[i], h: 1, v: 0, phase: 'ready', tc: 0, vin: 0, dip: 0, peaks: [], done: false,
     }));
-    drop.size = setupCanvas(drop.cv, 360);
+    drop.size = setupCanvas(drop.cv, 440);
     dropDraw();
     dropResult(false);
   }
@@ -106,7 +131,8 @@
     ctx.clearRect(0, 0, w, h);
     const n = Math.max(1, drop.lanes.length);
     const left = 34, laneW = (w - left) / n;
-    const foamTop = h - 78, foamH = 34, r = 11;
+    const foamTop = h - 158, foamH = 34, r = 11;
+    const imgTop = h - 104, imgH = 74;
     const top = 26, scale = foamTop - r * 2 - top; // 1m のピクセル数
     // 目盛り
     ctx.font = '11px "IBM Plex Mono", ui-monospace, monospace';
@@ -160,7 +186,9 @@
       ctx.beginPath(); ctx.ellipse(cx, by + r * (1 - squash), r / squash, r * squash, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       ctx.fillStyle = L.color;
       ctx.beginPath(); ctx.ellipse(cx - 3, by - 3 + r * (1 - squash), 3, 3, 0, 0, Math.PI * 2); ctx.fill();
-      // 名前
+      // 写真と名前
+      const pw = Math.min(fw, 130);
+      drawPhoto(ctx, photo(L.s, () => { if (!drop.lanes.some((x) => x.phase === 'air' || x.phase === 'contact')) dropDraw(); }), cx - pw / 2, imgTop, pw, imgH, L.color);
       ctx.fillStyle = css('--text') || '#ece6da';
       ctx.textAlign = 'center';
       ctx.font = '12px "IBM Plex Mono", ui-monospace, monospace';
