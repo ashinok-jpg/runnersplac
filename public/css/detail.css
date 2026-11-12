@@ -1113,22 +1113,36 @@ main {
 
 /* ===== 詳細ページの調整 ===== */
 :root{
-  --bg:#0b0f14;
-  --bg-secondary:#121820;
-  --card:#121820;
-  --line:#253041;
-  --line-strong:#3a4a60;
-  --fg:#e6edf3;
-  --fg-secondary:#c5d0da;
-  --muted:#9aa7b2;
-  --acc:#ff6a3d;
-  --acc-hover:#e85a2a;
-  --btn:#ff6a3d;
-  --btn-hover:#e85a2a;
+  --bg:#0e0d0b;
+  --paper:#0e0d0b;
+  --bg-secondary:#1d1a16;
+  --card:#171512;
+  --surface:#171512;
+  --line:#2f2b24;
+  --border:#2f2b24;
+  --line-strong:#ece6da;
+  --fg:#ece6da;
+  --ink:#ece6da;
+  --text:#ece6da;
+  --fg-secondary:#cfc8ba;
+  --muted:#9a9384;
+  --acc:#ff5a26;
+  --acc-hover:#e0461c;
+  --btn:#ff5a26;
+  --btn-hover:#e0461c;
+  --buy:#ff5a26;
+  --success:#3fb27f;
+  --shadow:none;
+  --shadow-lg:none;
+  --radius:2px;
+  --font-head:"Barlow Condensed","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif;
+  --font-num:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
 }
 .header,
 .header.header{
-  background:rgba(11,15,20,.92);
+  background:var(--paper);
+  border-bottom:2px solid var(--ink);
+  backdrop-filter:none;
   padding:.6rem max(4%, calc((100% - 1200px) / 2));
 }
 .logo{font-size:1.125rem;font-weight:800}
@@ -1173,8 +1187,56 @@ main {
   .fixed-footer .footer-btn{padding:.25rem 1rem}
   body{padding-bottom:56px}
 }
-html,body{font-family:"Inter","Hiragino Sans","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif}
+html,body{font-family:"Hiragino Sans","Hiragino Kaku Gothic ProN","Yu Gothic UI","Noto Sans JP",system-ui,sans-serif}
 
 /* よく比べられる靴（/compare へのリンク） */
 .compare-links ul{margin:.5rem 0 0;padding-left:1.2em;display:grid;gap:.4rem}
 .compare-links a{color:var(--brand, #1f6feb)}
+
+/* ===== 紙とインクの見た目（角を立て、影と浮き上がりをなくす） ===== */
+.card,.hero,.comment-list .review{animation:none}
+.hero,.card,.chart-wrap,.rating-row,.comment-list .review,.performance-item,.comparison-item,.tips-content,
+.gallery-item,.section-image-item,.section-images figure,.hero-img,.hero-img img,.section-image-item figure,.host-table table,
+.more-btn,.submit-btn,.buy-btn,#comment-form input[type="text"],#comment-form textarea,.badge,.footer-btn{
+  border-radius:var(--radius) !important;
+  box-shadow:none !important;
+}
+.card:hover,.comparison-item:hover,.gallery-item:hover,.section-image-item:hover,.performance-item:hover,
+.comment-list .review:hover,.buy-btn:hover,.submit-btn:hover,.hero-img:hover,.footer-btn:hover,.badge:hover{transform:none !important;box-shadow:none !important}
+.tips-content{background:var(--card)}
+.logo{font-family:var(--font-head);font-size:1.6rem;font-weight:800;letter-spacing:.02em;text-transform:uppercase;line-height:1}
+.nav a,.nav button{border-radius:0}
+.nav a:hover,.nav button:hover{background:transparent;color:var(--acc)}
+.hero{border:1px solid var(--line);border-top:6px solid var(--ink)}
+.hero-brand{font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:.8125rem}
+.hero h1{font-weight:900;letter-spacing:-.01em}
+.hero-score strong{font-family:var(--font-num);font-weight:600;letter-spacing:-.03em}
+.hero-spec{border-top:1.5px solid var(--ink);padding-top:.75rem}
+.hero-spec dd{font-family:var(--font-num);font-weight:600}
+.hero .buy-btn{border-radius:var(--radius);font-weight:800}
+.hero-img{border-left:1px solid var(--line) !important}
+.card{border:1px solid var(--line)}
+.card h2{border-bottom:2px solid var(--ink);font-weight:800}
+.chart-wrap{background:var(--card)}
+.host-table th{background:transparent;border-bottom:1.5px solid var(--ink);color:var(--muted)}
+.host-table tbody tr:hover{background:transparent}
+.star.full,.star.half,.rating-stars label:hover,.rating-stars label:hover ~ label,.rating-stars input:checked ~ label,
+.review .mini-stars,.score-stars{color:var(--acc)}
+.rating-label{color:var(--fg)}
+.rating-row{background:var(--card)}
+.rating-row:hover{border-color:var(--ink);background:var(--card)}
+.score-number{font-family:var(--font-num)}
+.badge{background:var(--ink);color:var(--paper)}
+.compare-links a{color:var(--ink);text-decoration:underline}
+.fixed-footer{background:var(--paper);border-top:2px solid var(--ink);backdrop-filter:none}
+.home-btn:hover,.buy-btn:hover{background:transparent}
+::-webkit-scrollbar-thumb{border-radius:0}
+@media (max-width:768px){
+  .hero{border-top-width:0}
+  .hero-img{border-left:0 !important;border-bottom:1px solid var(--line)}
+  .logo{font-size:1.3rem}
+}
+/* スマホでレーダー図（幅380pxの canvas）がページを横に押し広げないように */
+.charts>.card{min-width:0}
+.chart-wrap canvas{max-width:100% !important;height:auto !important}
+@media (max-width:1024px){.charts{grid-template-columns:minmax(0,1fr)}}

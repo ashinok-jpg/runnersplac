@@ -3,29 +3,29 @@
 /* 絞り込み */
 .c-filter{display:grid;gap:10px;margin-top:20px}
 .c-filter__row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center}
-.c-filter select{padding:.5rem .6rem;border:1px solid var(--border);border-radius:10px;background:var(--surface);color:var(--text);font:inherit;font-size:.9375rem;max-width:100%}
+.c-filter select{padding:.5rem .6rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--text);font:inherit;font-size:.9375rem;max-width:100%}
 .c-filter .input{flex:1 1 220px;min-width:0}
 .c-check{display:inline-flex;align-items:center;gap:6px;color:var(--text);font-size:.9375rem;cursor:pointer}
 .c-check input{accent-color:var(--brand);width:1rem;height:1rem}
 .c-reset{color:var(--muted);font-size:.875rem}
 
 /* 種類の色 */
-.c-type{display:inline-block;margin-right:.5rem;padding:.05rem .5rem;border-radius:6px;background:#253041;color:var(--text);font-size:.75rem;font-weight:700}
-.c-type[data-type="整骨院・接骨院"]{background:#1f6feb33;color:#79b0ff}
-.c-type[data-type="鍼灸院"]{background:#a371f733;color:#c9a7ff}
-.c-type[data-type="整体・コンディショニング"]{background:#2ecc7133;color:#7ee2a8}
-.c-type[data-type="スポーツ整形外科"]{background:#ff6a3d33;color:#ffa58a}
+.c-type{display:inline-block;margin-right:.5rem;padding:.05rem .5rem;border-radius:var(--radius);background:var(--border);color:var(--text);font-size:.75rem;font-weight:700}
+.c-type[data-type="整骨院・接骨院"]{background:rgba(121,176,255,.15);color:#79b0ff}
+.c-type[data-type="鍼灸院"]{background:rgba(163,113,247,.18);color:#c9a7ff}
+.c-type[data-type="整体・コンディショニング"]{background:rgba(63,178,127,.18);color:#7ee2a8}
+.c-type[data-type="スポーツ整形外科"]{background:rgba(255,90,38,.18);color:#ffa58a}
 
 /* 一覧 */
 .c-list{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:10px;margin:12px 0 0;padding:0;list-style:none}
-.c-card{border:1px solid var(--border);border-radius:14px;background:var(--surface);transition:border-color .15s ease}
+.c-card{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);transition:border-color .15s ease}
 .c-card:hover{border-color:var(--muted)}
 .c-card__link{display:block;padding:14px 16px;color:inherit;height:100%}
 .c-card__link:hover{color:inherit}
 .c-card__meta{display:flex;flex-wrap:wrap;align-items:center;gap:2px 0;color:var(--muted);font-size:.8125rem}
 .c-card h3{margin:.35rem 0 0;font-size:1.0625rem;line-height:1.4}
 .c-card__tags{display:flex;flex-wrap:wrap;gap:6px;margin:.6rem 0 0}
-.c-tag{padding:.1rem .5rem;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:.75rem}
+.c-tag{padding:.1rem .5rem;border:1px solid var(--border);border-radius:var(--radius);color:var(--muted);font-size:.75rem}
 .c-tag--on{border-color:var(--brand);color:var(--text)}
 .c-card__parts{margin:.5rem 0 0;color:var(--muted);font-size:.8125rem}
 
@@ -39,36 +39,36 @@
 /* 申込フォーム */
 .c-form{display:grid;gap:14px;margin-top:20px;max-width:560px}
 .c-form label{display:block;font-size:.9375rem}
-.c-form .input,.c-filter .input{display:block;box-sizing:border-box;padding:.55rem .75rem;border:1px solid var(--border);border-radius:10px;background:var(--surface)}
+.c-form .input,.c-filter .input{display:block;box-sizing:border-box;padding:.55rem .75rem;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
 .c-form .input{margin-top:6px}
 .c-form .input:focus,.c-filter .input:focus{border-color:var(--brand)}
 .c-form label.c-check{display:inline-flex}
-.c-form fieldset{display:grid;gap:8px;margin:0;padding:12px 14px;border:1px solid var(--border);border-radius:12px}
+.c-form fieldset{display:grid;gap:8px;margin:0;padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius)}
 .c-form legend{padding:0 4px;font-size:.875rem;color:var(--muted)}
 .c-form textarea{resize:vertical;font:inherit}
 .c-req{margin-left:4px;color:var(--brand);font-size:.75rem;font-weight:700}
 .c-hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
-.c-error{padding:10px 14px;border:1px solid #f85149;border-radius:10px;color:#ff9b95}
-.c-sent{margin-top:16px;padding:16px;border:1px solid var(--brand);border-radius:12px}
+.c-error{padding:10px 14px;border:1px solid #ff9b95;border-radius:var(--radius);color:#ff9b95}
+.c-sent{margin-top:16px;padding:16px;border:1px solid var(--brand);border-radius:var(--radius)}
 
 /* 体験談（/clinic/:id の投稿） */
 .cp{margin-top:2.5rem;padding-top:1.5rem;border-top:1px solid var(--border)}
-.cp-note{padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--surface);color:var(--muted);font-size:.875rem;line-height:1.7}
+.cp-note{padding:12px 14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);color:var(--muted);font-size:.875rem;line-height:1.7}
 .cp-note strong{color:var(--text)}
 .cp-filter{display:flex;flex-wrap:wrap;gap:6px;margin:16px 0 4px}
-.cp-chip{padding:.25rem .7rem;border:1px solid var(--border);border-radius:999px;color:var(--muted);font-size:.8125rem;text-decoration:none}
+.cp-chip{padding:.25rem .7rem;border:1px solid var(--border);border-radius:var(--radius);color:var(--muted);font-size:.8125rem;text-decoration:none}
 .cp-chip:hover{border-color:var(--muted);color:var(--text)}
 .cp-chip--on{border-color:var(--brand);color:var(--text);background:color-mix(in srgb,var(--brand) 14%,transparent)}
 .cp-list{display:grid;gap:12px;margin:14px 0 0;padding:0;list-style:none}
-.cp-item{min-width:0;padding:14px 16px;border:1px solid var(--border);border-radius:14px;background:var(--surface);scroll-margin-top:80px}
+.cp-item{min-width:0;padding:14px 16px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);scroll-margin-top:80px}
 .cp-item:target{border-color:var(--brand)}
 .cp-item--hidden{opacity:.6;border-style:dashed}
 .cp-hidden-label{margin:0 0 6px;color:#ff9b95;font-size:.75rem;font-weight:700}
 .cp-head{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
 .cp-injury{font-weight:700;font-size:1.0625rem}
-.cp-outcome{padding:.05rem .5rem;border-radius:6px;background:#253041;font-size:.75rem;font-weight:700}
-.cp-outcome[data-outcome="0"]{background:#2ecc7133;color:#7ee2a8}
-.cp-outcome[data-outcome="1"],.cp-outcome[data-outcome="2"]{background:#1f6feb33;color:#79b0ff}
+.cp-outcome{padding:.05rem .5rem;border-radius:var(--radius);background:var(--border);font-size:.75rem;font-weight:700}
+.cp-outcome[data-outcome="0"]{background:rgba(63,178,127,.18);color:#7ee2a8}
+.cp-outcome[data-outcome="1"],.cp-outcome[data-outcome="2"]{background:rgba(121,176,255,.15);color:#79b0ff}
 .cp-sub{margin:.3rem 0 0;color:var(--muted);font-size:.875rem}
 .cp-facts{display:grid;gap:4px;margin:.7rem 0 0}
 .cp-facts div{display:grid;grid-template-columns:6.5em 1fr;gap:8px}
@@ -76,13 +76,13 @@
 .cp-facts dd{margin:0;font-size:.9375rem;white-space:pre-line;overflow-wrap:anywhere}
 .cp-body{margin:.7rem 0 0;white-space:pre-line;overflow-wrap:anywhere;line-height:1.8}
 .cp-photos,.cp-previews{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
-.cp-photos img,.cp-previews img{display:block;width:110px;height:110px;object-fit:cover;border-radius:10px;border:1px solid var(--border)}
+.cp-photos img,.cp-previews img{display:block;width:110px;height:110px;object-fit:cover;border-radius:var(--radius);border:1px solid var(--border)}
 .cp-previews:empty{display:none}
 .cp-previews{color:var(--muted);font-size:.8125rem}
 .cp-foot{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px;margin-top:12px;font-size:.8125rem}
 .cp-tools{display:flex;flex-wrap:wrap;align-items:center;gap:6px}
 .cp-tools form{margin:0}
-.cp-helpful,.cp-share,.cp-mod{display:inline-block;padding:.3rem .7rem;border:1px solid var(--border);border-radius:999px;background:transparent;color:var(--text);font:inherit;font-size:.8125rem;cursor:pointer;text-decoration:none}
+.cp-helpful,.cp-share,.cp-mod{display:inline-block;padding:.3rem .7rem;border:1px solid var(--border);border-radius:var(--radius);background:transparent;color:var(--text);font:inherit;font-size:.8125rem;cursor:pointer;text-decoration:none}
 .cp-helpful:hover,.cp-share:hover,.cp-mod:hover{border-color:var(--muted);color:var(--text)}
 .cp-helpful--on{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 14%,transparent)}
 .cp-mod{color:var(--muted)}

@@ -4,7 +4,7 @@
 (function () {
   const { items, pick } = window.LAB;
   const byId = Object.fromEntries(items.map((s) => [s.id, s]));
-  const COLORS = ['#1f6feb', '#ff6a3d', '#2ecc71'];
+  const COLORS = ['#ece6da', '#ff5a26', '#3fb27f'];
   const DEFAULTS = {
     ret: ['metaspeedray', 'novablast5', 'waveinspire20'],
     flex: ['primex2strung', 'metaspeedray', 'japan9'],
@@ -109,9 +109,9 @@
     const foamTop = h - 78, foamH = 34, r = 11;
     const top = 26, scale = foamTop - r * 2 - top; // 1m のピクセル数
     // 目盛り
-    ctx.font = '11px system-ui, sans-serif';
-    ctx.fillStyle = css('--muted') || '#9aa7b2';
-    ctx.strokeStyle = 'rgba(154,167,178,.18)';
+    ctx.font = '11px "IBM Plex Mono", ui-monospace, monospace';
+    ctx.fillStyle = css('--muted') || '#9a9384';
+    ctx.strokeStyle = 'rgba(236,230,218,.10)';
     ctx.textAlign = 'right';
     for (const cm of [0, 25, 50, 75, 100]) {
       const yy = foamTop - (cm / 100) * scale;
@@ -147,23 +147,23 @@
         ctx.setLineDash([]);
         ctx.fillStyle = L.color;
         ctx.textAlign = 'right';
-        ctx.font = 'bold 13px system-ui, sans-serif';
+        ctx.font = 'bold 13px "IBM Plex Mono", ui-monospace, monospace';
         ctx.fillText(Math.round(L.peaks[0] * 100) + 'cm', cx + fw / 2, y - 6);
       }
       // ボール
       const by = foamTop + L.dip - r - L.h * scale;
-      ctx.fillStyle = 'rgba(0,0,0,.25)';
+      ctx.fillStyle = 'rgba(0,0,0,.5)';
       const sh = clamp(1 - L.h, 0.2, 1);
       ctx.beginPath(); ctx.ellipse(cx, foamTop + foamH + 8, r * sh, 3 * sh, 0, 0, Math.PI * 2); ctx.fill();
       const squash = L.phase === 'contact' ? 1 - (L.dip / 30) * 0.35 : 1;
-      ctx.fillStyle = '#f4f6f8';
-      ctx.beginPath(); ctx.ellipse(cx, by + r * (1 - squash), r / squash, r * squash, 0, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.strokeStyle = '#17150f'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.ellipse(cx, by + r * (1 - squash), r / squash, r * squash, 0, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       ctx.fillStyle = L.color;
       ctx.beginPath(); ctx.ellipse(cx - 3, by - 3 + r * (1 - squash), 3, 3, 0, 0, Math.PI * 2); ctx.fill();
       // 名前
-      ctx.fillStyle = css('--text') || '#e6edf3';
+      ctx.fillStyle = css('--text') || '#ece6da';
       ctx.textAlign = 'center';
-      ctx.font = '12px system-ui, sans-serif';
+      ctx.font = '12px "IBM Plex Mono", ui-monospace, monospace';
       ctx.fillText(fit(ctx, L.s.name, laneW - 6), cx, h - 12);
     });
   }
@@ -253,11 +253,11 @@
       const rad = (deg * Math.PI) / 180;
       const P = ([x, y]) => [g.heelX + x * g.len, g.ground - y * g.len];
       // 地面と目盛り
-      ctx.strokeStyle = 'rgba(154,167,178,.35)';
+      ctx.strokeStyle = 'rgba(236,230,218,.35)';
       ctx.lineWidth = 1;
       ctx.beginPath(); ctx.moveTo(8, g.ground + 0.5); ctx.lineTo(w - 8, g.ground + 0.5); ctx.stroke();
-      ctx.fillStyle = css('--muted') || '#9aa7b2';
-      ctx.font = '10px system-ui, sans-serif';
+      ctx.fillStyle = css('--muted') || '#9a9384';
+      ctx.font = '10px "IBM Plex Mono", ui-monospace, monospace';
       ctx.textAlign = 'center';
       for (const cm of [50, 100, 150]) {
         const x = g.toeX + 8 + cm * g.pxPerCm;
@@ -272,7 +272,7 @@
       ctx.strokeStyle = L.color;
       ctx.lineWidth = 2;
       ctx.beginPath(); upper.forEach(([x, y], k) => (k ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.fill(); ctx.stroke();
-      ctx.fillStyle = '#e9edf1';
+      ctx.fillStyle = '#2a2620';
       ctx.beginPath(); sole.forEach(([x, y], k) => (k ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.closePath(); ctx.fill();
       ctx.strokeStyle = L.color; ctx.stroke();
       // ボール
@@ -280,17 +280,17 @@
       let bx, by;
       if (L.ball) { bx = g.toeX + 8 + L.ball.x * g.pxPerCm; by = g.ground - r - L.ball.y * g.pxPerCm; }
       else { bx = g.toeX + r + 2; by = g.ground - r; }
-      ctx.fillStyle = '#f4f6f8';
-      ctx.beginPath(); ctx.arc(Math.min(bx, w - r - 2), by, r, 0, Math.PI * 2); ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.strokeStyle = '#17150f'; ctx.lineWidth = 1.5;
+      ctx.beginPath(); ctx.arc(Math.min(bx, w - r - 2), by, r, 0, Math.PI * 2); ctx.fill(); ctx.stroke();
       ctx.fillStyle = L.color;
       ctx.beginPath(); ctx.arc(Math.min(bx, w - r - 2) - 2, by - 2, 2.5, 0, Math.PI * 2); ctx.fill();
       // 文字
       ctx.textAlign = 'left';
-      ctx.fillStyle = css('--text') || '#e6edf3';
-      ctx.font = 'bold 12px system-ui, sans-serif';
+      ctx.fillStyle = css('--text') || '#ece6da';
+      ctx.font = 'bold 12px "IBM Plex Mono", ui-monospace, monospace';
       ctx.fillText(fit(ctx, L.s.name, w * 0.5), 12, g.y0 + 14);
-      ctx.font = '12px system-ui, sans-serif';
-      ctx.fillStyle = css('--muted') || '#9aa7b2';
+      ctx.font = '12px "IBM Plex Mono", ui-monospace, monospace';
+      ctx.fillStyle = css('--muted') || '#9a9384';
       const holdDeg = bend.state === 'hold' ? deg : L.from;
       const force = (L.s.flex * holdDeg) / 30;
       const txt = bend.state === 'hold' ? `${Math.round(deg)}° ・ 必要な力 ${force.toFixed(1)}N` : `曲げる力 ${L.s.flex}N（30°）`;
@@ -298,7 +298,7 @@
       ctx.fillText(txt, w - 12, g.y0 + 14);
       if (L.ball && L.ball.landed) {
         ctx.fillStyle = L.color;
-        ctx.font = 'bold 13px system-ui, sans-serif';
+        ctx.font = 'bold 13px "IBM Plex Mono", ui-monospace, monospace';
         ctx.textAlign = 'center';
         ctx.fillText(Math.round(L.ball.x) + 'cm', Math.min(bx, w - 30), by - 14);
       }

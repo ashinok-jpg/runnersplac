@@ -1,7 +1,7 @@
 /* シューズ比較（/compare） */
 .cmp{max-width:56rem}
 .cmp h1{margin:.25rem 0 1.25rem;font-size:clamp(24px,3.6vw,34px);line-height:1.35}
-.cmp-kicker{margin:0;color:var(--buy);font-size:.8125rem;font-weight:800;letter-spacing:.08em}
+.cmp-kicker{margin:0;font-family:var(--font-head);font-size:.95rem !important;color:var(--buy);font-size:.8125rem;font-weight:800;letter-spacing:.08em}
 .cmp-body{margin-top:1.5rem}
 
 /* 2足の見出しカード */
@@ -13,13 +13,13 @@
   padding:12px;
   border:1px solid var(--border);
   border-top:4px solid var(--brand);
-  border-radius:14px;
+  border-radius:var(--radius);
   background:var(--surface);
   color:inherit;
 }
 .cmp-head--b{border-top-color:var(--buy)}
 .cmp-head:hover{border-color:var(--muted);color:inherit}
-.cmp-head img{width:100%;aspect-ratio:16/10;max-height:220px;margin-bottom:8px;object-fit:contain;border-radius:10px;background:#fff}
+.cmp-head img{width:100%;aspect-ratio:16/10;max-height:220px;margin-bottom:8px;object-fit:contain;border-radius:var(--radius);background:#fff}
 .cmp-head__brand{color:var(--muted);font-size:.8125rem}
 .cmp-head__name{font-size:1.0625rem;line-height:1.35}
 .cmp-head__price{color:var(--muted);font-size:.9375rem}
@@ -27,7 +27,7 @@
 .cmp-head__score b{color:var(--text);font-size:1.5rem;font-weight:800}
 
 /* 点数の左右バー */
-.cmp-duel{margin:0 0 1.5rem;padding:14px;border:1px solid var(--border);border-radius:14px;background:var(--surface)}
+.cmp-duel{margin:0 0 1.5rem;padding:14px;border:1px solid var(--border);border-radius:var(--radius);background:var(--surface)}
 .cmp-duel__legend{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;font-size:.8125rem;font-weight:700}
 .cmp-duel__legend .is-a{color:var(--brand)}
 .cmp-duel__legend .is-b{color:var(--buy);text-align:right}
@@ -35,9 +35,9 @@
 .cmp-duel__row span{text-align:center;color:var(--muted);font-size:.8125rem}
 .cmp-duel__row em{font-style:normal;font-size:.875rem;color:var(--muted);text-align:center}
 .cmp-duel__row em.is-win{color:var(--text);font-weight:800}
-.cmp-duel__track{display:flex;height:8px;overflow:hidden;border-radius:999px;background:var(--border)}
+.cmp-duel__track{display:flex;height:8px;overflow:hidden;border-radius:var(--radius);background:var(--border)}
 .cmp-duel__track.is-a{justify-content:flex-end}
-.cmp-duel__track i{display:block;height:100%;border-radius:999px}
+.cmp-duel__track i{display:block;height:100%;border-radius:var(--radius)}
 .cmp-duel__track.is-a i{background:var(--brand)}
 .cmp-duel__track.is-b i{background:var(--buy)}
 .cmp-duel p{margin:10px 0 0;color:var(--muted);font-size:.8rem}
@@ -45,7 +45,7 @@
 
 /* 詳細・購入リンク */
 .cmp-links{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
-.cmp-link{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--border);border-radius:12px}
+.cmp-link{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--border);border-radius:var(--radius)}
 .cmp-link .btn{text-align:center;text-decoration:none}
 .cmp-related{padding-left:1.2em}
 
@@ -58,13 +58,13 @@
   gap:4px;
   padding:12px;
   border:1px solid var(--border);
-  border-radius:14px;
+  border-radius:var(--radius);
   background:var(--surface);
   color:inherit;
 }
 .cmp-card:hover{border-color:var(--muted);color:inherit}
 .cmp-card__imgs{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:6px;margin-bottom:6px}
-.cmp-card__imgs img{width:100%;aspect-ratio:16/10;object-fit:contain;border-radius:8px;background:#fff}
+.cmp-card__imgs img{width:100%;aspect-ratio:16/10;object-fit:contain;border-radius:var(--radius);background:#fff}
 .cmp-card__imgs span{color:var(--muted);font-size:.75rem;font-weight:800}
 .cmp-card strong{font-size:.9375rem;line-height:1.4}
 .cmp-card small{color:var(--muted);font-size:.8125rem}

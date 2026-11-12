@@ -7,6 +7,10 @@
 <% if (typeof description !== 'undefined' && description) { %><meta name="description" content="<%= description %>"><% } %>
 <% if (typeof robots !== 'undefined' && robots) { %><meta name="robots" content="<%= robots %>"><% } %>
 <% if (typeof req !== 'undefined' && req && !(typeof robots !== 'undefined' && robots && /noindex/.test(robots))) { %><link rel="canonical" href="https://runnersplac.com<%= req.originalUrl.split('?')[0] %>"><% } %>
+<meta name="theme-color" content="#0e0d0b">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <link rel="stylesheet" href="/css/base.css">
 <link rel="stylesheet" href="/css/site.css">
 <link rel="stylesheet" href="/css/prose.css">
@@ -17,7 +21,7 @@
 <body>
 <nav class="nav">
   <div class="container nav-inner">
-    <a class="site-brand" href="/">Runnersplac</a>
+    <a class="site-brand" href="/">RUNNERSPLAC</a>
     <div class="nav-actions">
 <% if (typeof user !== 'undefined' && user) { %>
       <a class="nav-login" href="/logout">ログアウト</a>
