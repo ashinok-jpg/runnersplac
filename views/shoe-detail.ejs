@@ -110,6 +110,39 @@
       <h2>ホストレビュー</h2>
       <article class="prose"><%- shoe.articleHtml %></article>
     </section>
+    <% } else if (typeof profile !== 'undefined' && profile) { %>
+    <section class="host-article card">
+      <h2>計測データで見る</h2>
+      <article class="prose">
+        <div class="rp-hero">
+          <p class="rp-kicker"><%= (shoe.category || shoe.purpose || 'DATA') %>｜LAB DATA</p>
+          <p class="rp-catch"><%= shoe.name %> を、計測した全シューズの中で並べる</p>
+          <p class="lead">海外ラボ（RunRepeat）の計測値を、同じ方法で計測したほかのシューズと比べたときの位置で見ていきます。</p>
+          <% if (profile.stats.length) { %>
+          <div class="rp-stats">
+            <% profile.stats.forEach(function (s) { %><div class="rp-stat"><b><%= s.value %></b><span><%= s.note %></span></div><% }) %>
+          </div>
+          <% } %>
+        </div>
+
+        <h2 data-en="POSITION">全シューズの中での位置</h2>
+        <div class="rp-chart">
+          <h3>バーが右に長いほど、左に書いた性質が強い</h3>
+          <% profile.rows.forEach(function (r) { %>
+          <div class="rp-row is-me"><span><%= r.bar %></span><div class="rp-track"><div class="rp-fill" style="left:0;width:<%= r.pct %>%"></div></div><em><%= r.text %></em></div>
+          <% }) %>
+          <p>バーの長さは、その項目でこの靴より下にいるシューズの割合。<%= profile.rows[0].n %>足前後の計測値と比べています。</p>
+        </div>
+
+        <% profile.groups.forEach(function (g) { %>
+        <h2 data-en="<%= g.en %>"><%= g.title %></h2>
+        <% g.text.forEach(function (t) { %><p><%= t %></p><% }) %>
+        <% if (g.lab) { %><p><a href="/lab?tab=<%= g.lab %>&amp;shoes=<%= shoe.id %>">シューズ実験室で<%= g.lab === 'drop' ? 'ボールを落として反発を見る' : '曲げて離して硬さを見る' %> →</a></p><% } %>
+        <% }) %>
+
+        <p class="rp-source">※海外ラボ（RunRepeat）の計測データ（US9・約27cm）をもとにしています。順位は当サイトに計測値があるシューズの中でのものです。曲げの力は50Nを超える旧方式の値を除いています。1kmあたりの費用は摩耗深度から推定した寿命での概算です。</p>
+      </article>
+    </section>
     <% } %>
 
     <% if (typeof comparisons !== 'undefined' && comparisons.length) { %>

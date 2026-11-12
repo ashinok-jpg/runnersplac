@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const router = express.Router();
 const { loadArticle } = require('../lib/articles');
+const { profile } = require('../lib/shoe-profile');
 const { isLocalDev } = require('../lib/session');
 const { pairsFor } = require('../lib/compare');
 const measurements = require('../data/measurements.json');
@@ -47,6 +48,7 @@ router.get('/:id', async (req, res, next) => {
       shoe,
       comparisons: pairsFor(shoe.id),
       labTabs: labTabsFor(shoe.id),
+      profile: profile(shoe),
       communityAvg: null, 
       communityCount: 0 
     });

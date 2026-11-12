@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { shoes } = require('../lib/data');
 const { listBlogs } = require('../lib/blogs');
+const { SHOW_ARTICLES } = require('../lib/articles');
 
 const BRANDS = Array.from(new Set(shoes.map((s) => s.brand).filter(Boolean)));
 const SORTERS = {
@@ -29,7 +30,7 @@ router.get('/home2', (req, res) => {
   const stabilityMin = toNum(req.query.stabilityMin);
   const speedMin     = toNum(req.query.speedMin);
   const category     = (req.query.category || '').trim();
-  const review       = req.query.review === '1';
+  const review       = SHOW_ARTICLES && req.query.review === '1';
   const sort         = SORTERS[req.query.sort] ? req.query.sort : 'score';
 
   const lower = s => (s || '').toString().toLowerCase();
@@ -73,7 +74,7 @@ router.get('/home2', (req, res) => {
     shoes: list,
     q, brand, priceMax, weightMax, cushionMin, stabilityMin, speedMin,
     activeFilters,
-    review, sort, category, keepParams,
+    review, sort, category, keepParams, showArticles: SHOW_ARTICLES,
     brands: BRANDS,
     totalCount: shoes.length,
     blogs: listBlogs(),

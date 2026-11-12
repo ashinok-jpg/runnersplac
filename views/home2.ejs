@@ -31,10 +31,10 @@
     <form class="list-bar" method="GET" action="/home2">
       <% Object.entries(keepParams).forEach(function([k, v]){ %><input type="hidden" name="<%= k %>" value="<%= v %>"><% }) %>
       <span class="list-bar__count"><strong><%= shoes.length %></strong> 足</span>
-      <label class="list-bar__check">
+      <% if (showArticles) { %><label class="list-bar__check">
         <input type="checkbox" name="review" value="1" <%= review ? 'checked' : '' %> data-autosubmit>
         レビュー記事あり
-      </label>
+      </label><% } %>
       <label class="list-bar__sort">
         用途
         <select name="category" data-autosubmit>
