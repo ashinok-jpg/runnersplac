@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-11-07",
+  "updatedAt": "2026-11-13",
   "vocab": {
     "TYPES": [
       "整骨院・接骨院",
@@ -1515,6 +1515,32 @@
       "intro": "院長は柔道整復師で、学生時代に陸上競技（800m）を専攻。スポーツによるけがに対応し、スポーツ障害の専用ページで膝・すね・足首・足裏・腰の痛みの相談を案内している。",
       "source": "https://zero-odawara.com/syojyo/supo-tushougai/",
       "checkedAt": "2026-11-07",
+      "origin": "公開情報"
+    },
+    {
+      "id": "sakura-shinkyu-sekkotsuin-kibougaoka-yokohama-asahi",
+      "name": "さくら鍼灸・接骨院 希望ヶ丘院",
+      "type": "整骨院・接骨院",
+      "pref": "神奈川県",
+      "city": "横浜市旭区",
+      "address": "中希望が丘101 水島ビル1階",
+      "station": "希望ヶ丘駅",
+      "walk": 1,
+      "tel": "045-489-4070",
+      "site": "https://sakuramedical-group.co.jp/shop/kibougaoka",
+      "booking": "https://page.line.me/397lpgyq",
+      "hours": "夜は20時まで営業／第3日曜日・年末年始休み",
+      "saturday": true,
+      "sunday": true,
+      "night": true,
+      "licenses": [],
+      "parts": [],
+      "features": [],
+      "insurance": "使える場合がある",
+      "firstFee": null,
+      "intro": "希望ヶ丘駅南口から徒歩1分の鍼灸・接骨院。土曜・日曜・祝日も営業し、夜は20時まで開いている。スポーツ中のケガの相談を受け付けている。",
+      "source": "https://sakuramedical-group.co.jp/shop/kibougaoka",
+      "checkedAt": "2026-11-13",
       "origin": "公開情報"
     }
   ]
