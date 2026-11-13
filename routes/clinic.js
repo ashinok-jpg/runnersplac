@@ -99,8 +99,14 @@ async function renderDetail(req, res, c, { status = 200, error = '', form = {} }
   const isAdmin = !!me?.isAdmin;
   let all = [], liked = new Set(), loadError = false;
   try {
-    all = await posts.listByClinic(c.id, { includeHidden: isAdmin });
-    liked = await posts.helpfulBy(me?.uid, all.map(p => p.id));
+    const [own, embeds] = await Promise.all([
+      posts.listByClinic(c.id, { includeHidden: isAdmin }),
+      posts.listEmbedsByClinic(c.id, { includeHidden: isAdmin }),
+    ]);
+    liked = await posts.helpfulBy(me?.uid, own.map(p => p.id));
+    // サイトへの投稿と SNS の紹介をまとめて新しい順に（SNS は投稿日、無ければ登録日）
+    const t = p => (p.postedAt || p.createdAt)?.getTime() || 0;
+    all = [...own, ...embeds].sort((a, b) => t(b) - t(a));
   } catch (e) {
     console.error('[clinic/posts]', e);
     loadError = true;
@@ -200,6 +206,30 @@ router.post('/posts/:postId/hide', requireAdmin, async (req, res, next) => {
   if (!post) return next();
   await posts.setHidden(post.id, req.body?.hidden === '1', req.user?.uid);
   res.redirect(303, `/clinic/${post.clinicId}#post-${post.id}`);
+});
+
+// 管理者：SNS の投稿（X・Instagram）の URL を貼って紹介する
+router.post('/:id/embeds', requireAdmin, async (req, res, next) => {
+  const c = findClinic(req.params.id);
+  if (!c) return next();
+  const b = req.body || {};
+  const form = { embedUrl: str(b.url), embedInjury: str(b.injury), embedNote: str(b.note).slice(0, 80), embedDate: str(b.postedAt) };
+  const fail = msg => renderDetail(req, res, c, { status: 400, error: msg, form });
+  if (!posts.parseSnsUrl(form.embedUrl)) return fail('X か Instagram の投稿の URL を貼ってください。');
+  if (!posts.INJURIES.includes(form.embedInjury)) return fail('ケガ・症状を選んでください。');
+  const postedAt = /^\d{4}-\d{2}-\d{2}$/.test(form.embedDate) ? new Date(form.embedDate + 'T12:00:00+09:00') : null;
+  const id = await posts.upsertEmbed({ clinicId: c.id, url: form.embedUrl, injury: form.embedInjury, note: form.embedNote, postedAt, by: req.user?.uid });
+  res.redirect(303, `/clinic/${c.id}#post-${id}`);
+});
+
+router.post('/embeds/:embedId/:action', requireAdmin, async (req, res, next) => {
+  const { embedId, action } = req.params;
+  if (!/^(x|instagram)-[A-Za-z0-9_-]{5,40}$/.test(embedId) || !['hide', 'delete'].includes(action)) return next();
+  const e = await posts.getEmbed(embedId).catch(() => null);
+  if (!e) return next();
+  if (action === 'hide') await posts.setEmbedHidden(e.id, req.body?.hidden === '1', req.user?.uid);
+  else await posts.deleteEmbed(e.id);
+  res.redirect(303, `/clinic/${e.clinicId}#${action === 'hide' ? 'post-' + e.id : 'posts'}`);
 });
 
 // 投稿した本人（と管理者）は消せる

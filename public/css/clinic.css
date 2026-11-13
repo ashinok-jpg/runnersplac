@@ -86,6 +86,12 @@
 .cp-helpful:hover,.cp-share:hover,.cp-mod:hover{border-color:var(--muted);color:var(--text)}
 .cp-helpful--on{border-color:var(--brand);background:color-mix(in srgb,var(--brand) 14%,transparent)}
 .cp-mod{color:var(--muted)}
+.cp-src{padding:.05rem .5rem;border:1px solid var(--border);color:var(--muted);font-size:.75rem}
+.cp-embed{margin-top:10px;max-width:550px;min-width:0;overflow:hidden}
+.cp-embed blockquote{margin:0}
+.cp-embed iframe{max-width:100% !important;min-width:0 !important}
+.cp-admin{margin-top:2rem;padding:12px 14px;border:1px dashed var(--border)}
+.cp-admin summary{cursor:pointer;font-weight:700}
 .cp h3{margin-top:2rem}
 .cp-form{max-width:640px}
 .cp-form select.input{width:100%;font:inherit;color:var(--text)}

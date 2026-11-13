@@ -24,6 +24,32 @@
 
   <ol class="cp-list">
   <% posts.forEach(function(p){ const mine = me && me.uid === p.uid; %>
+  <% if (p.kind === 'embed') { %>
+    <li class="cp-item cp-item--sns<%= p.hidden ? ' cp-item--hidden' : '' %>" id="post-<%= p.id %>">
+      <% if (p.hidden) { %><p class="cp-hidden-label">非表示中（管理者にだけ見えています）</p><% } %>
+      <div class="cp-head">
+        <span class="cp-injury"><%= p.injury %></span>
+        <span class="cp-src"><%= p.platform === 'x' ? 'X' : 'Instagram' %>の投稿</span>
+      </div>
+      <% if (p.note) { %><p class="cp-sub"><%= p.note %></p><% } %>
+      <div class="cp-embed">
+        <% if (p.platform === 'x') { %>
+          <blockquote class="twitter-tweet" data-dnt="true" data-theme="dark" data-lang="ja"><a href="<%= p.url %>"><%= p.author ? '@' + p.author + ' さんの投稿' : '投稿' %>をXで見る</a></blockquote>
+        <% } else { %>
+          <blockquote class="instagram-media" data-instgrm-permalink="<%= p.url %>" data-instgrm-version="14"><a href="<%= p.url %>" target="_blank" rel="noopener">Instagramで投稿を見る</a></blockquote>
+        <% } %>
+      </div>
+      <div class="cp-foot">
+        <span class="muted-text">投稿者のSNSから紹介しています。投稿が消されるとここにも表示されません。</span>
+        <% if (isAdmin) { %>
+          <span class="cp-tools">
+            <form method="post" action="/clinic/embeds/<%= p.id %>/hide"><input type="hidden" name="hidden" value="<%= p.hidden ? '' : '1' %>"><button class="cp-mod"><%= p.hidden ? '表示に戻す' : '非表示にする' %></button></form>
+            <form method="post" action="/clinic/embeds/<%= p.id %>/delete" onsubmit="return confirm('この紹介を削除します。よろしいですか？')"><button class="cp-mod">削除</button></form>
+          </span>
+        <% } %>
+      </div>
+    </li>
+  <% return; } %>
     <li class="cp-item<%= p.hidden ? ' cp-item--hidden' : '' %>" id="post-<%= p.id %>">
       <% if (p.hidden) { %><p class="cp-hidden-label">非表示中（管理者にだけ見えています）</p><% } %>
       <div class="cp-head">
@@ -58,11 +84,38 @@
   <% }) %>
   </ol>
 
+  <% if (isAdmin) { %>
+    <details class="cp-admin" id="embed-form"<%= form.embedUrl !== undefined ? ' open' : '' %>>
+      <summary>管理者：SNSの投稿を紹介する</summary>
+      <% if (error && form.embedUrl !== undefined) { %><p class="c-error" role="alert"><%= error %></p><% } %>
+      <form class="c-form" method="post" action="/clinic/<%= c.id %>/embeds">
+        <label>投稿のURL（X か Instagram）<span class="c-req">必須</span>
+          <input class="input" name="url" required value="<%= form.embedUrl || '' %>" placeholder="https://x.com/…/status/… または https://www.instagram.com/p/…/">
+        </label>
+        <div class="cp-row">
+          <label>ケガ・症状<span class="c-req">必須</span>
+            <select class="input" name="injury" required>
+              <option value="">選んでください</option>
+              <% choices.INJURIES.forEach(function(x){ %><option<%= form.embedInjury === x ? ' selected' : '' %>><%= x %></option><% }) %>
+            </select>
+          </label>
+          <label>投稿日（並び順に使う・任意）
+            <input class="input" type="date" name="postedAt" value="<%= form.embedDate || '' %>">
+          </label>
+        </div>
+        <label>ひとこと（任意・自分の言葉で。投稿の文章は写さない）
+          <input class="input" name="note" maxlength="80" value="<%= form.embedNote || '' %>" placeholder="例：シンスプリントで通い、レースに復帰した話">
+        </label>
+        <div><button class="btn" type="submit">紹介を載せる</button></div>
+      </form>
+    </details>
+  <% } %>
+
   <h3 id="post-form">体験談を書く</h3>
   <% if (!me) { %>
     <p>体験談を書くにはログインしてください。<a class="btn" href="/login?redirect=<%= encodeURIComponent('/clinic/' + c.id + '#post-form') %>">ログインして書く</a></p>
   <% } else { %>
-    <% if (error) { %><p class="c-error" role="alert"><%= error %></p><% } %>
+    <% if (error && form.embedUrl === undefined) { %><p class="c-error" role="alert"><%= error %></p><% } %>
     <form class="c-form cp-form" method="post" action="/clinic/<%= c.id %>/posts" enctype="multipart/form-data">
       <label>ケガ・症状<span class="c-req">必須</span>
         <select class="input" name="injury" required>
@@ -108,6 +161,8 @@
   <% } %>
 </section>
 
+<% if (posts.some(p => p.kind === 'embed' && p.platform === 'x')) { %><script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script><% } %>
+<% if (posts.some(p => p.kind === 'embed' && p.platform === 'instagram')) { %><script async src="https://www.instagram.com/embed.js"></script><% } %>
 <script>
 (function () {
   // 参考になった
