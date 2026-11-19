@@ -2,6 +2,7 @@
 <html lang="ja">
 <head>
   <!-- ...existing code... -->
+<%- include('partials/analytics') %>
 </head>
 <body data-user-uid="<%= user && user.uid ? user.uid : '' %>" data-shoe-id="<%= shoeId %>">
   <div id="memo-root" data-shoe-id="<%= shoeId %>"></div>
