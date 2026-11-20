@@ -43,6 +43,35 @@
 .cmp-duel p{margin:10px 0 0;color:var(--muted);font-size:.8rem}
 .cmp-note{color:var(--muted);font-size:.8125rem}
 
+/* 英語名・差の大きさ */
+.cmp-en{margin:-.75rem 0 1.25rem;color:var(--muted);font-family:var(--font-num);font-size:.8125rem}
+.cmp-tier{display:inline-block;margin-left:8px;padding:2px 8px;border:1px solid var(--border);border-radius:var(--radius);font-size:.75rem;font-weight:700;vertical-align:middle;color:var(--muted)}
+.cmp-tier.is-big{border-color:var(--buy);color:var(--buy)}
+.cmp-tier.is-some{border-color:var(--text);color:var(--text)}
+
+/* こんな人はこっち */
+.cmp-scenes{display:grid;gap:10px;margin:0 0 1.25rem}
+.cmp-scene{padding:12px 14px;border:1px solid var(--border);border-left:4px solid var(--border);border-radius:var(--radius);background:var(--surface)}
+.cmp-scene.is-a{border-left-color:var(--brand)}
+.cmp-scene.is-b{border-left-color:var(--buy)}
+.cmp .prose .cmp-scene p{margin:0}
+.cmp .prose .cmp-scene__q{color:var(--muted);font-size:.8125rem}
+.cmp .prose .cmp-scene__a{margin:2px 0 6px;font-size:1.0625rem;font-weight:800}
+.cmp-scene.is-b .cmp-scene__a{color:var(--buy)}
+.cmp-scene.is-none .cmp-scene__a{color:var(--muted)}
+.cmp .prose .cmp-scene__why{font-size:.875rem;line-height:1.7}
+
+/* 全体の中での位置 */
+.cmp-strip{margin:0 0 14px}
+.cmp .prose .cmp-strip p{margin:0}
+.cmp .prose .cmp-strip__label{font-size:.8125rem;font-weight:700}
+.cmp-strip__label small{margin-left:8px;color:var(--muted);font-weight:400}
+.cmp-strip__track{position:relative;height:6px;margin:12px 6px 6px;background:var(--border);border-radius:var(--radius)}
+.cmp-strip__track i{position:absolute;top:50%;width:14px;height:14px;margin:-7px 0 0 -7px;border-radius:50%;border:2px solid var(--paper)}
+.cmp-strip__track i.is-a{background:var(--brand)}
+.cmp-strip__track i.is-b{background:var(--buy)}
+.cmp .prose .cmp-strip__ends{display:flex;justify-content:space-between;color:var(--muted);font-size:.75rem}
+
 /* 詳細・購入リンク */
 .cmp-links{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
 .cmp-link{display:flex;flex-direction:column;gap:8px;padding:12px;border:1px solid var(--border);border-radius:var(--radius)}

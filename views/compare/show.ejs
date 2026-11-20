@@ -1,8 +1,13 @@
 <%
   const yen = (n) => n == null ? '—' : '¥' + Number(n).toLocaleString('en-US');
   const fmt = (v, unit, d) => v == null ? '—' : (d != null ? Number(v).toFixed(d) : v) + (unit || '');
-  const pageTitle = a.name + 'と' + b.name + 'を比較｜どっちがいい？｜Runnersplac';
-  const desc = a.name + '（' + yen(a.price) + '、性能点' + a.rating.toFixed(2) + '）と' + b.name + '（' + yen(b.price) + '、性能点' + b.rating.toFixed(2) + '）を、重さ・クッション・反発・グリップの計測データで比べました。';
+  const J = judge;
+  const ka = J.kanaA, kb = J.kanaB;
+  const nameJ = (s, k) => k === s.name ? s.name : k + '（' + s.name + '）';
+  const pageTitle = ka + 'と' + kb + 'を比較｜違いとどっちがいいか｜Runnersplac';
+  const desc = nameJ(a, ka) + 'と' + nameJ(b, kb) + 'の違いを、重さ・厚さ・クッション・反発・グリップの計測データで比べ、どんな人にどちらが向くかを理由つきでまとめました。';
+  const M = J.metrics;
+  const TIER_CLASS = { big: 'is-big', some: 'is-some', same: 'is-same' };
   // 計測値の行：better は 'high'（大きいほうが良い）か 'low'（小さいほうが良い）
   const rows = [
     ['価格', a.price, b.price, (v) => yen(v), 'low'],
@@ -22,7 +27,8 @@
   <div class="container cmp">
     <a class="back-link" href="/compare">← シューズ比較の一覧</a>
     <p class="cmp-kicker">COMPARE｜計測データで比べる</p>
-    <h1><%= a.name %> と <%= b.name %>、どっちがいい？</h1>
+    <h1><%= ka %> と <%= kb %>、どっちがいい？</h1>
+    <% if (ka !== a.name || kb !== b.name) { %><p class="cmp-en"><%= a.name %> / <%= b.name %></p><% } %>
 
     <div class="cmp-heads">
       <% [a, b].forEach(function (s, i) { %>
@@ -37,16 +43,25 @@
     </div>
 
     <div class="prose cmp-body">
-      <h2 data-en="VERDICT">結論</h2>
-      <p><%= verdict %></p>
-      <div class="rp-verdict">
-        <div class="rp-card rp-good"><h3><%= a.name %>が向く人</h3>
-          <% if (forA.length) { %><ul><% forA.forEach(function (t) { %><li><%= t %></li><% }) %></ul><% } else { %><p>計測値で大きく上回る項目はありません。</p><% } %>
+      <h2 data-en="VERDICT">ひとことで言うと</h2>
+      <% J.summary.forEach(function (t) { %><p><%= t %></p><% }) %>
+      <p class="cmp-note">当サイトの性能点は<%= ka %>が<%= a.rating.toFixed(2) %>、<%= kb %>が<%= b.rating.toFixed(2) %>。<% if (a.price != null && b.price != null) { %><%= a.price === b.price ? '価格はどちらも' + yen(a.price) + '。' : '価格は' + (a.price < b.price ? ka : kb) + 'のほうが' + yen(Math.abs(a.price - b.price)) + '安い。' %><% } %><% if (a.category !== b.category) { %><%= ka %>は<%= a.category %>、<%= kb %>は<%= b.category %>として採点しているので、用途の違いにも注意したい。<% } %></p>
+
+      <% if (J.scenes.length) { %>
+      <h2 data-en="WHICH ONE">こんな人はこっち</h2>
+      <div class="cmp-scenes">
+        <% J.scenes.forEach(function (sc) { %>
+        <div class="cmp-scene<%= sc.pick ? ' is-' + sc.pick : ' is-none' %>">
+          <p class="cmp-scene__q"><%= sc.title %></p>
+          <p class="cmp-scene__a"><%= sc.pick ? sc.pickName : 'どちらとも言えない' %></p>
+          <p class="cmp-scene__why"><%= sc.why %></p>
         </div>
-        <div class="rp-card rp-good"><h3><%= b.name %>が向く人</h3>
-          <% if (forB.length) { %><ul><% forB.forEach(function (t) { %><li><%= t %></li><% }) %></ul><% } else { %><p>計測値で大きく上回る項目はありません。</p><% } %>
-        </div>
+        <% }) %>
       </div>
+      <% } %>
+      <% if (J.same.length) { %>
+      <div class="rp-callout"><p><b>選ぶ理由にならない差：</b><%= J.same.join('、') %>。ここはほぼ同じなので、迷う材料から外していい。</p></div>
+      <% } %>
 
       <h2 data-en="SCORES">点数の比較</h2>
       <div class="cmp-duel">
@@ -63,11 +78,29 @@
         <p>5点満点。計測値を当サイトのルールで点数にしたもの。</p>
       </div>
 
-      <% sections.forEach(function (s) { %>
-      <h2 data-en="<%= s.en %>"><%= s.title %></h2>
+      <p class="cmp-duel__legend cmp-legend"><span class="is-a">● <%= ka %></span><span class="is-b">● <%= kb %></span></p>
+      <% sections.forEach(function (s) { const big = s.keys.map(function (k) { return M[k].tier; }); const t = big.indexOf('big') >= 0 ? 'big' : big.indexOf('some') >= 0 ? 'some' : 'same'; %>
+      <h2 data-en="<%= s.en %>"><%= s.title %> <span class="cmp-tier <%= TIER_CLASS[t] %>"><%= t === 'big' ? '大きな差' : t === 'some' ? '少し差がある' : 'ほぼ同じ' %></span></h2>
+      <% s.keys.forEach(function (k) { const m = M[k]; %>
+      <div class="cmp-strip">
+        <p class="cmp-strip__label"><%= m.label %><small><%= m.group ? m.group + '用の靴の中での位置' : '計測した靴の中での位置' %></small></p>
+        <div class="cmp-strip__track">
+          <i class="is-a" style="left:<%= m.pa %>%" title="<%= ka %>"></i>
+          <i class="is-b" style="left:<%= m.pb %>%" title="<%= kb %>"></i>
+        </div>
+        <p class="cmp-strip__ends"><span><%= m.lo %></span><span><%= m.hi %></span></p>
+      </div>
+      <% }) %>
       <% s.text.forEach(function (t) { %><p><%= t %></p><% }) %>
       <% if (s.extra) { %><p class="cmp-lab"><a href="/lab?tab=<%= s.extra.lab %>&amp;shoes=<%= a.id %>,<%= b.id %>">シューズ実験室で<%= s.extra.label %> →</a></p><% } %>
       <% }) %>
+
+      <% if (J.alternatives.length) { %>
+      <h2 data-en="ALTERNATIVES">どちらも少し違うと思ったら</h2>
+      <% J.alternatives.forEach(function (al) { %>
+      <p><%= al.from %>の作りが好きで、<%= al.want %>がもっと欲しいなら、同じ<%= al.brand %>の<a href="/shoes/<%= al.to.id %>"><%= al.toName %></a>も候補になる。<%= al.why %>。</p>
+      <% }) %>
+      <% } %>
 
       <h2 data-en="DATA">計測値の一覧</h2>
       <div class="rp-table"><table>
